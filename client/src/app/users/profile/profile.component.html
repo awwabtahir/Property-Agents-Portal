@@ -1,0 +1,40 @@
+<div class="profile">
+  <div class="cover-container d-flex h-100 p-3 mx-auto flex-column text-center">
+
+    <main role="main" class="inner cover">
+      <h1 class="cover-heading">Welcome {{ details?.name }}</h1>
+
+      <p *ngIf="details?.access == 1" class="lead">
+        <b>Acct Type:</b> Admin
+        <br>
+        <b>Email:</b> {{ details?.email }}
+        <br>
+        <b>Phone:</b> {{ details?.phone }}
+      </p>
+      <p *ngIf="details?.access == 2" class="lead">
+        <b>Acct Type:</b> Agent
+        <br>
+        <b>Email:</b> {{ details?.email }}
+        <br>
+        <b>Phone:</b> {{ details?.phone }}
+      </p>
+      <p *ngIf="details?.access == 3" class="lead">
+        <b>Acct Type:</b> Editor
+        <b>Email:</b>
+        <br> {{ details?.email }}
+        <br>
+        <b>Phone:</b> {{ details?.phone }}
+      </p>
+
+      <p class="lead">
+        <a routerLink="/leads" class="btn btn-lg btn-secondary">View Leads</a>
+      </p>
+    </main>
+
+    <footer class="mastfoot mt-auto">
+      <div class="inner">
+        <p>Created for Marwat Associates</p>
+      </div>
+    </footer>
+  </div>
+</div>

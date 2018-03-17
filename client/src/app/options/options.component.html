@@ -1,0 +1,124 @@
+<div class="container mb-4">
+  <!-- 
+  Manage Cities 
+  - add city
+  - edit city
+  - delete city
+-->
+  <div class="alert alert-success mt-3">
+    <b>Manage Cities</b>
+  </div>
+  <div class="row">
+    <div class="col mt-3">
+      <form (submit)="addCity()">
+
+        <!-- New city name is entered in this input -->
+        <div class="form-group">
+          <input type="text" name="name" class="form-control" id="name" placeholder="Enter city" [(ngModel)]="city.name">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add City</button>
+      </form>
+    </div>
+    <div class="col mt-3">
+      <form>
+
+        <!-- Get city names here for editing -->
+        <div class="form-group">
+          <select class="form-control" id="selectCity" name="cityId">
+            <option *ngFor="let city of cities" value="{{ city?._id }}">{{ city?.name }}</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Edit</button>
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 
+  Manage Locations 
+  - add Location
+  - edit Location
+  - delete Location
+-->
+  <div class="alert alert-success mt-3">
+    <b>Manage Locations</b>
+  </div>
+  <div class="row">
+    <div class="col mt-3">
+      <form (submit)="addLoc()">
+
+        <!-- City names are get here to add location -->
+        <div class="form-group">
+          <select class="form-control" id="selectCity" name="cityId" [(ngModel)]="location.cityId">
+            <option *ngFor="let city of cities" value="{{ city?._id }}">{{ city?.name }}</option>
+          </select>
+        </div>
+
+        <!-- New location will be entered here -->
+        <div class="form-group">
+          <input type="text" class="form-control" name="location" id="inputLocation" placeholder="Enter location" [(ngModel)]="location.location">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Location</button>
+      </form>
+    </div>
+    <div class="col mt-3">
+      <form>
+
+        <!-- Get city names here for editing location -->
+        <div class="form-group">
+          <select class="form-control" id="selectCity" name="cityId">
+            <option *ngFor="let city of cities" value="{{ city?._id }}">{{ city?.name }}</option>
+          </select>
+        </div>
+
+        <!-- Location is get here for editing and deleting -->
+        <div class="form-group">
+          <select class="form-control" id="selectLocation" name="locId">
+            <option *ngFor="let loc of locations" value="{{ loc?._id }}">{{ loc?.location }}</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Edit</button>
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 
+  Manage Property Types
+-->
+  <div class="alert alert-success mt-3">
+    <b>Manage Property Types</b>
+  </div>
+  <div class="row">
+    <div class="col mt-3">
+      <form (submit)="addPropType()">
+
+        <!-- New property type is entered here for adding in DB -->
+        <div class="form-group">
+          <input type="text" class="form-control" name="type" id="inputType" placeholder="Enter property type" [(ngModel)]="propType.type">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Property Type</button>
+      </form>
+    </div>
+    <div class="col mt-3">
+      <form>
+
+        <!-- Property type is get here for editing and deleting -->
+        <div class="form-group">
+          <select class="form-control" id="selectPropertyType" name="propTypeId">
+            <option *ngFor="let type of propTypes" value="{{ type?._id }}">{{ type?.type }}</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Edit</button>
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+  </div>
+
+</div>

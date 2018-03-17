@@ -1,0 +1,129 @@
+<div class="container">
+  <div class="row">
+    <div class="col align-self-center box-head">
+      <form
+      *ngIf="users && cities && propTypes && locations"
+      (submit)="updateLead()">
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <label for="inputPurpose">Purpose</label>
+            <select class="form-control" id="selectCity" name="purpose" [(ngModel)]="lead.purpose">
+              <option value="1">Sell</option>
+              <option value="2">Buy</option>
+              <option value="3">Rent</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <!-- Get city names here -->
+          <div class="form-group col-md-6">
+            <label for="inputCity">City</label>
+            <select class="form-control" id="selectCity" name="cityId" [(ngModel)]="lead.cityId">
+              <option *ngFor="let city of cities" value="{{ city?._id }}">{{ city?.name }}</option>
+            </select>
+          </div>
+
+          <!-- Get Property Types here -->
+          <div class="form-group col-md-6">
+            <label for="inputType">Property Type</label>
+            <select class="form-control" id="selectPropertyType" name="propTypeId" [(ngModel)]="lead.propTypeId">
+              <option *ngFor="let type of propTypes" value="{{ type?._id }}">{{ type?.type }}</option>
+            </select>
+          </div>
+
+        </div>
+        <div class="form-row">
+
+          <!-- Get Locations here -->
+          <div class="form-group col-md-6">
+            <label for="locId">Location</label>
+            <select class="form-control" id="selectLocation" name="locId" [(ngModel)]="lead.locationId">
+              <option *ngFor="let loc of locations" value="{{ loc?._id }}">{{ loc?.location }}</option>
+            </select>
+          </div>
+
+          <div class="form-group col-md-3">
+            <label for="propNumber">Number #</label>
+            <input type="text" class="form-control" name="propNumber" [(ngModel)]="lead.propNumber" id="inputPropNumber" placeholder="Number #">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label for="street">Street #</label>
+            <input type="text" class="form-control" name="street" [(ngModel)]="lead.street" id="inputStreet" placeholder="Street #">
+          </div>
+
+        </div>
+        <div class="form-row">
+
+          <div class="form-group col-md-6">
+            <label for="inputDemand">Demand (Rs)</label>
+            <input type="text" class="form-control" name="demand" [(ngModel)]="lead.demand" id="inputDemand">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label for="inputArea">Land Area</label>
+            <input type="text" class="form-control" name="area" [(ngModel)]="lead.area" id="inputArea">
+          </div>
+
+          <div class="form-group col-md-3">
+            <select id="inputSize" class="form-control" name="areaUnit" [(ngModel)]="lead.areaUnit">
+              <option value="1" selected>Sq. Feet</option>
+              <option value="2">Marla</option>
+              <option value="3">Kanal</option>
+            </select>
+          </div>
+
+        </div>
+        <div class="form-row">
+
+          <div class="form-group col-md-6">
+            <label for="inputBeds">No. of beds</label>
+            <input type="text" class="form-control" name="beds" [(ngModel)]="lead.beds" id="inputBeds">
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="selectLeadStatus">Status</label>
+            <input type="text" class="form-control" name="leadStatus" [(ngModel)]="lead.leadStatus" id="selectLeadStatus">
+          </div>
+
+        </div>
+        <hr>
+        <h6>Client Details</h6>
+        <div class="form-row">
+
+          <div class="form-group col-md-6">
+            <input type="text" class="form-control" name="clientName" [(ngModel)]="lead.clientName" id="inputName" placeholder="Client Name">
+          </div>
+
+          <div class="form-group col-md-6">
+            <select id="inputClientType" name="clientType" [(ngModel)]="lead.clientType" class="form-control">
+              <option value="1" selected>Owner</option>
+              <option value="2">Dealer</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="form-row">
+
+          <div class="form-group col-md-6">
+            <input type="text" class="form-control" name="phoneNumber" [(ngModel)]="lead.phoneNumber" id="inputPhone" placeholder="Phone #">
+          </div>
+
+          <div *ngIf="auth.isAdmin() || auth.isEditor()" class="form-group col-md-6">
+            <select id="selectAgent" name="assignedTo" [(ngModel)]="lead.assignedTo" class="form-control">
+              <option value="0" selected>Not assigned to any agent</option>
+              <option *ngFor="let user of users" value="{{ user?._id }}">{{ user?.name }}</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="text-left">
+          <button type="submit" class="btn btn-success">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

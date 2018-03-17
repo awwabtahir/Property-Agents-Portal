@@ -1,0 +1,77 @@
+var mongoose = require( 'mongoose' );
+var autoIncrement = require('mongoose-auto-increment');
+
+autoIncrement.initialize(mongoose.connection);
+
+var leadSchema = new mongoose.Schema({
+    clientName : {
+        type: String
+    },
+    clientType : {
+        type: Number
+    },
+    phoneNumber : {
+        type: String
+    },
+    assignedTo : {
+        type: String,
+        default: 0
+    },
+    leadStatus : {
+        type: String
+    },
+    inventoryId : {
+        type: Number
+    }
+});
+
+var inventorySchema = new mongoose.Schema({
+    purpose : {
+        type: Number,
+        required: true,
+        default: 1
+    },
+    cityId : {
+      type: Number 
+    },
+    locationId : {
+        type: Number
+    },
+    propTypeId : {
+        type: Number
+    },
+    propNumber : {
+        type: String
+    },
+    street : {
+        type: String
+    },
+    demand : {
+        type: Number
+    },
+    area : {
+       type: String 
+    },
+    areaUnit : {
+        type: Number
+    },
+    beds : {
+        type: Number
+    },
+    inventoryStatus : {
+        type: String
+    },
+    dateAdded : {
+        type: Date, 
+        default: Date.now
+    },
+    leadId : {
+        type: Number
+    }
+});
+
+inventorySchema.plugin(autoIncrement.plugin, 'Inventory');
+leadSchema.plugin(autoIncrement.plugin, 'Lead');
+
+mongoose.model('Inventory', inventorySchema);
+mongoose.model('Lead', leadSchema);

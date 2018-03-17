@@ -1,0 +1,43 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-6" class="mt-4">
+      <form (submit)="updateUser()">
+        <div class="form-group">
+          <label for="name">Full name</label>
+          <input type="text" class="form-control" name="name" placeholder="Enter name" [(ngModel)]="credentials.name">
+        </div>
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" class="form-control" name="email" placeholder="Enter email" [(ngModel)]="credentials.email">
+        </div>
+        <div class="form-group">
+          <label for="contact">Contact #</label>
+          <input type="text" class="form-control" name="contact" placeholder="Enter phone number" [(ngModel)]="credentials.phone">
+        </div>
+        <div class="form-group">
+          <label for="contact">Location</label>
+          <input type="text" class="form-control" name="location" placeholder="Enter location of user" [(ngModel)]="credentials.location">
+        </div>
+        <div class="form-group">
+          <p>User Access</p>
+          <select class="form-control" id="selectAccess" name="access" [(ngModel)]="credentials.access">
+            <option value="1">Admin</option>
+            <option value="2">Agent</option>
+            <option value="3">Editor</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <p>Status</p>
+          <select class="form-control" id="selectAccess" name="status" [(ngModel)]="credentials.status">
+            <option value="1">Active</option>
+            <option value="2">Inactive</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-default">Update User!</button>
+      </form>
+    </div>
+  </div>
+
+</div>

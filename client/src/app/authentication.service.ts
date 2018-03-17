@@ -1,0 +1,330 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators/map';
+import { Router } from '@angular/router';
+
+// For Users
+
+export interface UserDetails {
+  _id: string;
+  email: string;
+  name: string;
+  exp: number;
+  iat: number;
+}
+
+interface TokenResponse {
+  token: string;
+  access: number;
+  privelege?: string;
+  id?: string;
+}
+
+export interface TokenPayload {
+  email: string;
+  password: string;
+  name?: string;
+  phone?: string;
+  location?: string;
+  access?: Number;
+  status?: Number;
+}
+
+// For city
+
+export interface Cities {
+  _id: string;
+  name: string;
+}
+
+export interface City {
+  name: string
+}
+
+// For location
+
+export interface Location {
+  cityId: Number,
+  location: string
+}
+
+export interface Locations {
+  _id: string,
+  cityId: Number,
+  location: string
+}
+
+// For PropertyType
+
+export interface PropertyType {
+  type: string
+}
+
+export interface PropertyTypes {
+  _id: string,
+  type: string
+}
+
+// For Lead
+
+export interface Lead {
+  purpose: Number,
+  cityId: Number,
+  locationId: Number,
+  propTypeId: Number,
+  propNumber: String,
+  street: String,
+  demand: Number,
+  area: String,
+  areaUnit: Number,
+  beds: Number,
+  clientName: String,
+  clientType: Number,
+  phoneNumber: String,
+  assignedTo: Number,
+  leadStatus: String
+}
+
+export interface Leads {
+  _id: Number,
+  inventoryId: Number,
+  clientName: String,
+  clientType: Number,
+  phoneNumber: String,
+  leadStatus: Number,
+  assignedTo: String
+}
+
+export interface userId {
+  _id: Number
+}
+
+export interface Inventories {
+  _id: Number,
+  leadId: Number,
+  purpose: Number,
+  cityId: Number,
+  locationId: Number,
+  propTypeId: Number,
+  propNumber: String,
+  street: String,
+  demand: Number,
+  area: String,
+  areaUnit: Number,
+  beds: Number,
+  propertyStatus: Number
+}
+
+@Injectable()
+export class AuthenticationService {
+
+  constructor(private http: HttpClient, private router: Router) { }
+
+  // For token
+
+  private token: string;
+  private privelege: string;
+  private id: string;
+
+  private saveToken(token: string, privelege: string): void {
+    localStorage.setItem('mean-token', token);
+    localStorage.setItem('mean-privelege', privelege);    
+    this.token = token;
+    this.privelege = privelege;
+  }
+
+  private saveId(id: string) {
+    localStorage.setItem('mean-id', id);
+    this.id = id;
+  }
+
+  private getId() {
+    if (!this.id) {
+      this.id = localStorage.getItem('mean-id');
+    }
+    return this.id;
+  }
+
+  private getToken(): string {
+    if (!this.token) {
+      this.token = localStorage.getItem('mean-token');
+    }
+    return this.token;
+  }
+
+  private getPrivelege(): string {
+    if (!this.privelege) {
+      this.privelege = localStorage.getItem('mean-privelege');
+    }
+    return this.privelege;
+  }
+
+  // For user
+
+  public getUserDetails(): UserDetails {
+    const token = this.getToken();
+    let payload;
+    if (token) {
+      payload = token.split('.')[1];
+      payload = window.atob(payload);
+      return JSON.parse(payload);
+    } else {
+      return null;
+    }
+  }
+
+  public isLoggedIn(): boolean {
+    const user = this.getUserDetails();
+    if (user) {
+      return user.exp > Date.now() / 1000;
+    } else {
+      return false;
+    }
+  }
+
+  public isAdmin(): boolean {
+    const privelege = this.getPrivelege();
+    if (privelege == 'ADMIN') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public isEditor(): boolean {
+    const privelege = this.getPrivelege();
+    if (privelege == 'EDITOR') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public isAgent(): boolean {
+    const privelege = this.getPrivelege();
+    if (privelege == 'AGENT') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  private request(
+    method: 'post' | 'get',
+    type?: 'login' | 'register' | 'profile' | 'getUsers' | 'addCity' | 'getCities' |
+      'addLoc' | 'getLocations' | 'addPropType' | 'getPropTypes' | 'addLead' | 'getLeads' |
+      'getInventories' | 'updateLead' | 'updateUser',
+    template?: TokenPayload | City | Location | PropertyType | Lead):
+    Observable<any> {
+
+    let base;
+
+    if (method === 'post') {
+      base = this.http.post(`/api/${type}`, template);
+    } else {
+      base = this.http.get(`/api/${type}`, { headers: { Authorization: `Bearer ${this.getToken()}` } });
+    }
+
+    const request = base.pipe(
+      map((data: TokenResponse) => {
+        if (data.token) {
+          if(data.access == 1) data.privelege = 'ADMIN';
+          if(data.access == 2) data.privelege = 'AGENT';
+          if(data.access == 3) data.privelege = 'EDITOR';
+          this.saveToken(data.token, data.privelege);
+          this.saveId(data.id);
+        }
+        return data;
+      })
+    );
+
+    return request;
+  }
+
+  // For user 
+
+  public register(user: TokenPayload): Observable<any> {
+    return this.request('post', 'register', user);
+  }
+
+  public login(user: TokenPayload): Observable<any> {
+    return this.request('post', 'login', user);
+  }
+
+  public profile(): Observable<any> {
+    return this.request('get', 'profile');
+  }
+
+  public getUsers(): Observable<any> {
+    return this.request('get', 'getUsers');
+  }
+
+  public updateUser(user): Observable<any> {
+    return this.request('post', 'updateUser', user);
+  }
+
+  // For city
+
+  public addCity(city: City): Observable<any> {
+    return this.request('post', 'addCity', city);
+  }
+
+  public getCities(): Observable<any> {
+    return this.request('get', 'getCities');
+  }
+
+  // For location
+
+  public addLoc(location: Location): Observable<any> {
+    return this.request('post', 'addLoc', location);
+  }
+
+  public getLocations(): Observable<any> {
+    return this.request('get', 'getLocations');
+  }
+
+  // For property type
+
+  public addPropType(propType: PropertyType): Observable<any> {
+    return this.request('post', 'addPropType', propType);
+  }
+
+  public getPropTypes(): Observable<any> {
+    return this.request('get', 'getPropTypes');
+  }
+
+  // For lead
+
+  public addLead(lead: Lead): Observable<any> {
+    return this.request('post', 'addLead', lead);
+  }
+
+  public updateLead(lead: Lead): Observable<any> {
+    return this.request('post', 'updateLead', lead);
+  }
+
+  public getLeads(): Observable<any> {
+
+    if(this.isAgent()) {
+      return this.http.get("/api/getLeads", {
+        params: { user_id: this.getId() },
+        headers: { Authorization: `Bearer ${this.getToken()}` }
+      });
+    }   
+
+    return this.request('get', 'getLeads');
+  }
+
+  public getInventories(): Observable<any> {
+    return this.request('get', 'getInventories');
+  }
+
+  // For logout
+
+  public logout(): void {
+    this.token = '';
+    window.localStorage.removeItem('mean-token');
+    this.router.navigateByUrl('/');
+  }
+}

@@ -1,0 +1,93 @@
+<div class="col col-lg-12">
+  <div class="panel panel-default mt-4">
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+      <table 
+      *ngIf="leads && inventories && cities && propertytypes && locations && users" 
+      datatable="ng" 
+      class="table table-bordered table-hover" 
+      style="table-layout:auto;" 
+      [dtOptions]="dtOptions">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Lead Information</th>
+            <th>Contact #</th>
+            <th>Type</th>
+            <th *ngIf="!auth.isAgent()">Assigned To</th>
+            <th>Status</th>
+            <th>Operations</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="odd gradeX" *ngFor="let l of leads">
+            <td>{{ l._id }}</td>
+            <td>
+              <u style="text-transform:capitalize;">{{ l.clientName.toLowerCase() }}</u> want to
+              <span *ngIf="getInventory(l._id).purpose == 1">
+                "sell the {{ getPropertyType(l._id).type }}"</span>
+              <span *ngIf="getInventory(l._id).purpose == 2">
+                "buy the {{ getPropertyType(l._id).type }}"</span>
+              <span *ngIf="getInventory(l._id).purpose == 3">
+                "rent the {{ getPropertyType(l._id).type }}"</span>
+              in {{ getLocation(l._id).location }}, {{ getCity(l._id).name }}.
+              <br>
+              <b>Area</b>: {{ getInventory(l._id).area }}
+              <span *ngIf="getInventory(l._id).areaUnit == 1">Sq. Feet</span>
+              <span *ngIf="getInventory(l._id).areaUnit == 2">Marla</span>
+              <span *ngIf="getInventory(l._id).areaUnit == 3">Kanal</span>
+              <b>Demand</b>: {{ getInventory(l._id).demand }}
+              <b>{{ getPropertyType(l._id).type }} #</b>: {{ getInventory(l._id).propNumber }}
+              <b>Street</b>: {{ getInventory(l._id).street }}
+            </td>
+            <td>{{ l.phoneNumber }}</td>
+
+            <td *ngIf="l.clientType == 1">Owner</td>
+            <td *ngIf="l.clientType == 2">Dealer</td>
+
+            <td *ngIf="!auth.isAgent()">{{ getUser(l.assignedTo).name }}</td>
+
+            <td>{{ l.leadStatus }}</td>
+            <td>
+              <a (click)="editLead(l._id)" class="btn btn-sm btn-default">
+                <i class="fas fa-edit" style="font-size:1.2rem"></i> Edit
+              </a>
+            </td>
+          </tr>
+
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <th>
+              <input id="leadInput21" type="text" placeholder="Search ID" />
+            </th>
+            <th>
+              <input id="leadInput21" type="text" placeholder="Search Lead Info" />
+            </th>
+            <th>
+              <input id="leadInput21" type="text" placeholder="Search Contact" />
+            </th>
+            <th>
+              <input id="leadInput21" type="text" placeholder="Search Type" />
+            </th>
+            <th *ngIf="!auth.isAgent()">
+              <input id="leadInput21" type="text" placeholder="Search Assigned To" />
+            </th>
+            <th>
+              <input id="leadInput21" type="text" placeholder="Search Status" />
+            </th>
+            <th>
+              <i class="fab fa-searchengin" style="font-size:1.8rem;"></i>
+            </th>
+          </tr>
+        </tfoot>
+
+      </table>
+
+    </div>
+    <!-- /.panel-body -->
+  </div>
+  <!-- /.panel -->
+</div>
+<!-- /.col-lg-12 -->

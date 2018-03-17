@@ -1,0 +1,73 @@
+<div class="col col-lg-12">
+  <div class="panel panel-default mt-4">
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+      <table *ngIf="inventories" datatable="ng" class="table table-bordered table-hover" id="myTable21" [dtOptions]="dtOptions">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Location</th>
+            <th>Area</th>
+            <th>Type</th>
+            <th>Demand (Rs)</th>
+            <th>Purpose</th>
+            <th>Beds</th>
+            <th>Operations</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="odd gradeX" *ngFor="let inv of inventories">
+            <td>{{ inv._id }}</td>
+            <td>{{ inv.location }}</td>
+            <td>{{ inv.newarea }}</td>
+            <td>{{ inv.type }}</td>
+            <td>{{ inv.demand }}</td>
+            <td *ngIf="inv.purpose == 1">Sell</td>
+            <td *ngIf="inv.purpose == 2">Buy</td>
+            <td *ngIf="inv.purpose == 3">Rent</td>
+            <td>{{ inv.beds }}</td>
+            <td>
+              <a (click)="editLead(inv.leadId)" class="btn btn-sm btn-default">
+                <i class="fas fa-edit" style="font-size:1.2rem"></i> Edit
+              </a>
+            </td>
+          </tr>
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <th>
+              <input id="invInput21" type="text" placeholder="Search ID" />
+            </th>
+            <th>
+              <input id="invInput21" type="text" placeholder="Search Location" />
+            </th>
+            <th>
+              <input id="invInput21" type="text" placeholder="Search Area" />
+            </th>
+            <th>
+              <input id="invInput21" type="text" placeholder="Search Type" />
+            </th>
+            <th>
+              <input id="invInput21" type="text" placeholder="Search Demand" />
+            </th>
+            <th>
+              <input id="invInput21" type="text" placeholder="Search Purpose" />
+            </th>
+            <th>
+              <input id="invInput21" type="text" placeholder="Search Beds" />
+            </th>
+            <th>
+              <i class="fab fa-searchengin" style="font-size:1.8rem;"></i>
+            </th>
+          </tr>
+        </tfoot>
+
+      </table>
+
+    </div>
+    <!-- /.panel-body -->
+  </div>
+  <!-- /.panel -->
+</div>
+<!-- /.col-lg-12 -->

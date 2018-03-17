@@ -1,0 +1,7 @@
+tfoot {
+    display: table-caption;
+}
+
+tfoot tr th {
+    border: none;
+}

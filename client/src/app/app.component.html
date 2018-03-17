@@ -1,0 +1,44 @@
+<nav *ngIf="auth.isLoggedIn()" class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" routerLink="/profile">Asasa</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li *ngIf="auth.isLoggedIn()" class="nav-item">
+        <a class="nav-link" routerLink="/leads" routerLinkActive="active">Leads</a>
+      </li>
+      <li *ngIf="auth.isLoggedIn() && !auth.isAgent()" class="nav-item">
+        <a class="nav-link" routerLink="/inventory" routerLinkActive="active">Inventory</a>
+      </li>
+      <li *ngIf="auth.isLoggedIn() && !auth.isAgent()" class="nav-item">
+        <a class="nav-link" routerLink="/add" routerLinkActive="active">Add Lead/Inventory</a>
+      </li>
+      <li *ngIf="auth.isLoggedIn() && auth.isAgent()" class="nav-item">
+        <a class="nav-link" routerLink="/add" routerLinkActive="active">Add Lead</a>
+      </li>
+      <li *ngIf="auth.isLoggedIn() && auth.isAdmin()" class="nav-item">
+          <a class="nav-link" routerLink="/users" routerLinkActive="active">Users</a>
+        </li>
+      <li *ngIf="auth.isLoggedIn() && !auth.isAgent()" class="nav-item">
+        <a class="nav-link" routerLink="/options" routerLinkActive="active">Options</a>
+      </li>
+    </ul>
+
+
+    <ul class="navbar-nav ml-auto">
+      <li *ngIf="auth.isLoggedIn()" class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ auth.getUserDetails()?.name }}</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/profile">Profile</a>
+          <a class="dropdown-item" (click)="auth.logout()">
+            <i class="fa fa-sign-out-alt"></i> Logout</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>

@@ -7,7 +7,7 @@ import { LeadService } from '../../lead.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
-  details: UserDetails;
+  details;
 
   constructor(private auth: AuthenticationService,
     private leadService: LeadService) { }

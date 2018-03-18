@@ -41,6 +41,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
                 .draw();
             }
           });
+          $('#datatableId tfoot tr').appendTo('#datatableId thead');
         });
       });
 

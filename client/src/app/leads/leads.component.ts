@@ -47,6 +47,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
             }
           });
         });
+        $('#datatableId tfoot tr').appendTo('#datatableId thead');
       });
 
     }, 3000);

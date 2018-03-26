@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
 import { LeadService } from '../lead.service';
 import { Router } from '@angular/router';
@@ -9,10 +9,7 @@ import { DataTableDirective } from 'angular-datatables';
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.css']
 })
-export class InventoryComponent implements OnInit, AfterViewInit {
-
-  @ViewChild(DataTableDirective)
-  datatableElement: DataTableDirective;
+export class InventoryComponent implements OnInit {
 
   dtOptions: any = {};
 
@@ -29,29 +26,6 @@ export class InventoryComponent implements OnInit, AfterViewInit {
     this.dtOptions = {
       responsive: true
     };
-  }
-
-  ngAfterViewInit(): void {
-
-    setTimeout(() => {
-
-      this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.columns().every(function () {
-          const that = this;
-          $('#invInput21', this.footer()).on('keyup change', function () {
-            if (that.search() !== this['value']) {
-              that
-                .search(this['value'])
-                .draw();
-            }
-          });
-        });
-        $('#datatableId tfoot tr').appendTo('#datatableId thead');
-      });
-
-    }, 3000);
-
-
   }
 
   leads;
@@ -123,7 +97,17 @@ export class InventoryComponent implements OnInit, AfterViewInit {
   setInv() {
 
     for (var i = 0; i < this.inventories.length; i++) {
-      this.inventories[i].location = "No. " + this.inventories[i].propNumber + "/St # " + this.inventories[i].street + ", ";
+      var type;
+
+      for (var j = 0; j < this.propertytypes.length; j++) {
+        if (this.propertytypes[j]._id == this.inventories[i].propTypeId) {
+          this.inventories[i].type = this.propertytypes[j].type;
+          type = this.inventories[i].type;
+          break;
+        }
+      }
+
+      this.inventories[i].location = type + " # " + this.inventories[i].propNumber + " ,St # " + this.inventories[i].street + ", ";
 
       for (var j = 0; j < this.locations.length; j++) {
         if (this.locations[j]._id == this.inventories[i].locationId) {
@@ -135,13 +119,6 @@ export class InventoryComponent implements OnInit, AfterViewInit {
       for (var j = 0; j < this.cities.length; j++) {
         if (this.cities[j]._id == this.inventories[i].cityId) {
           this.inventories[i].location += this.cities[j].name;
-          break;
-        }
-      }
-
-      for (var j = 0; j < this.propertytypes.length; j++) {
-        if (this.propertytypes[j]._id == this.inventories[i].propTypeId) {
-          this.inventories[i].type = this.propertytypes[j].type;
           break;
         }
       }
@@ -234,9 +211,15 @@ export class InventoryComponent implements OnInit, AfterViewInit {
     }
 
     if (this.leadService.getLead && this.leadService.getInventory) {
+      this.leadService.setIsLead(false);
       this.router.navigateByUrl('/editlead');
     }
 
+  }
+
+  addInventory() {
+    this.leadService.setIsLead(false);
+    this.router.navigateByUrl('/add');
   }
 
 }

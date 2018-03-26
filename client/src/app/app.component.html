@@ -13,9 +13,6 @@
       <li *ngIf="auth.isLoggedIn() && !auth.isAgent()" class="nav-item">
         <a class="nav-link" routerLink="/inventory" routerLinkActive="active">Inventory</a>
       </li>
-      <li *ngIf="auth.isLoggedIn() && !auth.isAgent()" class="nav-item">
-        <a class="nav-link" routerLink="/add" routerLinkActive="active">Add Lead/Inventory</a>
-      </li>
       <li *ngIf="auth.isLoggedIn() && auth.isAgent()" class="nav-item">
         <a class="nav-link" routerLink="/add" routerLinkActive="active">Add Lead</a>
       </li>

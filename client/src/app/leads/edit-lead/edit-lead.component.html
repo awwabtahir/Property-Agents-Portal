@@ -1,9 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col align-self-center box-head">
-      <form
-      *ngIf="users && cities && propTypes && locations"
-      (submit)="updateLead()">
+      <form *ngIf="users && cities && propTypes && locations" (submit)="updateLead()">
         <div class="form-row">
           <div class="form-group col-md-3">
             <label for="inputPurpose">Purpose</label>
@@ -93,10 +91,12 @@
         <div class="form-row">
 
           <div class="form-group col-md-6">
+            <label for="selectClientName">Client Name</label>
             <input type="text" class="form-control" name="clientName" [(ngModel)]="lead.clientName" id="inputName" placeholder="Client Name">
           </div>
 
           <div class="form-group col-md-6">
+            <label for="selectClientType">Client Type</label>
             <select id="inputClientType" name="clientType" [(ngModel)]="lead.clientType" class="form-control">
               <option value="1" selected>Owner</option>
               <option value="2">Dealer</option>
@@ -108,11 +108,13 @@
         <div class="form-row">
 
           <div class="form-group col-md-6">
+            <label for="selectPhoneNumber">Phone #</label>
             <input type="text" class="form-control" name="phoneNumber" [(ngModel)]="lead.phoneNumber" id="inputPhone" placeholder="Phone #">
           </div>
 
           <div *ngIf="auth.isAdmin() || auth.isEditor()" class="form-group col-md-6">
-            <select id="selectAgent" name="assignedTo" [(ngModel)]="lead.assignedTo" class="form-control">
+            <label *ngIf="isLead" for="selectAssignedTo">Assigned To</label>
+            <select *ngIf="isLead" id="selectAgent" name="assignedTo" [(ngModel)]="lead.assignedTo" class="form-control">
               <option value="0" selected>Not assigned to any agent</option>
               <option *ngFor="let user of users" value="{{ user?._id }}">{{ user?.name }}</option>
             </select>

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthenticationService, Leads, Inventories } from '../authentication.service';
 import { LeadService } from '../lead.service';
 import { Router } from '@angular/router';
@@ -9,10 +9,7 @@ import { DataTableDirective } from 'angular-datatables';
   templateUrl: './leads.component.html',
   styleUrls: ['./leads.component.css']
 })
-export class LeadsComponent implements OnInit, AfterViewInit {
-
-  @ViewChild(DataTableDirective)
-  datatableElement: DataTableDirective;
+export class LeadsComponent implements OnInit {
 
   dtOptions: any = {};
 
@@ -32,29 +29,6 @@ export class LeadsComponent implements OnInit, AfterViewInit {
     };
   }
 
-  ngAfterViewInit(): void {
-
-    setTimeout(() => {
-
-      this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.columns().every(function () {
-          const that = this;
-          $('#leadInput21', this.footer()).on('keyup change', function () {
-            if (that.search() !== this['value']) {
-              that
-                .search(this['value'])
-                .draw();
-            }
-          });
-        });
-        $('#datatableId tfoot tr').appendTo('#datatableId thead');
-      });
-
-    }, 3000);
-
-
-  }
-
 
   // For getting leads
 
@@ -62,8 +36,13 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   getLeads() {
     this.auth.getLeads().subscribe(leads => {
-      this.leads = leads;
+
+      this.leads = leads.filter(function (leads) {
+        return leads.assignedTo !== "0";
+      });
+
       this.leadService.setLeads(this.leads);
+
     }, (err) => {
       console.error(err);
     });
@@ -191,9 +170,15 @@ export class LeadsComponent implements OnInit, AfterViewInit {
     }
 
     if (this.leadService.getLead && this.leadService.getInventory) {
+      this.leadService.setIsLead(true);
       this.router.navigateByUrl('/editlead');
     }
 
+  }
+
+  addLead() {
+    this.leadService.setIsLead(true);
+    this.router.navigateByUrl('/add');
   }
 
 }

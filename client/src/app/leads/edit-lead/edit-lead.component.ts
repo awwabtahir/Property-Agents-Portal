@@ -11,6 +11,12 @@ import { Router } from '@angular/router';
 })
 export class EditLeadComponent implements OnInit {
 
+  isLead;
+
+  getIsLead() {
+    this.isLead = this.leadService.getIsLead();
+  }
+
     // For city
 
   // Get cities
@@ -108,6 +114,7 @@ export class EditLeadComponent implements OnInit {
     this.getPropTypes();
     this.getLead();
     this.getUsers();
+    this.getIsLead();
   }
 
 }

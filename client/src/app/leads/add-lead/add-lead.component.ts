@@ -1,3 +1,4 @@
+import { LeadService } from './../../lead.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService, Cities, Locations, PropertyTypes, Lead } from '../../authentication.service';
 import { Router } from '@angular/router';
@@ -8,6 +9,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-lead.component.css']
 })
 export class AddLeadComponent implements OnInit {
+
+  isLead;
+
+  getIsLead() {
+    this.isLead = this.LeadService.getIsLead();
+  }
 
   // For city
 
@@ -109,19 +116,24 @@ export class AddLeadComponent implements OnInit {
 
   addLead() {
     this.auth.addLead(this.lead).subscribe(() => {
-      this.router.navigateByUrl('/leads');
+      if(this.isLead)
+        this.router.navigateByUrl('/leads');
+      else
+      this.router.navigateByUrl('/inventory');
     }, (err) => {
       console.error(err);
     });
   }
 
-  constructor(private auth: AuthenticationService, private router: Router) { }
+  constructor(private auth: AuthenticationService, private router: Router, 
+  private LeadService: LeadService) { }
 
   ngOnInit() {
     this.getCities();
     this.getLocations();
     this.getPropTypes();
     this.getUsers();
+    this.getIsLead();
   }
 
 }

@@ -125,8 +125,18 @@ export class LeadService {
     this.user = user;
   }
 
-  getUser() {
+  getUser(): Observable<any>  {
     return this.user;
+  }
+
+  private isLead;
+
+  setIsLead(isLead) {
+    this.isLead = isLead;
+  }
+
+  getIsLead(): Observable<any>  {
+    return this.isLead;
   }
 
   constructor() { }

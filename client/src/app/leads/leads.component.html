@@ -2,22 +2,21 @@
   <div class="panel panel-default mt-4">
     <!-- /.panel-heading -->
     <div class="panel-body">
-      <table 
-      *ngIf="leads && inventories && cities && propertytypes && locations && users" 
-      datatable="ng" 
-      class="table table-bordered table-hover" 
-      style="table-layout:auto;" 
-      [dtOptions]="dtOptions"
-      id="datatableId">
+      <div class="button-group mb-3">
+        <button (click)="addLead()" class="btn btn-primary">Add New Lead</button>
+        <button class="btn btn-primary">Search Lead</button>
+      </div>
+      <table *ngIf="leads && inventories && cities && propertytypes && locations && users" datatable="ng" class="table table-bordered table-hover"
+        style="table-layout:auto;" [dtOptions]="dtOptions" id="datatableId">
         <thead>
           <tr>
             <th>ID</th>
-            <th>Lead Information</th>
+            <th data-priority="1">Lead Information</th>
             <th>Contact #</th>
             <th>Type</th>
             <th *ngIf="!auth.isAgent()">Assigned To</th>
             <th>Status</th>
-            <th>Operations</th>
+            <th data-priority="2">Operations</th>
           </tr>
         </thead>
         <tbody>
@@ -50,39 +49,13 @@
 
             <td>{{ l.leadStatus }}</td>
             <td>
-              <a (click)="editLead(l._id)" class="btn btn-sm btn-default">
+              <button (click)="editLead(l._id)" class="btn btn-sm btn-default">
                 <i class="fas fa-edit" style="font-size:1.2rem"></i> Edit
-              </a>
+              </button>
             </td>
           </tr>
 
         </tbody>
-
-        <tfoot>
-          <tr>
-            <th>
-              <input id="leadInput21" type="text" placeholder="Search ID" />
-            </th>
-            <th>
-              <input id="leadInput21" type="text" placeholder="Search Lead Info" />
-            </th>
-            <th>
-              <input id="leadInput21" type="text" placeholder="Search Contact" />
-            </th>
-            <th>
-              <input id="leadInput21" type="text" placeholder="Search Type" />
-            </th>
-            <th *ngIf="!auth.isAgent()">
-              <input id="leadInput21" type="text" placeholder="Search Assigned To" />
-            </th>
-            <th>
-              <input id="leadInput21" type="text" placeholder="Search Status" />
-            </th>
-            <th>
-              <i class="fab fa-searchengin" style="font-size:1.8rem;"></i>
-            </th>
-          </tr>
-        </tfoot>
 
       </table>
 

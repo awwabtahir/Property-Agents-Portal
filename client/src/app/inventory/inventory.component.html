@@ -2,6 +2,10 @@
   <div class="panel panel-default mt-4">
     <!-- /.panel-heading -->
     <div class="panel-body">
+      <div class="button-group mb-3">
+        <button (click)="addInventory()" class="btn btn-primary">Add New Inventory</button>
+        <button class="btn btn-primary">Search Inventory</button>
+      </div>
       <table *ngIf="inventories" datatable="ng" class="table table-bordered table-hover" id="datatableId" [dtOptions]="dtOptions">
         <thead>
           <tr>
@@ -12,7 +16,7 @@
             <th>Demand (Rs)</th>
             <th>Purpose</th>
             <th>Beds</th>
-            <th>Operations</th>
+            <th data-priority="1">Operations</th>
           </tr>
         </thead>
         <tbody>
@@ -33,35 +37,6 @@
             </td>
           </tr>
         </tbody>
-
-        <tfoot>
-          <tr>
-            <th>
-              <input id="invInput21" type="text" placeholder="Search ID" />
-            </th>
-            <th>
-              <input id="invInput21" type="text" placeholder="Search Location" />
-            </th>
-            <th>
-              <input id="invInput21" type="text" placeholder="Search Area" />
-            </th>
-            <th>
-              <input id="invInput21" type="text" placeholder="Search Type" />
-            </th>
-            <th>
-              <input id="invInput21" type="text" placeholder="Search Demand" />
-            </th>
-            <th>
-              <input id="invInput21" type="text" placeholder="Search Purpose" />
-            </th>
-            <th>
-              <input id="invInput21" type="text" placeholder="Search Beds" />
-            </th>
-            <th>
-              <i class="fab fa-searchengin" style="font-size:1.8rem;"></i>
-            </th>
-          </tr>
-        </tfoot>
 
       </table>
 

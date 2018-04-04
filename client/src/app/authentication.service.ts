@@ -66,6 +66,17 @@ export interface PropertyTypes {
   type: string
 }
 
+// For StatusType
+
+export interface StatusType {
+  type: string
+}
+
+export interface StatusTypes {
+  _id: string,
+  type: string
+}
+
 // For Lead
 
 export interface Lead {
@@ -82,8 +93,9 @@ export interface Lead {
   clientName: String,
   clientType: Number,
   phoneNumber: String,
-  assignedTo: Number,
-  leadStatus: String
+  assignedTo: Number,  
+  leadAdminStatus: Number,
+  leadAgentStatus: Number
 }
 
 export interface Leads {
@@ -91,8 +103,9 @@ export interface Leads {
   inventoryId: Number,
   clientName: String,
   clientType: Number,
-  phoneNumber: String,
-  leadStatus: Number,
+  phoneNumber: String,  
+  leadAdminStatus: Number,
+  leadAgentStatus: Number,
   assignedTo: String
 }
 
@@ -114,6 +127,12 @@ export interface Inventories {
   areaUnit: Number,
   beds: Number,
   propertyStatus: Number
+}
+
+export interface Status {
+  sid: Number,
+  lid: Number,
+  isAdmin: boolean
 }
 
 @Injectable()
@@ -192,15 +211,6 @@ export class AuthenticationService {
     }
   }
 
-  public isEditor(): boolean {
-    const privelege = this.getPrivelege();
-    if (privelege == 'EDITOR') {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   public isAgent(): boolean {
     const privelege = this.getPrivelege();
     if (privelege == 'AGENT') {
@@ -214,8 +224,9 @@ export class AuthenticationService {
     method: 'post' | 'get',
     type?: 'login' | 'register' | 'profile' | 'getUsers' | 'addCity' | 'getCities' |
       'addLoc' | 'getLocations' | 'addPropType' | 'getPropTypes' | 'addLead' | 'getLeads' |
-      'getInventories' | 'updateLead' | 'updateUser',
-    template?: TokenPayload | City | Location | PropertyType | Lead):
+      'getInventories' | 'updateLead' | 'updateUser' | 'addStatusType' | 'getStatusTypes' | 
+      'updateStatus',
+    template?: TokenPayload | City | Location | PropertyType | Lead | Status):
     Observable<any> {
 
     let base;
@@ -231,7 +242,6 @@ export class AuthenticationService {
         if (data.token) {
           if(data.access == 1) data.privelege = 'ADMIN';
           if(data.access == 2) data.privelege = 'AGENT';
-          if(data.access == 3) data.privelege = 'EDITOR';
           this.saveToken(data.token, data.privelege);
           this.saveId(data.id);
         }
@@ -292,6 +302,20 @@ export class AuthenticationService {
 
   public getPropTypes(): Observable<any> {
     return this.request('get', 'getPropTypes');
+  }
+
+  // For status type
+
+  public addStatusType(statusType: StatusType): Observable<any> {
+    return this.request('post', 'addStatusType', statusType);
+  }
+
+  public updateStatus(status: Status): Observable<any> {
+    return this.request('post', 'updateStatus', status);
+  }
+
+  public getStatusTypes(): Observable<any> {
+    return this.request('get', 'getStatusTypes');
   }
 
   // For lead

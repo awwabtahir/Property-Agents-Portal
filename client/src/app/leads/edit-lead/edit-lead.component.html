@@ -1,6 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col align-self-center box-head">
+      <p *ngIf="!(users && cities && propTypes && locations)">Please wait...</p>
       <form *ngIf="users && cities && propTypes && locations" (submit)="updateLead()">
         <div class="form-row">
           <div class="form-group col-md-3">
@@ -17,7 +18,7 @@
           <!-- Get city names here -->
           <div class="form-group col-md-6">
             <label for="inputCity">City</label>
-            <select class="form-control" id="selectCity" name="cityId" [(ngModel)]="lead.cityId">
+            <select class="form-control" id="selectCity" name="cityId" [(ngModel)]="lead.cityId" (change)="onChange($event.target.value)">
               <option *ngFor="let city of cities" value="{{ city?._id }}">{{ city?.name }}</option>
             </select>
           </div>
@@ -37,7 +38,7 @@
           <div class="form-group col-md-6">
             <label for="locId">Location</label>
             <select class="form-control" id="selectLocation" name="locId" [(ngModel)]="lead.locationId">
-              <option *ngFor="let loc of locations" value="{{ loc?._id }}">{{ loc?.location }}</option>
+              <option *ngFor="let loc of newLocations" value="{{ loc?._id }}">{{ loc?.location }}</option>
             </select>
           </div>
 
@@ -80,11 +81,6 @@
             <input type="text" class="form-control" name="beds" [(ngModel)]="lead.beds" id="inputBeds">
           </div>
 
-          <div class="form-group col-md-6">
-            <label for="selectLeadStatus">Status</label>
-            <input type="text" class="form-control" name="leadStatus" [(ngModel)]="lead.leadStatus" id="selectLeadStatus">
-          </div>
-
         </div>
         <hr>
         <h6>Client Details</h6>
@@ -112,7 +108,7 @@
             <input type="text" class="form-control" name="phoneNumber" [(ngModel)]="lead.phoneNumber" id="inputPhone" placeholder="Phone #">
           </div>
 
-          <div *ngIf="auth.isAdmin() || auth.isEditor()" class="form-group col-md-6">
+          <div class="form-group col-md-6">
             <label *ngIf="isLead" for="selectAssignedTo">Assigned To</label>
             <select *ngIf="isLead" id="selectAgent" name="assignedTo" [(ngModel)]="lead.assignedTo" class="form-control">
               <option value="0" selected>Not assigned to any agent</option>

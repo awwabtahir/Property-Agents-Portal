@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, City, Cities, Location, PropertyType, Locations, PropertyTypes } from '../authentication.service';
+import { AuthenticationService, City, Cities, Location, PropertyType, Locations, PropertyTypes, StatusType, StatusTypes } from '../authentication.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -39,6 +39,14 @@ export class OptionsComponent implements OnInit {
     });
   }
 
+  // City onChange()
+  newLocations;
+  onChange(id) {
+    this.newLocations = this.locations.filter(function (locations) {
+      return locations.cityId == id;
+    });
+  }
+
 
   ///////////////////////////////////////////////
 
@@ -55,6 +63,7 @@ export class OptionsComponent implements OnInit {
 
   addLoc() {
     this.auth.addLoc(this.location).subscribe(() => {
+      this.getLocations();
       this.router.navigateByUrl('/options');
     }, (err) => {
       console.error(err);
@@ -63,7 +72,7 @@ export class OptionsComponent implements OnInit {
 
   // For getting locations
 
-  locations : Locations;
+  locations;
 
   getLocations() {
     this.auth.getLocations().subscribe(locations => {
@@ -87,6 +96,7 @@ export class OptionsComponent implements OnInit {
 
   addPropType() {
     this.auth.addPropType(this.propType).subscribe(() => {
+      this.getPropTypes();
       this.router.navigateByUrl('/options');
     }, (err) => {
       console.error(err);
@@ -106,6 +116,41 @@ export class OptionsComponent implements OnInit {
   }
 
   /////////////////////////////////////////////////////////
+
+  ///////////////////////////////////////////////
+
+  /***************
+   For status type operations
+  *****************/
+
+  // Adding status type
+
+  statusType: StatusType = {
+    type: ""
+  };
+
+  addStatusType() {
+    this.auth.addStatusType(this.statusType).subscribe(() => {
+      this.getStatusTypes();
+      this.router.navigateByUrl('/options');
+    }, (err) => {
+      console.error(err);
+    });
+  }
+
+  // Getting status types
+
+  statusTypes: StatusTypes;
+  
+  getStatusTypes() {
+    this.auth.getStatusTypes().subscribe(statusTypes => {
+      this.statusTypes = statusTypes;
+    }, (err) => {
+      console.error(err);
+    });
+  }
+
+  /////////////////////////////////////////////////////////
   
   constructor(private auth: AuthenticationService, private router: Router) {}
 
@@ -113,6 +158,7 @@ export class OptionsComponent implements OnInit {
     this.getCities();
     this.getLocations();
     this.getPropTypes();
+    this.getStatusTypes();
   } 
 
 }

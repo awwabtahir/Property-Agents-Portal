@@ -17,8 +17,11 @@ var leadSchema = new mongoose.Schema({
         type: String,
         default: 0
     },
-    leadStatus : {
-        type: String
+    leadAdminStatus : {
+        type: Number
+    },
+    leadAgentStatus: {
+        type: Number
     },
     inventoryId : {
         type: Number
@@ -57,9 +60,6 @@ var inventorySchema = new mongoose.Schema({
     },
     beds : {
         type: Number
-    },
-    inventoryStatus : {
-        type: String
     },
     dateAdded : {
         type: Date, 

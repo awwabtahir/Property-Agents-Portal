@@ -50,4 +50,5 @@ require('./users');
 require("./city");
 require("./location");
 require("./PropertyType");
+require("./StatusType");
 require("./lead");

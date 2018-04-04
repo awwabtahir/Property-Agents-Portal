@@ -2,11 +2,15 @@
   <div class="panel panel-default mt-4">
     <!-- /.panel-heading -->
     <div class="panel-body">
+      <p>
+        <b>Leads Management</b>
+      </p>
       <div class="button-group mb-3">
-        <button (click)="addLead()" class="btn btn-primary">Add New Lead</button>
-        <button class="btn btn-primary">Search Lead</button>
+        <button (click)="addLead()" class="btn btn-primary">Add New</button>
+        <button class="btn btn-primary">Search</button>
       </div>
-      <table *ngIf="leads && inventories && cities && propertytypes && locations && users" datatable="ng" class="table table-bordered table-hover"
+      <p *ngIf="!(resultLeads && inventories && cities && propertytypes && locations && users && statusTypes)">Please wait...</p>
+      <table *ngIf="resultLeads && inventories && cities && propertytypes && locations && users && statusTypes" datatable class="table table-bordered table-hover"
         style="table-layout:auto;" [dtOptions]="dtOptions" id="datatableId">
         <thead>
           <tr>
@@ -14,13 +18,14 @@
             <th data-priority="1">Lead Information</th>
             <th>Contact #</th>
             <th>Type</th>
-            <th *ngIf="!auth.isAgent()">Assigned To</th>
-            <th>Status</th>
+            <th>Assigned To</th>
+            <th *ngIf="auth.isAdmin()">Admin Status</th>
+            <th>Agent Status</th>
             <th data-priority="2">Operations</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="odd gradeX" *ngFor="let l of leads">
+          <tr class="odd gradeX" *ngFor="let l of resultLeads">
             <td>{{ l._id }}</td>
             <td>
               <u style="text-transform:capitalize;">{{ l.clientName.toLowerCase() }}</u> want to
@@ -45,17 +50,56 @@
             <td *ngIf="l.clientType == 1">Owner</td>
             <td *ngIf="l.clientType == 2">Dealer</td>
 
-            <td *ngIf="!auth.isAgent()">{{ getUser(l.assignedTo).name }}</td>
+            <td>{{ getUser(l.assignedTo).name }}</td>
 
-            <td>{{ l.leadStatus }}</td>
+            <td *ngIf="auth.isAdmin()">{{ getStatusType(l.leadAdminStatus) }}</td>
+            <td>{{ getStatusType(l.leadAgentStatus) }}</td>
             <td>
-              <button (click)="editLead(l._id)" class="btn btn-sm btn-default">
-                <i class="fas fa-edit" style="font-size:1.2rem"></i> Edit
-              </button>
+              <a *ngIf="auth.isAdmin()" (click)="changeStatus(l.leadAdminStatus, l._id)" class="btn btn-sm btn-default">
+                <i class="fas fa-exchange-alt" style="font-size:1.2rem"></i>
+              </a>
+              <a *ngIf="auth.isAgent()" (click)="changeStatus(l.leadAgentStatus, l._id)" class="btn btn-sm btn-default">
+                <i class="fas fa-exchange-alt" style="font-size:1.2rem"></i>
+              </a>
+              <a (click)="editLead(l._id)" class="btn btn-sm btn-default">
+                <i class="fas fa-edit" style="font-size:1.2rem"></i>
+              </a>
+              <a (click)="deleteLead(l._id)" class="btn btn-sm btn-default">
+                <i class="fas fa-trash" style="font-size:1.2rem"></i>
+              </a>
             </td>
           </tr>
 
         </tbody>
+
+        <tfoot>
+          <tr>
+            <th>
+              <input id="leadInput21" type="text" placeholder="Search ID" />
+            </th>
+            <th>
+              <input id="leadInput21" type="text" placeholder="Search Lead Info" />
+            </th>
+            <th>
+              <input id="leadInput21" type="text" placeholder="Search Contact" />
+            </th>
+            <th>
+              <input id="leadInput21" type="text" placeholder="Search Type" />
+            </th>
+            <th>
+              <input id="leadInput21" type="text" placeholder="Search Assigned To" />
+            </th>
+            <th *ngIf="auth.isAdmin()">
+              <input id="leadInput21" type="text" placeholder="Search Admin Status" />
+            </th>
+            <th>
+              <input id="leadInput21" type="text" placeholder="Search Agent Status" />
+            </th>
+            <th>
+              <i class="fab fa-searchengin" style="font-size:1.8rem;"></i>
+            </th>
+          </tr>
+        </tfoot>
 
       </table>
 

@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row">
+    <div class="col align-self-center box-head">
+      <form (submit)="updateStatus()">
+        <div class="form-group col-md-3 mt-3">
+          <label for="status">Change Status</label>
+          <select class="form-control" id="selectStatus" name="statusId" [(ngModel)]="statusID">
+              <option *ngFor="let type of statusTypes" value="{{ type?._id }}">{{ type?.type }}</option>
+          </select>
+        </div>
+
+        <div class="text-left ml-3">
+            <button type="submit" class="btn btn-success">Update & Go Back</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -2,11 +2,63 @@
   <div class="panel panel-default mt-4">
     <!-- /.panel-heading -->
     <div class="panel-body">
+      <p>
+        <b>Inventory Management</b>
+      </p>
       <div class="button-group mb-3">
-        <button (click)="addInventory()" class="btn btn-primary">Add New Inventory</button>
-        <button class="btn btn-primary">Search Inventory</button>
+        <button (click)="addInventory()" class="btn btn-primary">Add New</button>
+        <button class="btn btn-primary" (click)="toggleSearch()">More Filters</button>
       </div>
-      <table *ngIf="inventories" datatable="ng" class="table table-bordered table-hover" id="datatableId" [dtOptions]="dtOptions">
+      <div id="search" class="box-head mb-3" style="display:none;">
+        <div class="container mt-4">
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" (click)=areaChange($event) type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
+            <label class="form-check-label" for="inlineRadio1">Sq. Feet</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" (click)=areaChange($event) type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2">
+            <label class="form-check-label" for="inlineRadio2">Marla</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" (click)=areaChange($event) type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3">
+            <label class="form-check-label" for="inlineRadio3">Kanal</label>
+          </div>
+
+          <!-- <br><br>
+          <form (submit)="filterByArea()">
+            <label>
+              Min
+              <input type="number" name="min" id="min" [(ngModel)]="minA" />
+            </label>
+            <label>
+              Max
+              <input type="number" name="max" id="max" [(ngModel)]="maxA" />
+            </label>
+            <button class="btn btn-primary" type="submit">Filter by Area</button>
+          </form> -->
+
+          <br><br>
+          <form (submit)="filterByDemand()">
+            <label>
+              Min
+              <input type="number" name="min" id="min" [(ngModel)]="minD" />
+            </label>
+            <label>
+              Max
+              <input type="number" name="max" id="max" [(ngModel)]="maxD" />
+            </label>
+            <button class="btn btn-primary" type="submit">Filter by Demand</button>
+          </form>
+
+        </div>
+      </div>
+
+
+
+
+      <p *ngIf="!resultInventories">Please wait...</p>
+      <table *ngIf="resultInventories" datatable class="table table-bordered table-hover" id="datatableId" [dtOptions]="dtOptions">
         <thead>
           <tr>
             <th>ID</th>
@@ -20,7 +72,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="odd gradeX" *ngFor="let inv of inventories">
+          <tr class="odd gradeX" *ngFor="let inv of resultInventories">
             <td>{{ inv._id }}</td>
             <td>{{ inv.location }}</td>
             <td>{{ inv.newarea }}</td>
@@ -37,6 +89,35 @@
             </td>
           </tr>
         </tbody>
+
+        <tfoot>
+          <tr>
+            <th>
+              <input id="invInput21" type="text" placeholder="Search ID" />
+            </th>
+            <th>
+              <input id="invInput21" type="text" placeholder="Search Location" />
+            </th>
+            <th>
+              <input id="invInput21" type="text" placeholder="Search Area" />
+            </th>
+            <th>
+              <input id="invInput21" type="text" placeholder="Search Type" />
+            </th>
+            <th>
+              <input id="invInput21" type="text" placeholder="Search Demand" />
+            </th>
+            <th>
+              <input id="invInput21" type="text" placeholder="Search Purpose" />
+            </th>
+            <th>
+              <input id="invInput21" type="text" placeholder="Search Beds" />
+            </th>
+            <th>
+              <i class="fab fa-searchengin" style="font-size:1.8rem;"></i>
+            </th>
+          </tr>
+        </tfoot>
 
       </table>
 

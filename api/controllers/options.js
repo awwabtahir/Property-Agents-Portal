@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var Lead = mongoose.model('Lead');
 
 // For city operations
 var City = mongoose.model('City');
@@ -113,4 +114,75 @@ module.exports.getPropTypes = function (req, res) {
                 res.status(200).json(propTypes);
             });
     }
+}
+
+// For status type operations
+var StatusType = mongoose.model('StatusType');
+
+module.exports.addStatusType = function (req, res) {
+
+    if (!req.body.type) {
+        console.log(req.body);
+        console.log("error");
+        return;
+    }
+
+    var statusType = new StatusType();
+
+    statusType.type = req.body.type;
+
+    statusType.save(function (err) {
+        res.status(200);
+        res.json({
+            "message" : "success"
+          });
+    });    
+
+}
+
+module.exports.getStatusTypes = function (req, res) {
+    if (!req.payload._id) {
+        res.status(401).json({
+            "message": "UnauthorizedError: private profile"
+        });
+    } else {
+        StatusType
+            .find()
+            .exec(function (err, statusTypes) {
+                res.status(200).json(statusTypes);
+            });
+    }
+}
+
+module.exports.updateStatus = function (req, res) {
+
+    if (!req.body) {
+        console.log(req.body);
+        console.log("error");
+        return;
+    }
+
+    var status = {};
+    var lead = {};
+
+    status.isAdmin = req.body.isAdmin;
+
+    if(status.isAdmin === true) {
+        lead.leadAdminStatus = parseInt(req.body.sid);
+    } else {
+        lead.leadAgentStatus = parseInt(req.body.sid);
+    }
+
+    var conditions = { _id: req.body.lid }
+        , update = { $set: lead }
+        , options = { multi: true };
+
+    Lead.update(conditions, update, options, callback);
+
+    function callback(err, numAffected) {
+        if (err) console.log(err);
+        console.log("lead updated: " + numAffected.n);
+        res.status(200).json(numAffected);
+    };
+
 }

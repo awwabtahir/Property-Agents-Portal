@@ -1,6 +1,6 @@
 import { LeadService } from './../../lead.service';
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, Cities, Locations, PropertyTypes, Lead } from '../../authentication.service';
+import { AuthenticationService, Cities, Locations, PropertyTypes, Lead, StatusTypes } from '../../authentication.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -30,13 +30,21 @@ export class AddLeadComponent implements OnInit {
     });
   }
 
+  // City onChange()
+  newLocations: Locations;
+  onChange(id) {
+    this.newLocations = this.locations.filter(function (locations) {
+      return locations.cityId == id;
+    });
+  }
+
   //////////////////////////////////////////////////////////
 
   // For Location
 
   // Get Locations
 
-  locations: Locations;
+  locations;
 
   getLocations() {
     this.auth.getLocations().subscribe(locations => {
@@ -66,6 +74,36 @@ export class AddLeadComponent implements OnInit {
     for (var j = 0; j < this.propTypes.length; j++) {
       if (this.propTypes[j]._id == this.lead.propTypeId) {
         return this.propTypes[j].type;
+      }
+    }
+  }
+
+  //////////////////////////////////////////////////////////
+
+  // Status Type
+
+  // Get Status Types
+
+  statusTypes;
+  
+  getStatusTypes() {
+    this.auth.getStatusTypes().subscribe(statusTypes => {
+      this.statusTypes = statusTypes;
+      this.setStatusType();
+    }, (err) => {
+      console.error(err);
+    });
+  }
+
+  setStatusType() {
+    for (var j = 0; j < this.statusTypes.length; j++) {
+      if (this.statusTypes[j].type == "Added") {
+        this.lead.leadAdminStatus = this.statusTypes[j]._id;
+        console.log(this.lead.leadAdminStatus);
+      }
+      if (this.statusTypes[j].type == "Assigned") {
+        this.lead.leadAgentStatus = this.statusTypes[j]._id;
+        console.log(this.lead.leadAgentStatus);
       }
     }
   }
@@ -111,7 +149,8 @@ export class AddLeadComponent implements OnInit {
     clientType: 0,
     phoneNumber: "",
     assignedTo: 0,
-    leadStatus: "Active"
+    leadAdminStatus: 0,
+    leadAgentStatus: 0
   };
 
   addLead() {
@@ -134,6 +173,7 @@ export class AddLeadComponent implements OnInit {
     this.getPropTypes();
     this.getUsers();
     this.getIsLead();
+    this.getStatusTypes();
   }
 
 }

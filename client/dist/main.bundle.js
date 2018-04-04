@@ -20,7 +20,7 @@ webpackEmptyAsyncContext.id = "../../../../../src/$$_lazy_route_resource lazy re
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav *ngIf=\"auth.isLoggedIn()\" class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\n  <a class=\"navbar-brand\" routerLink=\"/profile\">Asasa</a>\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\"\n    aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n\n  <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n    <ul class=\"navbar-nav mr-auto\">\n      <li *ngIf=\"auth.isLoggedIn()\" class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/leads\" routerLinkActive=\"active\">Leads</a>\n      </li>\n      <li *ngIf=\"auth.isLoggedIn() && !auth.isAgent()\" class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/inventory\" routerLinkActive=\"active\">Inventory</a>\n      </li>\n      <li *ngIf=\"auth.isLoggedIn() && auth.isAgent()\" class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/add\" routerLinkActive=\"active\">Add Lead</a>\n      </li>\n      <li *ngIf=\"auth.isLoggedIn() && auth.isAdmin()\" class=\"nav-item\">\n          <a class=\"nav-link\" routerLink=\"/users\" routerLinkActive=\"active\">Users</a>\n        </li>\n      <li *ngIf=\"auth.isLoggedIn() && !auth.isAgent()\" class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/options\" routerLinkActive=\"active\">Options</a>\n      </li>\n    </ul>\n\n\n    <ul class=\"navbar-nav ml-auto\">\n      <li *ngIf=\"auth.isLoggedIn()\" class=\"nav-item dropdown\">\n        <a class=\"nav-link dropdown-toggle active\" data-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">{{ auth.getUserDetails()?.name }}</a>\n        <div class=\"dropdown-menu\">\n          <a class=\"dropdown-item\" routerLink=\"/profile\">Profile</a>\n          <a class=\"dropdown-item\" (click)=\"auth.logout()\">\n            <i class=\"fa fa-sign-out-alt\"></i> Logout</a>\n        </div>\n      </li>\n    </ul>\n  </div>\n</nav>\n\n<router-outlet></router-outlet>"
+module.exports = "<nav *ngIf=\"auth.isLoggedIn()\" class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\n  <a class=\"navbar-brand\" routerLink=\"/profile\">Asasa</a>\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\"\n    aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n\n  <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n    <ul class=\"navbar-nav mr-auto\">\n      <li *ngIf=\"auth.isLoggedIn()\" class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/leads\" routerLinkActive=\"active\">Leads</a>\n      </li>\n      <li *ngIf=\"auth.isLoggedIn()\" class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/inventory\" routerLinkActive=\"active\">Inventory</a>\n      </li>\n      <li *ngIf=\"auth.isLoggedIn() && auth.isAdmin()\" class=\"nav-item\">\n          <a class=\"nav-link\" routerLink=\"/users\" routerLinkActive=\"active\">Users</a>\n        </li>\n      <li *ngIf=\"auth.isLoggedIn() && !auth.isAgent()\" class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/options\" routerLinkActive=\"active\">Options</a>\n      </li>\n    </ul>\n\n\n    <ul class=\"navbar-nav ml-auto\">\n      <li *ngIf=\"auth.isLoggedIn()\" class=\"nav-item dropdown\">\n        <a class=\"nav-link dropdown-toggle active\" data-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">{{ auth.getUserDetails()?.name }}</a>\n        <div class=\"dropdown-menu\">\n          <a class=\"dropdown-item\" routerLink=\"/profile\">Profile</a>\n          <a class=\"dropdown-item\" (click)=\"auth.logout()\">\n            <i class=\"fa fa-sign-out-alt\"></i> Logout</a>\n        </div>\n      </li>\n    </ul>\n  </div>\n</nav>\n\n<router-outlet></router-outlet>"
 
 /***/ }),
 
@@ -85,6 +85,7 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__leads_edit_lead_edit_lead_component__ = __webpack_require__("../../../../../src/app/leads/edit-lead/edit-lead.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__users_users_component__ = __webpack_require__("../../../../../src/app/users/users.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__users_edit_user_edit_user_component__ = __webpack_require__("../../../../../src/app/users/edit-user/edit-user.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__options_status_status_component__ = __webpack_require__("../../../../../src/app/options/status/status.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -111,17 +112,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var routes = [
     { path: '', component: __WEBPACK_IMPORTED_MODULE_8__login_login_component__["a" /* LoginComponent */] },
     { path: 'register', component: __WEBPACK_IMPORTED_MODULE_9__users_register_register_component__["a" /* RegisterComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_11__auth_guard_service__["a" /* AuthGuardService */]] },
     { path: 'leads', component: __WEBPACK_IMPORTED_MODULE_12__leads_leads_component__["a" /* LeadsComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_11__auth_guard_service__["a" /* AuthGuardService */]] },
     { path: 'add', component: __WEBPACK_IMPORTED_MODULE_13__leads_add_lead_add_lead_component__["a" /* AddLeadComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_11__auth_guard_service__["a" /* AuthGuardService */]] },
     { path: 'editlead', component: __WEBPACK_IMPORTED_MODULE_17__leads_edit_lead_edit_lead_component__["a" /* EditLeadComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_11__auth_guard_service__["a" /* AuthGuardService */]] },
+    { path: 'editstatus', component: __WEBPACK_IMPORTED_MODULE_20__options_status_status_component__["a" /* StatusComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_11__auth_guard_service__["a" /* AuthGuardService */]] },
     { path: 'inventory', component: __WEBPACK_IMPORTED_MODULE_16__inventory_inventory_component__["a" /* InventoryComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_11__auth_guard_service__["a" /* AuthGuardService */]] },
     { path: 'users', component: __WEBPACK_IMPORTED_MODULE_18__users_users_component__["a" /* UsersComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_11__auth_guard_service__["a" /* AuthGuardService */]] },
     { path: 'profile', component: __WEBPACK_IMPORTED_MODULE_7__users_profile_profile_component__["a" /* ProfileComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_11__auth_guard_service__["a" /* AuthGuardService */]] },
     { path: 'edituser', component: __WEBPACK_IMPORTED_MODULE_19__users_edit_user_edit_user_component__["a" /* EditUserComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_11__auth_guard_service__["a" /* AuthGuardService */]] },
-    { path: 'options', component: __WEBPACK_IMPORTED_MODULE_14__options_options_component__["a" /* OptionsComponent */] }
+    { path: 'options', component: __WEBPACK_IMPORTED_MODULE_14__options_options_component__["a" /* OptionsComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_11__auth_guard_service__["a" /* AuthGuardService */]] }
 ];
 var AppModule = /** @class */ (function () {
     function AppModule() {
@@ -139,7 +142,8 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_16__inventory_inventory_component__["a" /* InventoryComponent */],
                 __WEBPACK_IMPORTED_MODULE_17__leads_edit_lead_edit_lead_component__["a" /* EditLeadComponent */],
                 __WEBPACK_IMPORTED_MODULE_18__users_users_component__["a" /* UsersComponent */],
-                __WEBPACK_IMPORTED_MODULE_19__users_edit_user_edit_user_component__["a" /* EditUserComponent */]
+                __WEBPACK_IMPORTED_MODULE_19__users_edit_user_edit_user_component__["a" /* EditUserComponent */],
+                __WEBPACK_IMPORTED_MODULE_20__options_status_status_component__["a" /* StatusComponent */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -292,15 +296,6 @@ var AuthenticationService = /** @class */ (function () {
             return false;
         }
     };
-    AuthenticationService.prototype.isEditor = function () {
-        var privelege = this.getPrivelege();
-        if (privelege == 'EDITOR') {
-            return true;
-        }
-        else {
-            return false;
-        }
-    };
     AuthenticationService.prototype.isAgent = function () {
         var privelege = this.getPrivelege();
         if (privelege == 'AGENT') {
@@ -325,8 +320,6 @@ var AuthenticationService = /** @class */ (function () {
                     data.privelege = 'ADMIN';
                 if (data.access == 2)
                     data.privelege = 'AGENT';
-                if (data.access == 3)
-                    data.privelege = 'EDITOR';
                 _this.saveToken(data.token, data.privelege);
                 _this.saveId(data.id);
             }
@@ -370,6 +363,16 @@ var AuthenticationService = /** @class */ (function () {
     };
     AuthenticationService.prototype.getPropTypes = function () {
         return this.request('get', 'getPropTypes');
+    };
+    // For status type
+    AuthenticationService.prototype.addStatusType = function (statusType) {
+        return this.request('post', 'addStatusType', statusType);
+    };
+    AuthenticationService.prototype.updateStatus = function (status) {
+        return this.request('post', 'updateStatus', status);
+    };
+    AuthenticationService.prototype.getStatusTypes = function () {
+        return this.request('get', 'getStatusTypes');
     };
     // For lead
     AuthenticationService.prototype.addLead = function (lead) {
@@ -415,7 +418,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".box-head {\r\n    margin: 5px;\r\n    padding: 10px;\r\n    border: 1px solid black;\r\n}", ""]);
 
 // exports
 
@@ -428,7 +431,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/inventory/inventory.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"col col-lg-12\">\n  <div class=\"panel panel-default mt-4\">\n    <!-- /.panel-heading -->\n    <div class=\"panel-body\">\n      <div class=\"button-group mb-3\">\n        <button (click)=\"addInventory()\" class=\"btn btn-primary\">Add New Inventory</button>\n        <button class=\"btn btn-primary\">Search Inventory</button>\n      </div>\n      <table *ngIf=\"inventories\" datatable=\"ng\" class=\"table table-bordered table-hover\" id=\"datatableId\" [dtOptions]=\"dtOptions\">\n        <thead>\n          <tr>\n            <th>ID</th>\n            <th>Location</th>\n            <th>Area</th>\n            <th>Type</th>\n            <th>Demand (Rs)</th>\n            <th>Purpose</th>\n            <th>Beds</th>\n            <th data-priority=\"1\">Operations</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr class=\"odd gradeX\" *ngFor=\"let inv of inventories\">\n            <td>{{ inv._id }}</td>\n            <td>{{ inv.location }}</td>\n            <td>{{ inv.newarea }}</td>\n            <td>{{ inv.type }}</td>\n            <td>{{ inv.demand }}</td>\n            <td *ngIf=\"inv.purpose == 1\">Sell</td>\n            <td *ngIf=\"inv.purpose == 2\">Buy</td>\n            <td *ngIf=\"inv.purpose == 3\">Rent</td>\n            <td>{{ inv.beds }}</td>\n            <td>\n              <a (click)=\"editLead(inv.leadId)\" class=\"btn btn-sm btn-default\">\n                <i class=\"fas fa-edit\" style=\"font-size:1.2rem\"></i> Edit\n              </a>\n            </td>\n          </tr>\n        </tbody>\n\n      </table>\n\n    </div>\n    <!-- /.panel-body -->\n  </div>\n  <!-- /.panel -->\n</div>\n<!-- /.col-lg-12 -->"
+module.exports = "<div class=\"col col-lg-12\">\n  <div class=\"panel panel-default mt-4\">\n    <!-- /.panel-heading -->\n    <div class=\"panel-body\">\n      <p>\n        <b>Inventory Management</b>\n      </p>\n      <div class=\"button-group mb-3\">\n        <button (click)=\"addInventory()\" class=\"btn btn-primary\">Add New</button>\n        <button class=\"btn btn-primary\" (click)=\"toggleSearch()\">More Filters</button>\n      </div>\n      <div id=\"search\" class=\"box-head mb-3\" style=\"display:none;\">\n        <div class=\"container mt-4\">\n\n          <div class=\"form-check form-check-inline\">\n            <input class=\"form-check-input\" (click)=areaChange($event) type=\"radio\" name=\"inlineRadioOptions\" id=\"inlineRadio1\" value=\"1\">\n            <label class=\"form-check-label\" for=\"inlineRadio1\">Sq. Feet</label>\n          </div>\n          <div class=\"form-check form-check-inline\">\n            <input class=\"form-check-input\" (click)=areaChange($event) type=\"radio\" name=\"inlineRadioOptions\" id=\"inlineRadio2\" value=\"2\">\n            <label class=\"form-check-label\" for=\"inlineRadio2\">Marla</label>\n          </div>\n          <div class=\"form-check form-check-inline\">\n            <input class=\"form-check-input\" (click)=areaChange($event) type=\"radio\" name=\"inlineRadioOptions\" id=\"inlineRadio3\" value=\"3\">\n            <label class=\"form-check-label\" for=\"inlineRadio3\">Kanal</label>\n          </div>\n\n          <!-- <br><br>\n          <form (submit)=\"filterByArea()\">\n            <label>\n              Min\n              <input type=\"number\" name=\"min\" id=\"min\" [(ngModel)]=\"minA\" />\n            </label>\n            <label>\n              Max\n              <input type=\"number\" name=\"max\" id=\"max\" [(ngModel)]=\"maxA\" />\n            </label>\n            <button class=\"btn btn-primary\" type=\"submit\">Filter by Area</button>\n          </form> -->\n\n          <br><br>\n          <form (submit)=\"filterByDemand()\">\n            <label>\n              Min\n              <input type=\"number\" name=\"min\" id=\"min\" [(ngModel)]=\"minD\" />\n            </label>\n            <label>\n              Max\n              <input type=\"number\" name=\"max\" id=\"max\" [(ngModel)]=\"maxD\" />\n            </label>\n            <button class=\"btn btn-primary\" type=\"submit\">Filter by Demand</button>\n          </form>\n\n        </div>\n      </div>\n\n\n\n\n      <p *ngIf=\"!resultInventories\">Please wait...</p>\n      <table *ngIf=\"resultInventories\" datatable class=\"table table-bordered table-hover\" id=\"datatableId\" [dtOptions]=\"dtOptions\">\n        <thead>\n          <tr>\n            <th>ID</th>\n            <th>Location</th>\n            <th>Area</th>\n            <th>Type</th>\n            <th>Demand (Rs)</th>\n            <th>Purpose</th>\n            <th>Beds</th>\n            <th data-priority=\"1\">Operations</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr class=\"odd gradeX\" *ngFor=\"let inv of resultInventories\">\n            <td>{{ inv._id }}</td>\n            <td>{{ inv.location }}</td>\n            <td>{{ inv.newarea }}</td>\n            <td>{{ inv.type }}</td>\n            <td>{{ inv.demand }}</td>\n            <td *ngIf=\"inv.purpose == 1\">Sell</td>\n            <td *ngIf=\"inv.purpose == 2\">Buy</td>\n            <td *ngIf=\"inv.purpose == 3\">Rent</td>\n            <td>{{ inv.beds }}</td>\n            <td>\n              <a (click)=\"editLead(inv.leadId)\" class=\"btn btn-sm btn-default\">\n                <i class=\"fas fa-edit\" style=\"font-size:1.2rem\"></i> Edit\n              </a>\n            </td>\n          </tr>\n        </tbody>\n\n        <tfoot>\n          <tr>\n            <th>\n              <input id=\"invInput21\" type=\"text\" placeholder=\"Search ID\" />\n            </th>\n            <th>\n              <input id=\"invInput21\" type=\"text\" placeholder=\"Search Location\" />\n            </th>\n            <th>\n              <input id=\"invInput21\" type=\"text\" placeholder=\"Search Area\" />\n            </th>\n            <th>\n              <input id=\"invInput21\" type=\"text\" placeholder=\"Search Type\" />\n            </th>\n            <th>\n              <input id=\"invInput21\" type=\"text\" placeholder=\"Search Demand\" />\n            </th>\n            <th>\n              <input id=\"invInput21\" type=\"text\" placeholder=\"Search Purpose\" />\n            </th>\n            <th>\n              <input id=\"invInput21\" type=\"text\" placeholder=\"Search Beds\" />\n            </th>\n            <th>\n              <i class=\"fab fa-searchengin\" style=\"font-size:1.8rem;\"></i>\n            </th>\n          </tr>\n        </tfoot>\n\n      </table>\n\n    </div>\n    <!-- /.panel-body -->\n  </div>\n  <!-- /.panel -->\n</div>\n<!-- /.col-lg-12 -->"
 
 /***/ }),
 
@@ -441,6 +444,7 @@ module.exports = "<div class=\"col col-lg-12\">\n  <div class=\"panel panel-defa
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__authentication_service__ = __webpack_require__("../../../../../src/app/authentication.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lead_service__ = __webpack_require__("../../../../../src/app/lead.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular_datatables__ = __webpack_require__("../../../../angular-datatables/index.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -454,6 +458,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var InventoryComponent = /** @class */ (function () {
     function InventoryComponent(auth, router, leadService) {
         this.auth = auth;
@@ -463,14 +468,54 @@ var InventoryComponent = /** @class */ (function () {
     }
     InventoryComponent_1 = InventoryComponent;
     InventoryComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.getLeads();
         // this.getPropTypes();
         // this.getLocations();
         // this.getCities();
         // this.getInventories();
+        // We need to call the $.fn.dataTable like this because DataTables typings do not have the "ext" property
+        $.fn['dataTable'].ext.search.push(function (settings, data, dataIndex) {
+            var demand = parseFloat(data[4]) || 4; // use data for the id column
+            if ((isNaN(_this.minD) && isNaN(_this.maxD)) ||
+                (isNaN(_this.minD) && demand <= _this.maxD) ||
+                (_this.minD <= demand && isNaN(_this.maxD)) ||
+                (_this.minD <= demand && demand <= _this.maxD)) {
+                return true;
+            }
+            return false;
+        });
         this.dtOptions = {
             responsive: true
         };
+    };
+    InventoryComponent.prototype.ngAfterViewInit = function () {
+        var _this = this;
+        setTimeout(function () {
+            _this.datatableElement.dtInstance.then(function (dtInstance) {
+                dtInstance.columns().every(function () {
+                    var that = this;
+                    $('#invInput21', this.footer()).on('keyup change', function () {
+                        if (that.search() !== this['value']) {
+                            that
+                                .search(this['value'])
+                                .draw();
+                        }
+                    });
+                });
+                $('#datatableId tfoot tr').appendTo('#datatableId thead');
+            });
+        }, 3000);
+    };
+    InventoryComponent.prototype.filterByDemand = function () {
+        this.datatableElement.dtInstance.then(function (dtInstance) {
+            dtInstance.draw();
+        });
+    };
+    InventoryComponent.prototype.filterByArea = function () {
+        this.datatableElement.dtInstance.then(function (dtInstance) {
+            dtInstance.draw();
+        });
     };
     InventoryComponent.prototype.getLeads = function () {
         var _this = this;
@@ -485,6 +530,7 @@ var InventoryComponent = /** @class */ (function () {
         var _this = this;
         this.auth.getInventories().subscribe(function (inventories) {
             _this.inventories = inventories;
+            _this.resultInventories = _this.inventories;
             _this.setInv();
         }, function (err) {
             console.error(err);
@@ -618,6 +664,63 @@ var InventoryComponent = /** @class */ (function () {
         this.leadService.setIsLead(false);
         this.router.navigateByUrl('/add');
     };
+    ////////////////////////////////////
+    ////////// Search
+    ////////////////////////////////////
+    InventoryComponent.prototype.toggleSearch = function () {
+        var x = document.getElementById("search");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        }
+        else {
+            x.style.display = "none";
+        }
+    };
+    InventoryComponent.prototype.areaChange = function (event) {
+        var value = event.target.value;
+        if (value == 1) {
+            this.resultInventories = $.map(this.inventories, function (entry) {
+                if (entry.areaUnit == 2) {
+                    entry.area = entry.area * 272;
+                }
+                if (entry.areaUnit == 3) {
+                    entry.area = entry.area * 5445;
+                }
+                entry.area = +parseFloat(entry.area).toFixed(2);
+                entry.areaUnit = 1;
+                return entry;
+            });
+            this.setInv();
+        }
+        if (value == 2) {
+            this.resultInventories = $.map(this.inventories, function (entry) {
+                if (entry.areaUnit == 1) {
+                    entry.area = entry.area * 0.0037;
+                }
+                if (entry.areaUnit == 3) {
+                    entry.area = entry.area * 20;
+                }
+                entry.area = +parseFloat(entry.area).toFixed(2);
+                entry.areaUnit = 2;
+                return entry;
+            });
+            this.setInv();
+        }
+        if (value == 3) {
+            this.resultInventories = $.map(this.inventories, function (entry) {
+                if (entry.areaUnit == 1) {
+                    entry.area = entry.area * 0.00018;
+                }
+                if (entry.areaUnit == 2) {
+                    entry.area = entry.area * 0.05;
+                }
+                entry.area = +parseFloat(entry.area).toFixed(2);
+                entry.areaUnit = 3;
+                return entry;
+            });
+            this.setInv();
+        }
+    };
     InventoryComponent.areaUnits = {
         ONE: "Sq. Feet",
         TWO: "Marla",
@@ -627,6 +730,10 @@ var InventoryComponent = /** @class */ (function () {
         ONE: "Owner",
         TWO: "Dealer"
     };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_4_angular_datatables__["a" /* DataTableDirective */]),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_4_angular_datatables__["a" /* DataTableDirective */])
+    ], InventoryComponent.prototype, "datatableElement", void 0);
     InventoryComponent = InventoryComponent_1 = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-inventory',
@@ -747,6 +854,18 @@ var LeadService = /** @class */ (function () {
     LeadService.prototype.getIsLead = function () {
         return this.isLead;
     };
+    LeadService.prototype.setStatusID = function (statusId) {
+        this.statusId = statusId;
+    };
+    LeadService.prototype.getStatusID = function () {
+        return this.statusId;
+    };
+    LeadService.prototype.setLeadID = function (leadId) {
+        this.leadId = leadId;
+    };
+    LeadService.prototype.getLeadID = function () {
+        return this.leadId;
+    };
     LeadService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
         __metadata("design:paramtypes", [])
@@ -779,7 +898,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/leads/add-lead/add-lead.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col align-self-center box-head\">\n      <form *ngIf=\"users && cities && propTypes && locations\" (submit)=\"addLead()\">\n        <div class=\"form-row\">\n\n          <b class=\"ml-2 mr-2\">Purpose:</b>\n          <div class=\"form-check form-check-inline\">\n            <input class=\"form-check-input\" type=\"radio\" name=\"purpose\" [(ngModel)]=\"lead.purpose\" id=\"purpose1\" value=\"1\" required checked>\n            <label class=\"form-check-label\" for=\"purpose1\">\n              Sell\n            </label>\n          </div>\n          <div class=\"form-check form-check-inline\">\n            <input class=\"form-check-input\" type=\"radio\" name=\"purpose\" [(ngModel)]=\"lead.purpose\" id=\"purpose2\" value=\"2\">\n            <label class=\"form-check-label\" for=\"purpose2\">\n              Buy\n            </label>\n          </div>\n          <div class=\"form-check form-check-inline\">\n            <input class=\"form-check-input\" type=\"radio\" name=\"purpose\" [(ngModel)]=\"lead.purpose\" id=\"purpose3\" value=\"3\">\n            <label class=\"form-check-label\" for=\"purpose3\">\n              Rent\n            </label>\n          </div>\n\n        </div>\n        <div class=\"form-row\">\n          <!-- Get city names here -->\n          <div class=\"form-group col-md-6\">\n            <label for=\"inputCity\"></label>\n            <select class=\"form-control\" id=\"selectCity\" name=\"cityId\" [(ngModel)]=\"lead.cityId\" required>\n              <option value=\"0\" selected>Select city</option>\n              <option *ngFor=\"let city of cities\" value=\"{{ city?._id }}\">{{ city?.name }}</option>\n            </select>\n          </div>\n\n          <!-- Get Property Types here -->\n          <div class=\"form-group col-md-6\">\n            <label for=\"inputType\"></label>\n            <select class=\"form-control\" id=\"selectPropertyType\" name=\"propTypeId\" [(ngModel)]=\"lead.propTypeId\" required>\n              <option value=\"0\" selected>Select property type</option>\n              <option *ngFor=\"let type of propTypes\" value=\"{{ type?._id }}\">{{ type?.type }}</option>\n            </select>\n          </div>\n\n        </div>\n        <div class=\"form-row\">\n\n          <!-- Get Locations here -->\n          <div class=\"form-group col-md-6\">\n            <label for=\"locId\">Select location</label>\n            <select class=\"form-control\" id=\"selectLocation\" name=\"locId\" [(ngModel)]=\"lead.locationId\" required>\n              <option value=\"0\" selected>Select location</option>\n              <option *ngFor=\"let loc of locations\" value=\"{{ loc?._id }}\">{{ loc?.location }}</option>\n            </select>\n          </div>\n\n          <div class=\"form-group col-md-3\">\n            <label for=\"propNumber\">{{ getPropertyType }} #</label>\n            <input type=\"text\" class=\"form-control\" name=\"propNumber\" [(ngModel)]=\"lead.propNumber\" id=\"inputPropNumber\" placeholder=\"{{ getPropertyType }} #\">\n          </div>\n\n          <div class=\"form-group col-md-3\">\n            <label for=\"street\">Street #</label>\n            <input type=\"text\" class=\"form-control\" name=\"street\" [(ngModel)]=\"lead.street\" id=\"inputStreet\" placeholder=\"Street #\">\n          </div>\n\n        </div>\n        <div class=\"form-row\">\n\n          <div class=\"form-group col-md-6\">\n            <label for=\"inputDemand\">Demand (Rs)</label>\n            <input type=\"text\" class=\"form-control\" name=\"demand\" [(ngModel)]=\"lead.demand\" id=\"inputDemand\">\n          </div>\n\n          <div class=\"form-group col-md-3\">\n            <label for=\"inputArea\">Land Area</label>\n            <input type=\"text\" class=\"form-control\" name=\"area\" [(ngModel)]=\"lead.area\" id=\"inputArea\">\n          </div>\n\n          <div class=\"form-group col-md-3\">\n            <select id=\"inputSize\" class=\"form-control\" name=\"areaUnit\" [(ngModel)]=\"lead.areaUnit\">\n              <option value=\"1\" selected>Sq. Feet</option>\n              <option value=\"2\">Marla</option>\n              <option value=\"3\">Kanal</option>\n            </select>\n          </div>\n\n        </div>\n        <div class=\"form-row\">\n\n          <div class=\"form-group col-md-6\">\n            <label for=\"inputBeds\">No. of beds</label>\n            <input type=\"text\" class=\"form-control\" name=\"beds\" [(ngModel)]=\"lead.beds\" id=\"inputBeds\">\n          </div>\n\n          <div class=\"form-group col-md-6\">\n            <label for=\"selectLeadStatus\">Status</label>\n            <input type=\"text\" class=\"form-control\" name=\"leadStatus\" [(ngModel)]=\"lead.leadStatus\" id=\"selectLeadStatus\">\n          </div>\n\n        </div>\n        <hr>\n        <h6>Client Details</h6>\n        <div class=\"form-row\">\n\n          <div class=\"form-group col-md-6\">\n            <input type=\"text\" class=\"form-control\" name=\"clientName\" [(ngModel)]=\"lead.clientName\" id=\"inputName\" placeholder=\"Client Name\">\n          </div>\n\n          <div class=\"form-group col-md-6\">\n            <select id=\"inputClientType\" name=\"clientType\" [(ngModel)]=\"lead.clientType\" class=\"form-control\">\n              <option value=\"0\" selected>Select client type</option>\n              <option value=\"1\">Owner</option>\n              <option value=\"2\">Dealer</option>\n            </select>\n          </div>\n\n        </div>\n\n        <div class=\"form-row\">\n\n          <div class=\"form-group col-md-6\">\n            <input type=\"text\" class=\"form-control\" name=\"phoneNumber\" [(ngModel)]=\"lead.phoneNumber\" id=\"inputPhone\" placeholder=\"Phone #\">\n          </div>\n\n          <div *ngIf=\"auth.isAdmin() || auth.isEditor()\" class=\"form-group col-md-6\">\n            <select *ngIf=\"isLead\" id=\"selectAgent\" name=\"assignedTo\" [(ngModel)]=\"lead.assignedTo\" class=\"form-control\">\n              <option value=\"0\" selected>Not assigned to any agent</option>\n              <option *ngFor=\"let user of users\" value=\"{{ user?._id }}\">{{ user?.name }}</option>\n            </select>\n          </div>\n\n        </div>\n\n        <div class=\"text-left\">\n          <button type=\"submit\" class=\"btn btn-success\">Save</button>\n        </div>\n        \n      </form>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col align-self-center box-head\">\n      <p *ngIf=\"!(users && cities && propTypes && locations)\">Please wait...</p>\n      <form *ngIf=\"users && cities && propTypes && locations\" (submit)=\"addLead()\">\n        <div class=\"form-row\">\n\n          <b class=\"ml-2 mr-2\">Purpose:</b>\n          <div class=\"form-check form-check-inline\">\n            <input class=\"form-check-input\" type=\"radio\" name=\"purpose\" [(ngModel)]=\"lead.purpose\" id=\"purpose1\" value=\"1\" required checked>\n            <label class=\"form-check-label\" for=\"purpose1\">\n              Sell\n            </label>\n          </div>\n          <div class=\"form-check form-check-inline\">\n            <input class=\"form-check-input\" type=\"radio\" name=\"purpose\" [(ngModel)]=\"lead.purpose\" id=\"purpose2\" value=\"2\">\n            <label class=\"form-check-label\" for=\"purpose2\">\n              Buy\n            </label>\n          </div>\n          <div class=\"form-check form-check-inline\">\n            <input class=\"form-check-input\" type=\"radio\" name=\"purpose\" [(ngModel)]=\"lead.purpose\" id=\"purpose3\" value=\"3\">\n            <label class=\"form-check-label\" for=\"purpose3\">\n              Rent\n            </label>\n          </div>\n\n        </div>\n        <div class=\"form-row\">\n          <!-- Get city names here -->\n          <div class=\"form-group col-md-6\">\n            <label for=\"inputCity\"></label>\n            <select class=\"form-control\" id=\"selectCity\" name=\"cityId\" [(ngModel)]=\"lead.cityId\" (change)=\"onChange($event.target.value)\" required>\n              <option value=\"0\" selected>Select city</option>\n              <option *ngFor=\"let city of cities\" value=\"{{ city?._id }}\">{{ city?.name }}</option>\n            </select>\n          </div>\n\n          <!-- Get Property Types here -->\n          <div class=\"form-group col-md-6\">\n            <label for=\"inputType\"></label>\n            <select class=\"form-control\" id=\"selectPropertyType\" name=\"propTypeId\" [(ngModel)]=\"lead.propTypeId\" required>\n              <option value=\"0\" selected>Select property type</option>\n              <option *ngFor=\"let type of propTypes\" value=\"{{ type?._id }}\">{{ type?.type }}</option>\n            </select>\n          </div>\n\n        </div>\n        <div class=\"form-row\">\n\n          <!-- Get Locations here -->\n          <div class=\"form-group col-md-6\">\n            <label for=\"locId\">Select location</label>\n            <select class=\"form-control\" id=\"selectLocation\" name=\"locId\" [(ngModel)]=\"lead.locationId\" required>\n              <option value=\"0\" selected>Select location</option>\n              <option *ngFor=\"let loc of newLocations\" value=\"{{ loc?._id }}\">{{ loc?.location }}</option>\n            </select>\n          </div>\n\n          <div class=\"form-group col-md-3\">\n            <label for=\"propNumber\">{{ getPropertyType }} #</label>\n            <input type=\"text\" class=\"form-control\" name=\"propNumber\" [(ngModel)]=\"lead.propNumber\" id=\"inputPropNumber\" placeholder=\"{{ getPropertyType }} #\">\n          </div>\n\n          <div class=\"form-group col-md-3\">\n            <label for=\"street\">Street #</label>\n            <input type=\"text\" class=\"form-control\" name=\"street\" [(ngModel)]=\"lead.street\" id=\"inputStreet\" placeholder=\"Street #\">\n          </div>\n\n        </div>\n        <div class=\"form-row\">\n\n          <div class=\"form-group col-md-6\">\n            <label for=\"inputDemand\">Demand (Rs)</label>\n            <input type=\"text\" class=\"form-control\" name=\"demand\" [(ngModel)]=\"lead.demand\" id=\"inputDemand\">\n          </div>\n\n          <div class=\"form-group col-md-3\">\n            <label for=\"inputArea\">Land Area</label>\n            <input type=\"text\" class=\"form-control\" name=\"area\" [(ngModel)]=\"lead.area\" id=\"inputArea\">\n          </div>\n\n          <div class=\"form-group col-md-3\">\n            <select id=\"inputSize\" class=\"form-control\" name=\"areaUnit\" [(ngModel)]=\"lead.areaUnit\">\n              <option value=\"1\" selected>Sq. Feet</option>\n              <option value=\"2\">Marla</option>\n              <option value=\"3\">Kanal</option>\n            </select>\n          </div>\n\n        </div>\n        <div class=\"form-row\">\n\n          <div class=\"form-group col-md-6\">\n            <label for=\"inputBeds\">No. of beds</label>\n            <input type=\"text\" class=\"form-control\" name=\"beds\" [(ngModel)]=\"lead.beds\" id=\"inputBeds\">\n          </div>\n\n        </div>\n        <hr>\n        <h6>Client Details</h6>\n        <div class=\"form-row\">\n\n          <div class=\"form-group col-md-6\">\n            <input type=\"text\" class=\"form-control\" name=\"clientName\" [(ngModel)]=\"lead.clientName\" id=\"inputName\" placeholder=\"Client Name\">\n          </div>\n\n          <div class=\"form-group col-md-6\">\n            <select id=\"inputClientType\" name=\"clientType\" [(ngModel)]=\"lead.clientType\" class=\"form-control\">\n              <option value=\"0\" selected>Select client type</option>\n              <option value=\"1\">Owner</option>\n              <option value=\"2\">Dealer</option>\n            </select>\n          </div>\n\n        </div>\n\n        <div class=\"form-row\">\n\n          <div class=\"form-group col-md-6\">\n            <input type=\"text\" class=\"form-control\" name=\"phoneNumber\" [(ngModel)]=\"lead.phoneNumber\" id=\"inputPhone\" placeholder=\"Phone #\">\n          </div>\n\n          <div class=\"form-group col-md-6\">\n            <select *ngIf=\"isLead\" id=\"selectAgent\" name=\"assignedTo\" [(ngModel)]=\"lead.assignedTo\" class=\"form-control\">\n              <option value=\"0\" selected>Not assigned to any agent</option>\n              <option *ngFor=\"let user of users\" value=\"{{ user?._id }}\">{{ user?.name }}</option>\n            </select>\n          </div>\n\n        </div>\n\n        <div class=\"text-left\">\n          <button type=\"submit\" class=\"btn btn-success\">Save</button>\n        </div>\n        \n      </form>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -828,7 +947,8 @@ var AddLeadComponent = /** @class */ (function () {
             clientType: 0,
             phoneNumber: "",
             assignedTo: 0,
-            leadStatus: "Active"
+            leadAdminStatus: 0,
+            leadAgentStatus: 0
         };
     }
     AddLeadComponent.prototype.getIsLead = function () {
@@ -840,6 +960,11 @@ var AddLeadComponent = /** @class */ (function () {
             _this.cities = cities;
         }, function (err) {
             console.error(err);
+        });
+    };
+    AddLeadComponent.prototype.onChange = function (id) {
+        this.newLocations = this.locations.filter(function (locations) {
+            return locations.cityId == id;
         });
     };
     AddLeadComponent.prototype.getLocations = function () {
@@ -869,6 +994,27 @@ var AddLeadComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    AddLeadComponent.prototype.getStatusTypes = function () {
+        var _this = this;
+        this.auth.getStatusTypes().subscribe(function (statusTypes) {
+            _this.statusTypes = statusTypes;
+            _this.setStatusType();
+        }, function (err) {
+            console.error(err);
+        });
+    };
+    AddLeadComponent.prototype.setStatusType = function () {
+        for (var j = 0; j < this.statusTypes.length; j++) {
+            if (this.statusTypes[j].type == "Added") {
+                this.lead.leadAdminStatus = this.statusTypes[j]._id;
+                console.log(this.lead.leadAdminStatus);
+            }
+            if (this.statusTypes[j].type == "Assigned") {
+                this.lead.leadAgentStatus = this.statusTypes[j]._id;
+                console.log(this.lead.leadAgentStatus);
+            }
+        }
+    };
     AddLeadComponent.prototype.getUsers = function () {
         var _this = this;
         this.auth.getUsers().subscribe(function (unfiltered_users) {
@@ -896,6 +1042,7 @@ var AddLeadComponent = /** @class */ (function () {
         this.getPropTypes();
         this.getUsers();
         this.getIsLead();
+        this.getStatusTypes();
     };
     AddLeadComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["n" /* Component */])({
@@ -934,7 +1081,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/leads/edit-lead/edit-lead.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col align-self-center box-head\">\n      <form *ngIf=\"users && cities && propTypes && locations\" (submit)=\"updateLead()\">\n        <div class=\"form-row\">\n          <div class=\"form-group col-md-3\">\n            <label for=\"inputPurpose\">Purpose</label>\n            <select class=\"form-control\" id=\"selectCity\" name=\"purpose\" [(ngModel)]=\"lead.purpose\">\n              <option value=\"1\">Sell</option>\n              <option value=\"2\">Buy</option>\n              <option value=\"3\">Rent</option>\n            </select>\n          </div>\n        </div>\n\n        <div class=\"form-row\">\n          <!-- Get city names here -->\n          <div class=\"form-group col-md-6\">\n            <label for=\"inputCity\">City</label>\n            <select class=\"form-control\" id=\"selectCity\" name=\"cityId\" [(ngModel)]=\"lead.cityId\">\n              <option *ngFor=\"let city of cities\" value=\"{{ city?._id }}\">{{ city?.name }}</option>\n            </select>\n          </div>\n\n          <!-- Get Property Types here -->\n          <div class=\"form-group col-md-6\">\n            <label for=\"inputType\">Property Type</label>\n            <select class=\"form-control\" id=\"selectPropertyType\" name=\"propTypeId\" [(ngModel)]=\"lead.propTypeId\">\n              <option *ngFor=\"let type of propTypes\" value=\"{{ type?._id }}\">{{ type?.type }}</option>\n            </select>\n          </div>\n\n        </div>\n        <div class=\"form-row\">\n\n          <!-- Get Locations here -->\n          <div class=\"form-group col-md-6\">\n            <label for=\"locId\">Location</label>\n            <select class=\"form-control\" id=\"selectLocation\" name=\"locId\" [(ngModel)]=\"lead.locationId\">\n              <option *ngFor=\"let loc of locations\" value=\"{{ loc?._id }}\">{{ loc?.location }}</option>\n            </select>\n          </div>\n\n          <div class=\"form-group col-md-3\">\n            <label for=\"propNumber\">Number #</label>\n            <input type=\"text\" class=\"form-control\" name=\"propNumber\" [(ngModel)]=\"lead.propNumber\" id=\"inputPropNumber\" placeholder=\"Number #\">\n          </div>\n\n          <div class=\"form-group col-md-3\">\n            <label for=\"street\">Street #</label>\n            <input type=\"text\" class=\"form-control\" name=\"street\" [(ngModel)]=\"lead.street\" id=\"inputStreet\" placeholder=\"Street #\">\n          </div>\n\n        </div>\n        <div class=\"form-row\">\n\n          <div class=\"form-group col-md-6\">\n            <label for=\"inputDemand\">Demand (Rs)</label>\n            <input type=\"text\" class=\"form-control\" name=\"demand\" [(ngModel)]=\"lead.demand\" id=\"inputDemand\">\n          </div>\n\n          <div class=\"form-group col-md-3\">\n            <label for=\"inputArea\">Land Area</label>\n            <input type=\"text\" class=\"form-control\" name=\"area\" [(ngModel)]=\"lead.area\" id=\"inputArea\">\n          </div>\n\n          <div class=\"form-group col-md-3\">\n            <select id=\"inputSize\" class=\"form-control\" name=\"areaUnit\" [(ngModel)]=\"lead.areaUnit\">\n              <option value=\"1\" selected>Sq. Feet</option>\n              <option value=\"2\">Marla</option>\n              <option value=\"3\">Kanal</option>\n            </select>\n          </div>\n\n        </div>\n        <div class=\"form-row\">\n\n          <div class=\"form-group col-md-6\">\n            <label for=\"inputBeds\">No. of beds</label>\n            <input type=\"text\" class=\"form-control\" name=\"beds\" [(ngModel)]=\"lead.beds\" id=\"inputBeds\">\n          </div>\n\n          <div class=\"form-group col-md-6\">\n            <label for=\"selectLeadStatus\">Status</label>\n            <input type=\"text\" class=\"form-control\" name=\"leadStatus\" [(ngModel)]=\"lead.leadStatus\" id=\"selectLeadStatus\">\n          </div>\n\n        </div>\n        <hr>\n        <h6>Client Details</h6>\n        <div class=\"form-row\">\n\n          <div class=\"form-group col-md-6\">\n            <label for=\"selectClientName\">Client Name</label>\n            <input type=\"text\" class=\"form-control\" name=\"clientName\" [(ngModel)]=\"lead.clientName\" id=\"inputName\" placeholder=\"Client Name\">\n          </div>\n\n          <div class=\"form-group col-md-6\">\n            <label for=\"selectClientType\">Client Type</label>\n            <select id=\"inputClientType\" name=\"clientType\" [(ngModel)]=\"lead.clientType\" class=\"form-control\">\n              <option value=\"1\" selected>Owner</option>\n              <option value=\"2\">Dealer</option>\n            </select>\n          </div>\n\n        </div>\n\n        <div class=\"form-row\">\n\n          <div class=\"form-group col-md-6\">\n            <label for=\"selectPhoneNumber\">Phone #</label>\n            <input type=\"text\" class=\"form-control\" name=\"phoneNumber\" [(ngModel)]=\"lead.phoneNumber\" id=\"inputPhone\" placeholder=\"Phone #\">\n          </div>\n\n          <div *ngIf=\"auth.isAdmin() || auth.isEditor()\" class=\"form-group col-md-6\">\n            <label *ngIf=\"isLead\" for=\"selectAssignedTo\">Assigned To</label>\n            <select *ngIf=\"isLead\" id=\"selectAgent\" name=\"assignedTo\" [(ngModel)]=\"lead.assignedTo\" class=\"form-control\">\n              <option value=\"0\" selected>Not assigned to any agent</option>\n              <option *ngFor=\"let user of users\" value=\"{{ user?._id }}\">{{ user?.name }}</option>\n            </select>\n          </div>\n\n        </div>\n\n        <div class=\"text-left\">\n          <button type=\"submit\" class=\"btn btn-success\">Update</button>\n        </div>\n      </form>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col align-self-center box-head\">\n      <p *ngIf=\"!(users && cities && propTypes && locations)\">Please wait...</p>\n      <form *ngIf=\"users && cities && propTypes && locations\" (submit)=\"updateLead()\">\n        <div class=\"form-row\">\n          <div class=\"form-group col-md-3\">\n            <label for=\"inputPurpose\">Purpose</label>\n            <select class=\"form-control\" id=\"selectCity\" name=\"purpose\" [(ngModel)]=\"lead.purpose\">\n              <option value=\"1\">Sell</option>\n              <option value=\"2\">Buy</option>\n              <option value=\"3\">Rent</option>\n            </select>\n          </div>\n        </div>\n\n        <div class=\"form-row\">\n          <!-- Get city names here -->\n          <div class=\"form-group col-md-6\">\n            <label for=\"inputCity\">City</label>\n            <select class=\"form-control\" id=\"selectCity\" name=\"cityId\" [(ngModel)]=\"lead.cityId\" (change)=\"onChange($event.target.value)\">\n              <option *ngFor=\"let city of cities\" value=\"{{ city?._id }}\">{{ city?.name }}</option>\n            </select>\n          </div>\n\n          <!-- Get Property Types here -->\n          <div class=\"form-group col-md-6\">\n            <label for=\"inputType\">Property Type</label>\n            <select class=\"form-control\" id=\"selectPropertyType\" name=\"propTypeId\" [(ngModel)]=\"lead.propTypeId\">\n              <option *ngFor=\"let type of propTypes\" value=\"{{ type?._id }}\">{{ type?.type }}</option>\n            </select>\n          </div>\n\n        </div>\n        <div class=\"form-row\">\n\n          <!-- Get Locations here -->\n          <div class=\"form-group col-md-6\">\n            <label for=\"locId\">Location</label>\n            <select class=\"form-control\" id=\"selectLocation\" name=\"locId\" [(ngModel)]=\"lead.locationId\">\n              <option *ngFor=\"let loc of newLocations\" value=\"{{ loc?._id }}\">{{ loc?.location }}</option>\n            </select>\n          </div>\n\n          <div class=\"form-group col-md-3\">\n            <label for=\"propNumber\">Number #</label>\n            <input type=\"text\" class=\"form-control\" name=\"propNumber\" [(ngModel)]=\"lead.propNumber\" id=\"inputPropNumber\" placeholder=\"Number #\">\n          </div>\n\n          <div class=\"form-group col-md-3\">\n            <label for=\"street\">Street #</label>\n            <input type=\"text\" class=\"form-control\" name=\"street\" [(ngModel)]=\"lead.street\" id=\"inputStreet\" placeholder=\"Street #\">\n          </div>\n\n        </div>\n        <div class=\"form-row\">\n\n          <div class=\"form-group col-md-6\">\n            <label for=\"inputDemand\">Demand (Rs)</label>\n            <input type=\"text\" class=\"form-control\" name=\"demand\" [(ngModel)]=\"lead.demand\" id=\"inputDemand\">\n          </div>\n\n          <div class=\"form-group col-md-3\">\n            <label for=\"inputArea\">Land Area</label>\n            <input type=\"text\" class=\"form-control\" name=\"area\" [(ngModel)]=\"lead.area\" id=\"inputArea\">\n          </div>\n\n          <div class=\"form-group col-md-3\">\n            <select id=\"inputSize\" class=\"form-control\" name=\"areaUnit\" [(ngModel)]=\"lead.areaUnit\">\n              <option value=\"1\" selected>Sq. Feet</option>\n              <option value=\"2\">Marla</option>\n              <option value=\"3\">Kanal</option>\n            </select>\n          </div>\n\n        </div>\n        <div class=\"form-row\">\n\n          <div class=\"form-group col-md-6\">\n            <label for=\"inputBeds\">No. of beds</label>\n            <input type=\"text\" class=\"form-control\" name=\"beds\" [(ngModel)]=\"lead.beds\" id=\"inputBeds\">\n          </div>\n\n        </div>\n        <hr>\n        <h6>Client Details</h6>\n        <div class=\"form-row\">\n\n          <div class=\"form-group col-md-6\">\n            <label for=\"selectClientName\">Client Name</label>\n            <input type=\"text\" class=\"form-control\" name=\"clientName\" [(ngModel)]=\"lead.clientName\" id=\"inputName\" placeholder=\"Client Name\">\n          </div>\n\n          <div class=\"form-group col-md-6\">\n            <label for=\"selectClientType\">Client Type</label>\n            <select id=\"inputClientType\" name=\"clientType\" [(ngModel)]=\"lead.clientType\" class=\"form-control\">\n              <option value=\"1\" selected>Owner</option>\n              <option value=\"2\">Dealer</option>\n            </select>\n          </div>\n\n        </div>\n\n        <div class=\"form-row\">\n\n          <div class=\"form-group col-md-6\">\n            <label for=\"selectPhoneNumber\">Phone #</label>\n            <input type=\"text\" class=\"form-control\" name=\"phoneNumber\" [(ngModel)]=\"lead.phoneNumber\" id=\"inputPhone\" placeholder=\"Phone #\">\n          </div>\n\n          <div class=\"form-group col-md-6\">\n            <label *ngIf=\"isLead\" for=\"selectAssignedTo\">Assigned To</label>\n            <select *ngIf=\"isLead\" id=\"selectAgent\" name=\"assignedTo\" [(ngModel)]=\"lead.assignedTo\" class=\"form-control\">\n              <option value=\"0\" selected>Not assigned to any agent</option>\n              <option *ngFor=\"let user of users\" value=\"{{ user?._id }}\">{{ user?.name }}</option>\n            </select>\n          </div>\n\n        </div>\n\n        <div class=\"text-left\">\n          <button type=\"submit\" class=\"btn btn-success\">Update</button>\n        </div>\n      </form>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -977,10 +1124,16 @@ var EditLeadComponent = /** @class */ (function () {
             console.error(err);
         });
     };
+    EditLeadComponent.prototype.onChange = function (id) {
+        this.newLocations = this.locations.filter(function (locations) {
+            return locations.cityId == id;
+        });
+    };
     EditLeadComponent.prototype.getLocations = function () {
         var _this = this;
         this.auth.getLocations().subscribe(function (locations) {
             _this.locations = locations;
+            _this.newLocations = locations;
         }, function (err) {
             console.error(err);
         });
@@ -1061,7 +1214,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/leads/leads.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"col col-lg-12\">\n  <div class=\"panel panel-default mt-4\">\n    <!-- /.panel-heading -->\n    <div class=\"panel-body\">\n      <div class=\"button-group mb-3\">\n        <button (click)=\"addLead()\" class=\"btn btn-primary\">Add New Lead</button>\n        <button class=\"btn btn-primary\">Search Lead</button>\n      </div>\n      <table *ngIf=\"leads && inventories && cities && propertytypes && locations && users\" datatable=\"ng\" class=\"table table-bordered table-hover\"\n        style=\"table-layout:auto;\" [dtOptions]=\"dtOptions\" id=\"datatableId\">\n        <thead>\n          <tr>\n            <th>ID</th>\n            <th data-priority=\"1\">Lead Information</th>\n            <th>Contact #</th>\n            <th>Type</th>\n            <th *ngIf=\"!auth.isAgent()\">Assigned To</th>\n            <th>Status</th>\n            <th data-priority=\"2\">Operations</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr class=\"odd gradeX\" *ngFor=\"let l of leads\">\n            <td>{{ l._id }}</td>\n            <td>\n              <u style=\"text-transform:capitalize;\">{{ l.clientName.toLowerCase() }}</u> want to\n              <span *ngIf=\"getInventory(l._id).purpose == 1\">\n                \"sell the {{ getPropertyType(l._id).type }}\"</span>\n              <span *ngIf=\"getInventory(l._id).purpose == 2\">\n                \"buy the {{ getPropertyType(l._id).type }}\"</span>\n              <span *ngIf=\"getInventory(l._id).purpose == 3\">\n                \"rent the {{ getPropertyType(l._id).type }}\"</span>\n              in {{ getLocation(l._id).location }}, {{ getCity(l._id).name }}.\n              <br>\n              <b>Area</b>: {{ getInventory(l._id).area }}\n              <span *ngIf=\"getInventory(l._id).areaUnit == 1\">Sq. Feet</span>\n              <span *ngIf=\"getInventory(l._id).areaUnit == 2\">Marla</span>\n              <span *ngIf=\"getInventory(l._id).areaUnit == 3\">Kanal</span>\n              <b>Demand</b>: {{ getInventory(l._id).demand }}\n              <b>{{ getPropertyType(l._id).type }} #</b>: {{ getInventory(l._id).propNumber }}\n              <b>Street</b>: {{ getInventory(l._id).street }}\n            </td>\n            <td>{{ l.phoneNumber }}</td>\n\n            <td *ngIf=\"l.clientType == 1\">Owner</td>\n            <td *ngIf=\"l.clientType == 2\">Dealer</td>\n\n            <td *ngIf=\"!auth.isAgent()\">{{ getUser(l.assignedTo).name }}</td>\n\n            <td>{{ l.leadStatus }}</td>\n            <td>\n              <button (click)=\"editLead(l._id)\" class=\"btn btn-sm btn-default\">\n                <i class=\"fas fa-edit\" style=\"font-size:1.2rem\"></i> Edit\n              </button>\n            </td>\n          </tr>\n\n        </tbody>\n\n      </table>\n\n    </div>\n    <!-- /.panel-body -->\n  </div>\n  <!-- /.panel -->\n</div>\n<!-- /.col-lg-12 -->"
+module.exports = "<div class=\"col col-lg-12\">\n  <div class=\"panel panel-default mt-4\">\n    <!-- /.panel-heading -->\n    <div class=\"panel-body\">\n      <p>\n        <b>Leads Management</b>\n      </p>\n      <div class=\"button-group mb-3\">\n        <button (click)=\"addLead()\" class=\"btn btn-primary\">Add New</button>\n        <button class=\"btn btn-primary\">Search</button>\n      </div>\n      <p *ngIf=\"!(resultLeads && inventories && cities && propertytypes && locations && users && statusTypes)\">Please wait...</p>\n      <table *ngIf=\"resultLeads && inventories && cities && propertytypes && locations && users && statusTypes\" datatable class=\"table table-bordered table-hover\"\n        style=\"table-layout:auto;\" [dtOptions]=\"dtOptions\" id=\"datatableId\">\n        <thead>\n          <tr>\n            <th>ID</th>\n            <th data-priority=\"1\">Lead Information</th>\n            <th>Contact #</th>\n            <th>Type</th>\n            <th>Assigned To</th>\n            <th *ngIf=\"auth.isAdmin()\">Admin Status</th>\n            <th>Agent Status</th>\n            <th data-priority=\"2\">Operations</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr class=\"odd gradeX\" *ngFor=\"let l of resultLeads\">\n            <td>{{ l._id }}</td>\n            <td>\n              <u style=\"text-transform:capitalize;\">{{ l.clientName.toLowerCase() }}</u> want to\n              <span *ngIf=\"getInventory(l._id).purpose == 1\">\n                \"sell the {{ getPropertyType(l._id).type }}\"</span>\n              <span *ngIf=\"getInventory(l._id).purpose == 2\">\n                \"buy the {{ getPropertyType(l._id).type }}\"</span>\n              <span *ngIf=\"getInventory(l._id).purpose == 3\">\n                \"rent the {{ getPropertyType(l._id).type }}\"</span>\n              in {{ getLocation(l._id).location }}, {{ getCity(l._id).name }}.\n              <br>\n              <b>Area</b>: {{ getInventory(l._id).area }}\n              <span *ngIf=\"getInventory(l._id).areaUnit == 1\">Sq. Feet</span>\n              <span *ngIf=\"getInventory(l._id).areaUnit == 2\">Marla</span>\n              <span *ngIf=\"getInventory(l._id).areaUnit == 3\">Kanal</span>\n              <b>Demand</b>: {{ getInventory(l._id).demand }}\n              <b>{{ getPropertyType(l._id).type }} #</b>: {{ getInventory(l._id).propNumber }}\n              <b>Street</b>: {{ getInventory(l._id).street }}\n            </td>\n            <td>{{ l.phoneNumber }}</td>\n\n            <td *ngIf=\"l.clientType == 1\">Owner</td>\n            <td *ngIf=\"l.clientType == 2\">Dealer</td>\n\n            <td>{{ getUser(l.assignedTo).name }}</td>\n\n            <td *ngIf=\"auth.isAdmin()\">{{ getStatusType(l.leadAdminStatus) }}</td>\n            <td>{{ getStatusType(l.leadAgentStatus) }}</td>\n            <td>\n              <a *ngIf=\"auth.isAdmin()\" (click)=\"changeStatus(l.leadAdminStatus, l._id)\" class=\"btn btn-sm btn-default\">\n                <i class=\"fas fa-exchange-alt\" style=\"font-size:1.2rem\"></i>\n              </a>\n              <a *ngIf=\"auth.isAgent()\" (click)=\"changeStatus(l.leadAgentStatus, l._id)\" class=\"btn btn-sm btn-default\">\n                <i class=\"fas fa-exchange-alt\" style=\"font-size:1.2rem\"></i>\n              </a>\n              <a (click)=\"editLead(l._id)\" class=\"btn btn-sm btn-default\">\n                <i class=\"fas fa-edit\" style=\"font-size:1.2rem\"></i>\n              </a>\n              <a (click)=\"deleteLead(l._id)\" class=\"btn btn-sm btn-default\">\n                <i class=\"fas fa-trash\" style=\"font-size:1.2rem\"></i>\n              </a>\n            </td>\n          </tr>\n\n        </tbody>\n\n        <tfoot>\n          <tr>\n            <th>\n              <input id=\"leadInput21\" type=\"text\" placeholder=\"Search ID\" />\n            </th>\n            <th>\n              <input id=\"leadInput21\" type=\"text\" placeholder=\"Search Lead Info\" />\n            </th>\n            <th>\n              <input id=\"leadInput21\" type=\"text\" placeholder=\"Search Contact\" />\n            </th>\n            <th>\n              <input id=\"leadInput21\" type=\"text\" placeholder=\"Search Type\" />\n            </th>\n            <th>\n              <input id=\"leadInput21\" type=\"text\" placeholder=\"Search Assigned To\" />\n            </th>\n            <th *ngIf=\"auth.isAdmin()\">\n              <input id=\"leadInput21\" type=\"text\" placeholder=\"Search Admin Status\" />\n            </th>\n            <th>\n              <input id=\"leadInput21\" type=\"text\" placeholder=\"Search Agent Status\" />\n            </th>\n            <th>\n              <i class=\"fab fa-searchengin\" style=\"font-size:1.8rem;\"></i>\n            </th>\n          </tr>\n        </tfoot>\n\n      </table>\n\n    </div>\n    <!-- /.panel-body -->\n  </div>\n  <!-- /.panel -->\n</div>\n<!-- /.col-lg-12 -->"
 
 /***/ }),
 
@@ -1074,6 +1227,7 @@ module.exports = "<div class=\"col col-lg-12\">\n  <div class=\"panel panel-defa
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__authentication_service__ = __webpack_require__("../../../../../src/app/authentication.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lead_service__ = __webpack_require__("../../../../../src/app/lead.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular_datatables__ = __webpack_require__("../../../../angular-datatables/index.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1083,6 +1237,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -1100,17 +1255,45 @@ var LeadsComponent = /** @class */ (function () {
         this.getCities();
         this.getLocations();
         this.getPropTypes();
+        this.getStatusTypes();
         this.getUsers();
         this.dtOptions = {
             responsive: true
         };
     };
+    LeadsComponent.prototype.ngAfterViewInit = function () {
+        var _this = this;
+        setTimeout(function () {
+            _this.datatableElement.dtInstance.then(function (dtInstance) {
+                dtInstance.columns().every(function () {
+                    var that = this;
+                    $('#leadInput21', this.footer()).on('keyup change', function () {
+                        if (that.search() !== this['value']) {
+                            that
+                                .search(this['value'])
+                                .draw();
+                        }
+                    });
+                });
+                $('#datatableId tfoot tr').appendTo('#datatableId thead');
+            });
+        }, 3000);
+    };
     LeadsComponent.prototype.getLeads = function () {
         var _this = this;
         this.auth.getLeads().subscribe(function (leads) {
-            _this.leads = leads.filter(function (leads) {
+            _this.rawleads = leads.filter(function (leads) {
                 return leads.assignedTo !== "0";
             });
+            _this.leads = _this.rawleads.filter(function (rawleads) {
+                return rawleads.leadAdminStatus !== 0;
+            });
+            if (_this.auth.isAgent) {
+                _this.leads = _this.leads.filter(function (leads) {
+                    return leads.leadAgentStatus !== 0;
+                });
+            }
+            _this.resultLeads = _this.leads;
             _this.leadService.setLeads(_this.leads);
         }, function (err) {
             console.error(err);
@@ -1157,6 +1340,21 @@ var LeadsComponent = /** @class */ (function () {
             console.error(err);
         });
     };
+    LeadsComponent.prototype.getStatusTypes = function () {
+        var _this = this;
+        this.auth.getStatusTypes().subscribe(function (statusTypes) {
+            _this.statusTypes = statusTypes;
+        }, function (err) {
+            console.error(err);
+        });
+    };
+    LeadsComponent.prototype.getStatusType = function (id) {
+        for (var i = 0; i < this.statusTypes.length; i++) {
+            if (this.statusTypes[i]._id == id) {
+                return this.statusTypes[i].type;
+            }
+        }
+    };
     LeadsComponent.prototype.getPropertyType = function (id) {
         for (var j = 0; j < this.propertytypes.length; j++) {
             if (this.propertytypes[j]._id == this.getInventory(id).propTypeId) {
@@ -1195,6 +1393,11 @@ var LeadsComponent = /** @class */ (function () {
             }
         }
     };
+    LeadsComponent.prototype.changeStatus = function (statusID, leadID) {
+        this.leadService.setStatusID(statusID);
+        this.leadService.setLeadID(leadID);
+        this.router.navigateByUrl('/editstatus');
+    };
     LeadsComponent.prototype.editLead = function (id) {
         for (var i = 0; i < this.leads.length; i++) {
             if (this.leads[i]._id == id) {
@@ -1213,6 +1416,30 @@ var LeadsComponent = /** @class */ (function () {
             this.router.navigateByUrl('/editlead');
         }
     };
+    LeadsComponent.prototype.deleteLead = function (id) {
+        for (var i = 0; i < this.leads.length; i++) {
+            if (this.leads[i]._id == id) {
+                this.leads.splice(i, 1);
+                break;
+            }
+        }
+        var isAdmin;
+        if (this.auth.isAdmin)
+            isAdmin = true;
+        else
+            isAdmin = false;
+        console.log(isAdmin);
+        var status = {
+            "sid": 0,
+            "lid": id,
+            "isAdmin": isAdmin
+        };
+        this.auth.updateStatus(status).subscribe(function () {
+            console.log("success");
+        }, function (err) {
+            console.error(err);
+        });
+    };
     LeadsComponent.prototype.addLead = function () {
         this.leadService.setIsLead(true);
         this.router.navigateByUrl('/add');
@@ -1226,6 +1453,10 @@ var LeadsComponent = /** @class */ (function () {
         ONE: "Owner",
         TWO: "Dealer"
     };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_4_angular_datatables__["a" /* DataTableDirective */]),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_4_angular_datatables__["a" /* DataTableDirective */])
+    ], LeadsComponent.prototype, "datatableElement", void 0);
     LeadsComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-leads',
@@ -1321,7 +1552,7 @@ var LoginComponent = /** @class */ (function () {
 /***/ "../../../../../src/app/options/options.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container mb-4\">\n  <!-- \n  Manage Cities \n  - add city\n  - edit city\n  - delete city\n-->\n  <div class=\"alert alert-success mt-3\">\n    <b>Manage Cities</b>\n  </div>\n  <div class=\"row\">\n    <div class=\"col mt-3\">\n      <form (submit)=\"addCity()\">\n\n        <!-- New city name is entered in this input -->\n        <div class=\"form-group\">\n          <input type=\"text\" name=\"name\" class=\"form-control\" id=\"name\" placeholder=\"Enter city\" [(ngModel)]=\"city.name\">\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-primary\">Add City</button>\n      </form>\n    </div>\n    <div class=\"col mt-3\">\n      <form>\n\n        <!-- Get city names here for editing -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectCity\" name=\"cityId\">\n            <option *ngFor=\"let city of cities\" value=\"{{ city?._id }}\">{{ city?.name }}</option>\n          </select>\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-primary\">Edit</button>\n        <button type=\"submit\" class=\"btn btn-danger\">Delete</button>\n      </form>\n    </div>\n  </div>\n\n  <!-- \n  Manage Locations \n  - add Location\n  - edit Location\n  - delete Location\n-->\n  <div class=\"alert alert-success mt-3\">\n    <b>Manage Locations</b>\n  </div>\n  <div class=\"row\">\n    <div class=\"col mt-3\">\n      <form (submit)=\"addLoc()\">\n\n        <!-- City names are get here to add location -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectCity\" name=\"cityId\" [(ngModel)]=\"location.cityId\">\n            <option *ngFor=\"let city of cities\" value=\"{{ city?._id }}\">{{ city?.name }}</option>\n          </select>\n        </div>\n\n        <!-- New location will be entered here -->\n        <div class=\"form-group\">\n          <input type=\"text\" class=\"form-control\" name=\"location\" id=\"inputLocation\" placeholder=\"Enter location\" [(ngModel)]=\"location.location\">\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-primary\">Add Location</button>\n      </form>\n    </div>\n    <div class=\"col mt-3\">\n      <form>\n\n        <!-- Get city names here for editing location -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectCity\" name=\"cityId\">\n            <option *ngFor=\"let city of cities\" value=\"{{ city?._id }}\">{{ city?.name }}</option>\n          </select>\n        </div>\n\n        <!-- Location is get here for editing and deleting -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectLocation\" name=\"locId\">\n            <option *ngFor=\"let loc of locations\" value=\"{{ loc?._id }}\">{{ loc?.location }}</option>\n          </select>\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-primary\">Edit</button>\n        <button type=\"submit\" class=\"btn btn-danger\">Delete</button>\n      </form>\n    </div>\n  </div>\n\n  <!-- \n  Manage Property Types\n-->\n  <div class=\"alert alert-success mt-3\">\n    <b>Manage Property Types</b>\n  </div>\n  <div class=\"row\">\n    <div class=\"col mt-3\">\n      <form (submit)=\"addPropType()\">\n\n        <!-- New property type is entered here for adding in DB -->\n        <div class=\"form-group\">\n          <input type=\"text\" class=\"form-control\" name=\"type\" id=\"inputType\" placeholder=\"Enter property type\" [(ngModel)]=\"propType.type\">\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-primary\">Add Property Type</button>\n      </form>\n    </div>\n    <div class=\"col mt-3\">\n      <form>\n\n        <!-- Property type is get here for editing and deleting -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectPropertyType\" name=\"propTypeId\">\n            <option *ngFor=\"let type of propTypes\" value=\"{{ type?._id }}\">{{ type?.type }}</option>\n          </select>\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-primary\">Edit</button>\n        <button type=\"submit\" class=\"btn btn-danger\">Delete</button>\n      </form>\n    </div>\n  </div>\n\n</div>"
+module.exports = "<div class=\"container mb-4\">\n  <!-- \n  Manage Cities \n  - add city\n  - edit city\n  - delete city\n-->\n  <div class=\"alert alert-success mt-3\">\n    <b>Cities</b>\n  </div>\n  <div class=\"row\">\n    <div class=\"col mt-3\">\n      <p>\n        <b>Add New City</b>\n      </p>\n      <form (submit)=\"addCity()\">\n\n        <!-- New city name is entered in this input -->\n        <div class=\"form-group\">\n          <input type=\"text\" name=\"name\" class=\"form-control\" id=\"name\" placeholder=\"Enter city\" [(ngModel)]=\"city.name\">\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-primary\">Add City</button>\n      </form>\n    </div>\n    <div class=\"col mt-3\">\n      <p>\n        <b>Added Cities</b>\n      </p>\n      <form>\n\n        <!-- Get city names here for editing -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectCity\" name=\"cityId\">\n            <option *ngFor=\"let city of cities\" value=\"{{ city?._id }}\">{{ city?.name }}</option>\n          </select>\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-primary\">Edit</button>\n        <button type=\"submit\" class=\"btn btn-danger\">Delete</button>\n      </form>\n    </div>\n  </div>\n\n  <!-- \n  Manage Locations \n  - add Location\n  - edit Location\n  - delete Location\n-->\n  <div class=\"alert alert-success mt-3\">\n    <b>Locations</b>\n  </div>\n  <div class=\"row\">\n    <div class=\"col mt-3\">\n      <p>\n        <b>Add New Location</b>\n      </p>\n      <form (submit)=\"addLoc()\">\n\n        <!-- City names are get here to add location -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectCity\" name=\"cityId\" [(ngModel)]=\"location.cityId\">\n            <option *ngFor=\"let city of cities\" value=\"{{ city?._id }}\">{{ city?.name }}</option>\n          </select>\n        </div>\n\n        <!-- New location will be entered here -->\n        <div class=\"form-group\">\n          <input type=\"text\" class=\"form-control\" name=\"location\" id=\"inputLocation\" placeholder=\"Enter location\" [(ngModel)]=\"location.location\">\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-primary\">Add Location</button>\n      </form>\n    </div>\n    <div class=\"col mt-3\">\n      <p>\n        <b>Added Locations</b>\n      </p>\n      <form>\n\n        <!-- Get city names here for editing location -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectCity\" name=\"cityId\" (change)=\"onChange($event.target.value)\">\n            <option *ngFor=\"let city of cities\" value=\"{{ city?._id }}\">{{ city?.name }}</option>\n          </select>\n        </div>\n\n        <!-- Location is get here for editing and deleting -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectLocation\" name=\"locId\">\n            <option *ngFor=\"let loc of newLocations\" value=\"{{ loc?._id }}\">{{ loc?.location }}</option>\n          </select>\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-primary\">Edit</button>\n        <button type=\"submit\" class=\"btn btn-danger\">Delete</button>\n      </form>\n    </div>\n  </div>\n\n  <!-- \n  Manage Property Types\n-->\n  <div class=\"alert alert-success mt-3\">\n    <b>Property Types</b>\n  </div>\n  <div class=\"row\">\n    <div class=\"col mt-3\">\n      <p>\n        <b>Add New Type</b>\n      </p>\n      <form (submit)=\"addPropType()\">\n\n        <!-- New property type is entered here for adding in DB -->\n        <div class=\"form-group\">\n          <input type=\"text\" class=\"form-control\" name=\"type\" id=\"inputType\" placeholder=\"Enter property type\" [(ngModel)]=\"propType.type\">\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-primary\">Add Property Type</button>\n      </form>\n    </div>\n    <div class=\"col mt-3\">\n      <p>\n        <b>Added Types</b>\n      </p>\n      <form>\n\n        <!-- Property type is get here for editing and deleting -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectPropertyType\" name=\"propTypeId\">\n            <option *ngFor=\"let type of propTypes\" value=\"{{ type?._id }}\">{{ type?.type }}</option>\n          </select>\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-primary\">Edit</button>\n        <button type=\"submit\" class=\"btn btn-danger\">Delete</button>\n      </form>\n    </div>\n  </div>\n\n  <!-- \n  Manage Status Types\n-->\n  <div class=\"alert alert-success mt-3\">\n    <b>Status Types</b>\n  </div>\n  <div class=\"row\">\n    <div class=\"col mt-3\">\n      <p>\n        <b>Add New Status</b>\n      </p>\n      <form (submit)=\"addStatusType()\">\n\n        <!-- New status type is entered here for adding in DB -->\n        <div class=\"form-group\">\n          <input type=\"text\" class=\"form-control\" name=\"type\" id=\"inputType\" placeholder=\"Enter status type\" [(ngModel)]=\"statusType.type\">\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-primary\">Add Status Type</button>\n      </form>\n    </div>\n    <div class=\"col mt-3\">\n      <p>\n        <b>Added Status</b>\n      </p>\n      <form>\n\n        <!-- Status type is get here for editing and deleting -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectStatusType\" name=\"statusTypeId\">\n            <option *ngFor=\"let type of statusTypes\" value=\"{{ type?._id }}\">{{ type?.type }}</option>\n          </select>\n        </div>\n      </form>\n    </div>\n  </div>\n\n</div>"
 
 /***/ }),
 
@@ -1374,6 +1605,15 @@ var OptionsComponent = /** @class */ (function () {
         this.propType = {
             type: ""
         };
+        /////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////
+        /***************
+         For status type operations
+        *****************/
+        // Adding status type
+        this.statusType = {
+            type: ""
+        };
     }
     OptionsComponent.prototype.addCity = function () {
         var _this = this;
@@ -1392,9 +1632,15 @@ var OptionsComponent = /** @class */ (function () {
             console.error(err);
         });
     };
+    OptionsComponent.prototype.onChange = function (id) {
+        this.newLocations = this.locations.filter(function (locations) {
+            return locations.cityId == id;
+        });
+    };
     OptionsComponent.prototype.addLoc = function () {
         var _this = this;
         this.auth.addLoc(this.location).subscribe(function () {
+            _this.getLocations();
             _this.router.navigateByUrl('/options');
         }, function (err) {
             console.error(err);
@@ -1411,6 +1657,7 @@ var OptionsComponent = /** @class */ (function () {
     OptionsComponent.prototype.addPropType = function () {
         var _this = this;
         this.auth.addPropType(this.propType).subscribe(function () {
+            _this.getPropTypes();
             _this.router.navigateByUrl('/options');
         }, function (err) {
             console.error(err);
@@ -1424,10 +1671,28 @@ var OptionsComponent = /** @class */ (function () {
             console.error(err);
         });
     };
+    OptionsComponent.prototype.addStatusType = function () {
+        var _this = this;
+        this.auth.addStatusType(this.statusType).subscribe(function () {
+            _this.getStatusTypes();
+            _this.router.navigateByUrl('/options');
+        }, function (err) {
+            console.error(err);
+        });
+    };
+    OptionsComponent.prototype.getStatusTypes = function () {
+        var _this = this;
+        this.auth.getStatusTypes().subscribe(function (statusTypes) {
+            _this.statusTypes = statusTypes;
+        }, function (err) {
+            console.error(err);
+        });
+    };
     OptionsComponent.prototype.ngOnInit = function () {
         this.getCities();
         this.getLocations();
         this.getPropTypes();
+        this.getStatusTypes();
     };
     OptionsComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -1437,6 +1702,116 @@ var OptionsComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__authentication_service__["a" /* AuthenticationService */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* Router */]])
     ], OptionsComponent);
     return OptionsComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/options/status/status.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/options/status/status.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col align-self-center box-head\">\n      <form (submit)=\"updateStatus()\">\n        <div class=\"form-group col-md-3 mt-3\">\n          <label for=\"status\">Change Status</label>\n          <select class=\"form-control\" id=\"selectStatus\" name=\"statusId\" [(ngModel)]=\"statusID\">\n              <option *ngFor=\"let type of statusTypes\" value=\"{{ type?._id }}\">{{ type?.type }}</option>\n          </select>\n        </div>\n\n        <div class=\"text-left ml-3\">\n            <button type=\"submit\" class=\"btn btn-success\">Update & Go Back</button>\n        </div>\n      </form>\n    </div>\n  </div>\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/options/status/status.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StatusComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lead_service__ = __webpack_require__("../../../../../src/app/lead.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__authentication_service__ = __webpack_require__("../../../../../src/app/authentication.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var StatusComponent = /** @class */ (function () {
+    function StatusComponent(auth, router, leadService) {
+        this.auth = auth;
+        this.router = router;
+        this.leadService = leadService;
+    }
+    StatusComponent.prototype.ngOnInit = function () {
+        this.getStatus();
+        this.getStatusTypes();
+        this.getLead();
+        this.setIsAdmin();
+    };
+    StatusComponent.prototype.setIsAdmin = function () {
+        if (this.auth.isAdmin)
+            this.isAdmin = true;
+        else
+            this.isAdmin = false;
+    };
+    StatusComponent.prototype.getStatus = function () {
+        this.statusID = this.leadService.getStatusID();
+    };
+    StatusComponent.prototype.getLead = function () {
+        this.leadID = this.leadService.getLeadID();
+    };
+    StatusComponent.prototype.getStatusTypes = function () {
+        var _this = this;
+        this.auth.getStatusTypes().subscribe(function (statusTypes) {
+            _this.statusTypes = statusTypes.filter(function (statusTypes) {
+                return statusTypes._id !== 0;
+            });
+        }, function (err) {
+            console.error(err);
+        });
+    };
+    StatusComponent.prototype.updateStatus = function () {
+        var _this = this;
+        var status = {
+            "sid": this.statusID,
+            "lid": this.leadID,
+            "isAdmin": this.isAdmin
+        };
+        this.auth.updateStatus(status).subscribe(function () {
+            _this.router.navigateByUrl('/leads');
+        }, function (err) {
+            console.error(err);
+        });
+    };
+    StatusComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["n" /* Component */])({
+            selector: 'app-status',
+            template: __webpack_require__("../../../../../src/app/options/status/status.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/options/status/status.component.css")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__authentication_service__["a" /* AuthenticationService */], __WEBPACK_IMPORTED_MODULE_0__angular_router__["a" /* Router */],
+            __WEBPACK_IMPORTED_MODULE_1__lead_service__["a" /* LeadService */]])
+    ], StatusComponent);
+    return StatusComponent;
 }());
 
 
@@ -1464,7 +1839,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/users/edit-user/edit-user.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n\n  <div class=\"row\">\n    <div class=\"col-md-6\" class=\"mt-4\">\n      <form (submit)=\"updateUser()\">\n        <div class=\"form-group\">\n          <label for=\"name\">Full name</label>\n          <input type=\"text\" class=\"form-control\" name=\"name\" placeholder=\"Enter name\" [(ngModel)]=\"credentials.name\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"email\">Email address</label>\n          <input type=\"email\" class=\"form-control\" name=\"email\" placeholder=\"Enter email\" [(ngModel)]=\"credentials.email\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"contact\">Contact #</label>\n          <input type=\"text\" class=\"form-control\" name=\"contact\" placeholder=\"Enter phone number\" [(ngModel)]=\"credentials.phone\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"contact\">Location</label>\n          <input type=\"text\" class=\"form-control\" name=\"location\" placeholder=\"Enter location of user\" [(ngModel)]=\"credentials.location\">\n        </div>\n        <div class=\"form-group\">\n          <p>User Access</p>\n          <select class=\"form-control\" id=\"selectAccess\" name=\"access\" [(ngModel)]=\"credentials.access\">\n            <option value=\"1\">Admin</option>\n            <option value=\"2\">Agent</option>\n            <option value=\"3\">Editor</option>\n          </select>\n        </div>\n        <div class=\"form-group\">\n          <p>Status</p>\n          <select class=\"form-control\" id=\"selectAccess\" name=\"status\" [(ngModel)]=\"credentials.status\">\n            <option value=\"1\">Active</option>\n            <option value=\"2\">Inactive</option>\n          </select>\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-default\">Update User!</button>\n      </form>\n    </div>\n  </div>\n\n</div>"
+module.exports = "<div class=\"container\">\n\n  <div class=\"row\">\n    <div class=\"col-md-6\" class=\"mt-4\">\n      <form (submit)=\"updateUser()\">\n        <div class=\"form-group\">\n          <label for=\"name\">Full name</label>\n          <input type=\"text\" class=\"form-control\" name=\"name\" placeholder=\"Enter name\" [(ngModel)]=\"credentials.name\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"email\">Email address</label>\n          <input type=\"email\" class=\"form-control\" name=\"email\" placeholder=\"Enter email\" [(ngModel)]=\"credentials.email\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"contact\">Contact #</label>\n          <input type=\"text\" class=\"form-control\" name=\"contact\" placeholder=\"Enter phone number\" [(ngModel)]=\"credentials.phone\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"contact\">Location</label>\n          <input type=\"text\" class=\"form-control\" name=\"location\" placeholder=\"Enter location of user\" [(ngModel)]=\"credentials.location\">\n        </div>\n        <div class=\"form-group\">\n          <p>User Access</p>\n          <select class=\"form-control\" id=\"selectAccess\" name=\"access\" [(ngModel)]=\"credentials.access\">\n            <option value=\"1\">Admin</option>\n            <option value=\"2\">Agent</option>\n          </select>\n        </div>\n        <div class=\"form-group\">\n          <p>Status</p>\n          <select class=\"form-control\" id=\"selectAccess\" name=\"status\" [(ngModel)]=\"credentials.status\">\n            <option value=\"1\">Active</option>\n            <option value=\"2\">Inactive</option>\n          </select>\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-default\">Update User!</button>\n      </form>\n    </div>\n  </div>\n\n</div>"
 
 /***/ }),
 
@@ -1548,7 +1923,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/users/profile/profile.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"profile\">\n  <div class=\"cover-container d-flex h-100 p-3 mx-auto flex-column text-center\">\n\n    <main role=\"main\" class=\"inner cover\">\n      <h1 class=\"cover-heading\">Welcome {{ details?.name }}</h1>\n\n      <p *ngIf=\"details?.access == 1\" class=\"lead\">\n        <b>Acct Type:</b> Admin\n        <br>\n        <b>Email:</b> {{ details?.email }}\n        <br>\n        <b>Phone:</b> {{ details?.phone }}\n      </p>\n      <p *ngIf=\"details?.access == 2\" class=\"lead\">\n        <b>Acct Type:</b> Agent\n        <br>\n        <b>Email:</b> {{ details?.email }}\n        <br>\n        <b>Phone:</b> {{ details?.phone }}\n      </p>\n      <p *ngIf=\"details?.access == 3\" class=\"lead\">\n        <b>Acct Type:</b> Editor\n        <b>Email:</b>\n        <br> {{ details?.email }}\n        <br>\n        <b>Phone:</b> {{ details?.phone }}\n      </p>\n\n      <p class=\"lead\">\n        <a routerLink=\"/leads\" class=\"btn btn-lg btn-secondary\">View Leads</a>\n      </p>\n    </main>\n\n    <footer class=\"mastfoot mt-auto\">\n      <div class=\"inner\">\n        <p>Created for Marwat Associates</p>\n      </div>\n    </footer>\n  </div>\n</div>"
+module.exports = "<div class=\"profile\">\n  <div class=\"cover-container d-flex h-100 p-3 mx-auto flex-column text-center\">\n\n    <main role=\"main\" class=\"inner cover\">\n      <h1 class=\"cover-heading\">Welcome {{ details?.name }}</h1>\n\n      <p *ngIf=\"details?.access == 1\" class=\"lead\">\n        <b>Acct Type:</b> Admin\n        <br>\n        <b>Email:</b> {{ details?.email }}\n        <br>\n        <b>Phone:</b> {{ details?.phone }}\n      </p>\n      <p *ngIf=\"details?.access == 2\" class=\"lead\">\n        <b>Acct Type:</b> Agent\n        <br>\n        <b>Email:</b> {{ details?.email }}\n        <br>\n        <b>Phone:</b> {{ details?.phone }}\n      </p>\n\n      <p class=\"lead\">\n        <a routerLink=\"/leads\" class=\"btn btn-lg btn-secondary\">View Leads</a>\n      </p>\n    </main>\n\n    <footer class=\"mastfoot mt-auto\">\n      <div class=\"inner\">\n        <p>Created for Marwat Associates</p>\n      </div>\n    </footer>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -1653,7 +2028,7 @@ var ProfileComponent = /** @class */ (function () {
 /***/ "../../../../../src/app/users/register/register.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n\n  <div class=\"row\">\n    <div class=\"col-md-6\" class=\"mt-4\">\n      <form (submit)=\"register()\">\n        <div class=\"form-group\">\n          <label for=\"name\">Full name</label>\n          <input type=\"text\" class=\"form-control\" name=\"name\" placeholder=\"Enter name\" [(ngModel)]=\"credentials.name\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"email\">Email address</label>\n          <input type=\"email\" class=\"form-control\" name=\"email\" placeholder=\"Enter email\" [(ngModel)]=\"credentials.email\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"contact\">Contact #</label>\n          <input type=\"text\" class=\"form-control\" name=\"contact\" placeholder=\"Enter phone number\" [(ngModel)]=\"credentials.phone\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"contact\">Location</label>\n          <input type=\"text\" class=\"form-control\" name=\"location\" placeholder=\"Enter location of user\" [(ngModel)]=\"credentials.location\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"password\">Password</label>\n          <input type=\"password\" class=\"form-control\" name=\"password\" placeholder=\"Password\" [(ngModel)]=\"credentials.password\">\n        </div>\n        <div class=\"form-group\">\n          <p>User Access</p>\n          <div class=\"form-check form-check-inline\">\n            <input class=\"form-check-input\" type=\"radio\" [(ngModel)]=\"credentials.access\" name=\"access\" id=\"inlineRadio1\" value=\"1\">\n            <label class=\"form-check-label\" for=\"access\">Admin</label>\n          </div>\n          <div class=\"form-check form-check-inline\">\n            <input class=\"form-check-input\" type=\"radio\" [(ngModel)]=\"credentials.access\" name=\"access\" id=\"inlineRadio2\" value=\"2\">\n            <label class=\"form-check-label\" for=\"access\">Agent</label>\n          </div>\n          <div class=\"form-check form-check-inline\">\n            <input class=\"form-check-input\" type=\"radio\" [(ngModel)]=\"credentials.access\" name=\"access\" id=\"inlineRadio3\" value=\"3\">\n            <label class=\"form-check-label\" for=\"access\">Editor</label>\n          </div>\n        </div>\n        <div class=\"form-group\">\n          <p>Status</p>\n          <div class=\"form-check form-check-inline\">\n            <input class=\"form-check-input\" type=\"radio\" [(ngModel)]=\"credentials.status\" name=\"status\" id=\"inlineRadio1\" value=\"1\">\n            <label class=\"form-check-label\" for=\"status\">Active</label>\n          </div>\n          <div class=\"form-check form-check-inline\">\n            <input class=\"form-check-input\" type=\"radio\" [(ngModel)]=\"credentials.status\" name=\"status\" id=\"inlineRadio2\" value=\"2\">\n            <label class=\"form-check-label\" for=\"status\">Inactive</label>\n          </div>\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-default\">Add User!</button>\n      </form>\n    </div>\n  </div>\n\n</div>"
+module.exports = "<div class=\"container\">\n\n  <div class=\"row\">\n    <div class=\"col-md-6\" class=\"mt-4\">\n      <form (submit)=\"register()\">\n        <div class=\"form-group\">\n          <label for=\"name\">Full name</label>\n          <input type=\"text\" class=\"form-control\" name=\"name\" placeholder=\"Enter name\" [(ngModel)]=\"credentials.name\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"email\">Email address</label>\n          <input type=\"email\" class=\"form-control\" name=\"email\" placeholder=\"Enter email\" [(ngModel)]=\"credentials.email\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"contact\">Contact #</label>\n          <input type=\"text\" class=\"form-control\" name=\"contact\" placeholder=\"Enter phone number\" [(ngModel)]=\"credentials.phone\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"contact\">Location</label>\n          <input type=\"text\" class=\"form-control\" name=\"location\" placeholder=\"Enter location of user\" [(ngModel)]=\"credentials.location\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"password\">Password</label>\n          <input type=\"password\" class=\"form-control\" name=\"password\" placeholder=\"Password\" [(ngModel)]=\"credentials.password\">\n        </div>\n        <div class=\"form-group\">\n          <p>User Access</p>\n          <div class=\"form-check form-check-inline\">\n            <input class=\"form-check-input\" type=\"radio\" [(ngModel)]=\"credentials.access\" name=\"access\" id=\"inlineRadio1\" value=\"1\">\n            <label class=\"form-check-label\" for=\"access\">Admin</label>\n          </div>\n          <div class=\"form-check form-check-inline\">\n            <input class=\"form-check-input\" type=\"radio\" [(ngModel)]=\"credentials.access\" name=\"access\" id=\"inlineRadio2\" value=\"2\">\n            <label class=\"form-check-label\" for=\"access\">Agent</label>\n          </div>\n        </div>\n        <div class=\"form-group\">\n          <p>Status</p>\n          <div class=\"form-check form-check-inline\">\n            <input class=\"form-check-input\" type=\"radio\" [(ngModel)]=\"credentials.status\" name=\"status\" id=\"inlineRadio1\" value=\"1\">\n            <label class=\"form-check-label\" for=\"status\">Active</label>\n          </div>\n          <div class=\"form-check form-check-inline\">\n            <input class=\"form-check-input\" type=\"radio\" [(ngModel)]=\"credentials.status\" name=\"status\" id=\"inlineRadio2\" value=\"2\">\n            <label class=\"form-check-label\" for=\"status\">Inactive</label>\n          </div>\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-default\">Add User!</button>\n      </form>\n    </div>\n  </div>\n\n</div>"
 
 /***/ }),
 
@@ -1733,7 +2108,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/users/users.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"col col-lg-12\">\n    <div class=\"panel panel-default mt-4\">\n      <!-- /.panel-heading -->\n      <div class=\"panel-body\">\n        <button class=\"btn btn-info btn-sm mb-3\" routerLink=\"/register\">Add new user</button>\n          <table *ngIf=\"users\" datatable=\"ng\" class=\"table table-bordered table-hover\" id=\"datatableId\" [dtOptions]=\"dtOptions\">\n            <thead>\n              <tr>\n                <th>User ID</th>\n                <th>Full Name</th>\n                <th>Contact #</th>\n                <th>Location</th>\n                <th>Email Address</th>\n                <th>Access</th>\n                <th>Status</th>\n                <th>Operations</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr class=\"odd gradeX\" *ngFor=\"let u of users\">\n                <td>{{ u._id.substr(u._id.length - 4) }}</td>\n                <td>{{ u.name }}</td>\n                <td>{{ u.phone }}</td>\n                <td>{{ u.location }}</td>\n                <td>{{ u.email }}</td>\n  \n                <td *ngIf=\"u.access == 1\">Admin</td>\n                <td *ngIf=\"u.access == 2\">Agent</td>\n                <td *ngIf=\"u.access == 3\">Editor</td>\n  \n                <td *ngIf=\"u.status == 1\">Active</td>\n                <td *ngIf=\"u.status == 2\">Inactive</td>\n                <td>\n                  <a (click)=\"editUser(u._id)\" class=\"btn btn-sm btn-default\">\n                    <i class=\"fas fa-edit\" style=\"font-size:1.2rem\"></i> Edit\n                  </a>\n                </td>\n              </tr>\n  \n            </tbody>\n\n            <tfoot>\n              <tr>\n                <th><input id=\"userInput21\" type=\"text\" placeholder=\"Search ID\" /></th>\n                <th><input id=\"userInput21\" type=\"text\" placeholder=\"Search Name\" /></th>\n                <th><input id=\"userInput21\" type=\"text\" placeholder=\"Search Contact\" /></th>\n                <th><input id=\"userInput21\" type=\"text\" placeholder=\"Search Location\" /></th>\n                <th><input id=\"userInput21\" type=\"text\" placeholder=\"Search Email\" /></th>\n                <th><input id=\"userInput21\" type=\"text\" placeholder=\"Search Access\" /></th>\n                <th><input id=\"userInput21\" type=\"text\" placeholder=\"Search Status\" /></th>\n                <th><i class=\"fab fa-searchengin\" style=\"font-size:1.8rem;\"></i></th>\n              </tr>\n            </tfoot>\n\n          </table>\n  \n      </div>\n      <!-- /.panel-body -->\n    </div>\n    <!-- /.panel -->\n  </div>\n  <!-- /.col-lg-12 -->"
+module.exports = "<div class=\"col col-lg-12\">\n    <div class=\"panel panel-default mt-4\">\n      <!-- /.panel-heading -->\n      <div class=\"panel-body\">\n        <button class=\"btn btn-info btn-sm mb-3\" routerLink=\"/register\">Add new user</button>\n          <p *ngIf=\"!users\">Please wait...</p>\n          <table *ngIf=\"users\" datatable=\"ng\" class=\"table table-bordered table-hover\" id=\"datatableId\" [dtOptions]=\"dtOptions\">\n            <thead>\n              <tr>\n                <th>User ID</th>\n                <th>Full Name</th>\n                <th>Contact #</th>\n                <th>Location</th>\n                <th>Email Address</th>\n                <th>Access</th>\n                <th>Status</th>\n                <th>Operations</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr class=\"odd gradeX\" *ngFor=\"let u of users\">\n                <td>{{ u._id.substr(u._id.length - 4) }}</td>\n                <td>{{ u.name }}</td>\n                <td>{{ u.phone }}</td>\n                <td>{{ u.location }}</td>\n                <td>{{ u.email }}</td>\n  \n                <td *ngIf=\"u.access == 1\">Admin</td>\n                <td *ngIf=\"u.access == 2\">Agent</td>\n                <td *ngIf=\"u.access == 3\">Editor</td>\n  \n                <td *ngIf=\"u.status == 1\">Active</td>\n                <td *ngIf=\"u.status == 2\">Inactive</td>\n                <td>\n                  <a (click)=\"editUser(u._id)\" class=\"btn btn-sm btn-default\">\n                    <i class=\"fas fa-edit\" style=\"font-size:1.2rem\"></i> Edit\n                  </a>\n                </td>\n              </tr>\n  \n            </tbody>\n\n            <tfoot>\n              <tr>\n                <th><input id=\"userInput21\" type=\"text\" placeholder=\"Search ID\" /></th>\n                <th><input id=\"userInput21\" type=\"text\" placeholder=\"Search Name\" /></th>\n                <th><input id=\"userInput21\" type=\"text\" placeholder=\"Search Contact\" /></th>\n                <th><input id=\"userInput21\" type=\"text\" placeholder=\"Search Location\" /></th>\n                <th><input id=\"userInput21\" type=\"text\" placeholder=\"Search Email\" /></th>\n                <th><input id=\"userInput21\" type=\"text\" placeholder=\"Search Access\" /></th>\n                <th><input id=\"userInput21\" type=\"text\" placeholder=\"Search Status\" /></th>\n                <th><i class=\"fab fa-searchengin\" style=\"font-size:1.8rem;\"></i></th>\n              </tr>\n            </tfoot>\n\n          </table>\n  \n      </div>\n      <!-- /.panel-body -->\n    </div>\n    <!-- /.panel -->\n  </div>\n  <!-- /.col-lg-12 -->"
 
 /***/ }),
 

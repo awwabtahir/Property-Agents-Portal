@@ -31,17 +31,26 @@ export class EditLeadComponent implements OnInit {
     });
   }
 
+  // City onChange()
+  newLocations;
+  onChange(id) {
+    this.newLocations = this.locations.filter(function (locations) {
+      return locations.cityId == id;
+    });
+  }
+
   //////////////////////////////////////////////////////////
 
   // For Location
 
   // Get Locations
 
-  locations: Locations;
+  locations;
 
   getLocations() {
     this.auth.getLocations().subscribe(locations => {
       this.locations = locations;
+      this.newLocations = locations;
     }, (err) => {
       console.error(err);
     });

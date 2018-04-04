@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthenticationService, Leads, Inventories } from '../authentication.service';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { AuthenticationService, Leads, Inventories, Status } from '../authentication.service';
 import { LeadService } from '../lead.service';
 import { Router } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
@@ -9,7 +9,10 @@ import { DataTableDirective } from 'angular-datatables';
   templateUrl: './leads.component.html',
   styleUrls: ['./leads.component.css']
 })
-export class LeadsComponent implements OnInit {
+export class LeadsComponent implements OnInit, AfterViewInit  {
+
+  @ViewChild(DataTableDirective)
+  datatableElement: DataTableDirective;
 
   dtOptions: any = {};
 
@@ -22,6 +25,7 @@ export class LeadsComponent implements OnInit {
     this.getCities();
     this.getLocations();
     this.getPropTypes();
+    this.getStatusTypes();
     this.getUsers();
 
     this.dtOptions = {
@@ -29,17 +33,54 @@ export class LeadsComponent implements OnInit {
     };
   }
 
+  ngAfterViewInit(): void {
+
+    setTimeout(() => {
+
+      this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.columns().every(function () {
+          const that = this;
+          $('#leadInput21', this.footer()).on('keyup change', function () {
+            if (that.search() !== this['value']) {
+              that
+                .search(this['value'])
+                .draw();
+            }
+          });
+        });
+        $('#datatableId tfoot tr').appendTo('#datatableId thead');
+      });
+
+    }, 3000);
+
+
+  }
+
 
   // For getting leads
 
+  rawleads;
   leads;
+  resultLeads;
 
   getLeads() {
     this.auth.getLeads().subscribe(leads => {
 
-      this.leads = leads.filter(function (leads) {
+      this.rawleads = leads.filter(function (leads) {
         return leads.assignedTo !== "0";
       });
+
+      this.leads = this.rawleads.filter(function (rawleads) {
+        return rawleads.leadAdminStatus !== 0;
+      });
+
+      if (this.auth.isAgent) {
+        this.leads = this.leads.filter(function (leads) {
+          return leads.leadAgentStatus !== 0;
+        });
+      }
+
+      this.resultLeads = this.leads;
 
       this.leadService.setLeads(this.leads);
 
@@ -95,6 +136,24 @@ export class LeadsComponent implements OnInit {
     }, (err) => {
       console.error(err);
     });
+  }
+
+  statusTypes;
+
+  getStatusTypes() {
+    this.auth.getStatusTypes().subscribe(statusTypes => {
+      this.statusTypes = statusTypes;
+    }, (err) => {
+      console.error(err);
+    });
+  }
+
+  getStatusType(id) {
+    for (var i = 0; i < this.statusTypes.length; i++) {
+      if (this.statusTypes[i]._id == id) {
+        return this.statusTypes[i].type;
+      }
+    }
   }
 
   getPropertyType(id) {
@@ -153,6 +212,12 @@ export class LeadsComponent implements OnInit {
     TWO: "Dealer"
   };
 
+  changeStatus(statusID, leadID) {
+    this.leadService.setStatusID(statusID);
+    this.leadService.setLeadID(leadID);
+    this.router.navigateByUrl('/editstatus');
+  }
+
   editLead(id) {
 
     for (var i = 0; i < this.leads.length; i++) {
@@ -176,9 +241,45 @@ export class LeadsComponent implements OnInit {
 
   }
 
+  deleteLead(id) {
+
+    for (var i = 0; i < this.leads.length; i++) {
+      if (this.leads[i]._id == id) {
+        this.leads.splice(i, 1);
+        break;
+      }
+    }
+
+    let isAdmin;
+
+    if (this.auth.isAdmin) isAdmin = true;
+    else isAdmin = false;
+
+    console.log(isAdmin);
+
+    let status: Status = {
+      "sid": 0,
+      "lid": id,
+      "isAdmin": isAdmin
+    }
+
+    this.auth.updateStatus(status).subscribe(() => {
+      console.log("success");
+    }, (err) => {
+      console.error(err);
+    });
+
+  }
+
   addLead() {
     this.leadService.setIsLead(true);
     this.router.navigateByUrl('/add');
   }
+
+  ///////////////////////////////////////
+  ///////// For search
+  //////////////////////////////////////
+
+
 
 }

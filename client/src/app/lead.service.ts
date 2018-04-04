@@ -139,6 +139,26 @@ export class LeadService {
     return this.isLead;
   }
 
+  private statusId;
+
+  setStatusID(statusId) {
+    this.statusId = statusId;
+  }
+
+  getStatusID(): Observable<any> {
+    return this.statusId;
+  }
+
+  private leadId;
+
+  setLeadID(leadId) {
+    this.leadId = leadId;
+  }
+
+  getLeadID(): Observable<any> {
+    return this.leadId;
+  }
+
   constructor() { }
 
 }

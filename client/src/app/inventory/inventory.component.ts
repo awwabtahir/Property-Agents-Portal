@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
 import { LeadService } from '../lead.service';
 import { Router } from '@angular/router';
@@ -9,7 +9,16 @@ import { DataTableDirective } from 'angular-datatables';
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.css']
 })
-export class InventoryComponent implements OnInit {
+export class InventoryComponent implements OnInit, AfterViewInit {
+
+  @ViewChild(DataTableDirective)
+  datatableElement: DataTableDirective;
+
+  minD: number;
+  maxD: number;
+
+  minA: number;
+  maxA: number;
 
   dtOptions: any = {};
 
@@ -23,9 +32,56 @@ export class InventoryComponent implements OnInit {
     // this.getCities();
     // this.getInventories();
 
+    // We need to call the $.fn.dataTable like this because DataTables typings do not have the "ext" property
+    $.fn['dataTable'].ext.search.push((settings, data, dataIndex) => {
+      const demand = parseFloat(data[4]) || 4; // use data for the id column
+      if ((isNaN(this.minD) && isNaN(this.maxD)) ||
+        (isNaN(this.minD) && demand <= this.maxD) ||
+        (this.minD <= demand && isNaN(this.maxD)) ||
+        (this.minD <= demand && demand <= this.maxD)) {
+        return true;
+      }
+      return false;
+    });
+
     this.dtOptions = {
       responsive: true
     };
+  }
+
+  ngAfterViewInit(): void {
+
+    setTimeout(() => {
+
+      this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.columns().every(function () {
+          const that = this;
+          $('#invInput21', this.footer()).on('keyup change', function () {
+            if (that.search() !== this['value']) {
+              that
+                .search(this['value'])
+                .draw();
+            }
+          });
+        });
+        $('#datatableId tfoot tr').appendTo('#datatableId thead');
+      });
+
+    }, 3000);
+
+
+  }
+
+  filterByDemand(): void {
+    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.draw();
+    });
+  }
+
+  filterByArea(): void {
+    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.draw();
+    });
   }
 
   leads;
@@ -40,10 +96,12 @@ export class InventoryComponent implements OnInit {
   }
 
   inventories;
+  resultInventories;
 
   getInventories() {
     this.auth.getInventories().subscribe(inventories => {
       this.inventories = inventories;
+      this.resultInventories = this.inventories;
       this.setInv();
     }, (err) => {
       console.error(err);
@@ -220,6 +278,67 @@ export class InventoryComponent implements OnInit {
   addInventory() {
     this.leadService.setIsLead(false);
     this.router.navigateByUrl('/add');
+  }
+
+  ////////////////////////////////////
+  ////////// Search
+  ////////////////////////////////////
+
+  toggleSearch() {
+    let x = document.getElementById("search");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+
+  areaChange(event: any) {
+    let value = event.target.value;
+    if (value == 1) {
+      this.resultInventories = $.map(this.inventories, function (entry) {
+        if (entry.areaUnit == 2) {
+          entry.area = entry.area * 272;
+        }
+        if (entry.areaUnit == 3) {
+          entry.area = entry.area * 5445;
+        }
+        entry.area = +parseFloat(entry.area).toFixed(2);
+        entry.areaUnit = 1;
+        return entry;
+      });
+      this.setInv();
+    }
+
+    if (value == 2) {
+      this.resultInventories = $.map(this.inventories, function (entry) {
+        if (entry.areaUnit == 1) {
+          entry.area = entry.area * 0.0037;
+        }
+        if (entry.areaUnit == 3) {
+          entry.area = entry.area * 20;
+        }
+        entry.area = +parseFloat(entry.area).toFixed(2);
+        entry.areaUnit = 2;
+        return entry;
+      });
+      this.setInv();
+    }
+
+    if (value == 3) {
+      this.resultInventories = $.map(this.inventories, function (entry) {
+        if (entry.areaUnit == 1) {
+          entry.area = entry.area * 0.00018;
+        }
+        if (entry.areaUnit == 2) {
+          entry.area = entry.area * 0.05;
+        }
+        entry.area = +parseFloat(entry.area).toFixed(2);
+        entry.areaUnit = 3;
+        return entry;
+      });
+      this.setInv();
+    }
   }
 
 }

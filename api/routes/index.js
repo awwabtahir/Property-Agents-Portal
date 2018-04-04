@@ -20,6 +20,8 @@ router.post('/updateUser', ctrlProfile.updateUser);
 router.post('/addCity', ctrlOptions.addCity);
 router.post('/addLoc', ctrlOptions.addLoc);
 router.post('/addPropType', ctrlOptions.addPropType);
+router.post('/addStatusType', ctrlOptions.addStatusType);
+router.post('/updateStatus', ctrlOptions.updateStatus);
 router.post('/addLead', ctrlLead.addLead);
 router.post('/updateLead', ctrlLead.updateLead);
 
@@ -27,6 +29,7 @@ router.post('/updateLead', ctrlLead.updateLead);
 router.get('/getCities', auth, ctrlOptions.getCities);
 router.get('/getLocations', auth, ctrlOptions.getLocations);
 router.get('/getPropTypes', auth, ctrlOptions.getPropTypes);
+router.get('/getStatusTypes', auth, ctrlOptions.getStatusTypes);
 router.get('/getLeads', auth, ctrlLead.getLeads);
 router.get('/getInventories', auth, ctrlLead.getInventories);
 

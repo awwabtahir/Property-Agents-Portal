@@ -21,7 +21,6 @@ module.exports.addLead = function (req, res) {
     inventory.area = req.body.area;
     inventory.areaUnit = req.body.areaUnit;
     inventory.beds = req.body.beds;
-    inventory.inventoryStatus = req.body.leadStatus;
     inventory.leadId = 0;
 
     var lead = new Lead();
@@ -30,7 +29,8 @@ module.exports.addLead = function (req, res) {
     lead.clientType = req.body.clientType;
     lead.phoneNumber = req.body.phoneNumber;
     lead.assignedTo = req.body.assignedTo;
-    lead.leadStatus = req.body.leadStatus;
+    lead.leadAdminStatus = req.body.leadAdminStatus;
+    lead.leadAgentStatus = req.body.leadAgentStatus;
     lead.inventoryId = 0;
 
     lead.save(function (err, l) {
@@ -114,7 +114,6 @@ module.exports.updateLead = function (req, res) {
     lead.clientType = req.body.clientType;
     lead.phoneNumber = req.body.phoneNumber;
     lead.assignedTo = req.body.assignedTo;
-    lead.leadStatus = req.body.leadStatus;
     lead.inventoryId = req.body.inventoryId;
 
     var conditions = { _id: req.body.leadId }

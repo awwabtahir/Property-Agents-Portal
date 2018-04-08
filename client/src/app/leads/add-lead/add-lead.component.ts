@@ -10,6 +10,20 @@ import { Router } from '@angular/router';
 })
 export class AddLeadComponent implements OnInit {
 
+  constructor(private auth: AuthenticationService, private router: Router,
+    private LeadService: LeadService) { }
+
+  ngOnInit() {
+    this.getCities();
+    this.getLocations();
+    this.getPropTypes();
+    this.getUsers();
+    this.getIsLead();
+    this.getStatusTypes();
+
+  }
+
+
   isLead;
 
   getIsLead() {
@@ -85,7 +99,7 @@ export class AddLeadComponent implements OnInit {
   // Get Status Types
 
   statusTypes;
-  
+
   getStatusTypes() {
     this.auth.getStatusTypes().subscribe(statusTypes => {
       this.statusTypes = statusTypes;
@@ -139,41 +153,34 @@ export class AddLeadComponent implements OnInit {
     cityId: 0,
     locationId: 0,
     propTypeId: 0,
-    propNumber: "",
-    street: "",
-    demand: 0,
-    area: "",
+    propNumber: null,
+    street: null,
+    demand: null,
+    area: null,
     areaUnit: 1,
     beds: 0,
-    clientName: "",
+    clientName: null,
     clientType: 0,
-    phoneNumber: "",
+    phoneNumber: null,
     assignedTo: 0,
     leadAdminStatus: 0,
     leadAgentStatus: 0
   };
 
   addLead() {
+    if(this.lead.assignedTo == 0) {
+      var userId = this.LeadService.getUserId();
+      this.lead.assignedTo = userId;
+    }
     this.auth.addLead(this.lead).subscribe(() => {
-      if(this.isLead)
+      if (this.isLead)
         this.router.navigateByUrl('/leads');
       else
-      this.router.navigateByUrl('/inventory');
+        this.router.navigateByUrl('/inventory');
     }, (err) => {
       console.error(err);
     });
   }
 
-  constructor(private auth: AuthenticationService, private router: Router, 
-  private LeadService: LeadService) { }
-
-  ngOnInit() {
-    this.getCities();
-    this.getLocations();
-    this.getPropTypes();
-    this.getUsers();
-    this.getIsLead();
-    this.getStatusTypes();
-  }
 
 }

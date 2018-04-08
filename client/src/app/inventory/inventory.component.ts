@@ -1,3 +1,4 @@
+import { Status } from './../authentication.service';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
 import { LeadService } from '../lead.service';
@@ -45,7 +46,8 @@ export class InventoryComponent implements OnInit, AfterViewInit {
     });
 
     this.dtOptions = {
-      responsive: true
+      responsive: true,
+      order: [[0, "desc"]]
     };
   }
 
@@ -101,11 +103,36 @@ export class InventoryComponent implements OnInit, AfterViewInit {
   getInventories() {
     this.auth.getInventories().subscribe(inventories => {
       this.inventories = inventories;
+      this.cleaner();
       this.resultInventories = this.inventories;
       this.setInv();
     }, (err) => {
       console.error(err);
     });
+  }
+
+  cleaner() {
+    for (var i = 0; i < this.inventories.length; i++) {
+      var cur = this.inventories[i];
+      for (var j = 0; j < this.leads.length; j++) {
+        if (cur.leadId == this.leads[j]._id) {
+          
+          if (this.leads[j].leadAdminStatus == 0) {
+            this.inventories.splice(i, 1);
+            console.log("hello");
+            break;
+          }
+
+          if (this.auth.isAgent) {
+            if (this.leads[j].leadAgentStatus == 0) {
+              this.inventories.splice(i, 1);
+              break;
+            }
+          }
+
+        }
+      }
+    }
   }
 
   locations;
@@ -272,6 +299,36 @@ export class InventoryComponent implements OnInit, AfterViewInit {
       this.leadService.setIsLead(false);
       this.router.navigateByUrl('/editlead');
     }
+
+  }
+
+  deleteLead(id) {
+
+    for (var i = 0; i < this.inventories.length; i++) {
+      if (this.inventories[i].leadId == id) {
+        this.inventories.splice(i, 1);
+        break;
+      }
+    }
+
+    let isAdmin;
+
+    if (this.auth.isAdmin) isAdmin = true;
+    else isAdmin = false;
+
+    console.log(isAdmin);
+
+    let status: Status = {
+      "sid": 0,
+      "lid": id,
+      "isAdmin": isAdmin
+    }
+
+    this.auth.updateStatus(status).subscribe(() => {
+      console.log("success");
+    }, (err) => {
+      console.error(err);
+    });
 
   }
 

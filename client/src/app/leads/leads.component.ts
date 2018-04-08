@@ -29,7 +29,8 @@ export class LeadsComponent implements OnInit, AfterViewInit  {
     this.getUsers();
 
     this.dtOptions = {
-      responsive: true
+      responsive: true,
+      order: [[ 0, "desc" ]]
     };
   }
 

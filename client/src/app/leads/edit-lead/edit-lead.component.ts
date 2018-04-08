@@ -107,6 +107,11 @@ export class EditLeadComponent implements OnInit {
   }
 
   updateLead() {
+    if(this.lead.assignedTo == 0) {
+      var userId = this.leadService.getUserId();
+      this.lead.assignedTo = userId;
+    }
+
     this.auth.updateLead(this.lead).subscribe(() => {
       this.router.navigateByUrl('/leads');
     }, (err) => {

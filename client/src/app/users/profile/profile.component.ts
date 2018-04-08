@@ -16,6 +16,7 @@ export class ProfileComponent {
 
     this.auth.profile().subscribe(user => {
       this.details = user;
+      this.leadService.setUserId(this.details._id);
     }, (err) => {
       console.error(err);
     });

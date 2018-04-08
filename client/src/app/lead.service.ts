@@ -1,3 +1,4 @@
+import { userId } from './authentication.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
@@ -157,6 +158,16 @@ export class LeadService {
 
   getLeadID(): Observable<any> {
     return this.leadId;
+  }
+
+  private userId;
+
+  setUserId(userId) {
+    this.userId = userId;
+  }
+
+  getUserId() {
+    return this.userId;
   }
 
   constructor() { }

@@ -14,10 +14,13 @@
         <a class="nav-link" routerLink="/inventory" routerLinkActive="active">Inventory</a>
       </li>
       <li *ngIf="auth.isLoggedIn() && auth.isAdmin()" class="nav-item">
-          <a class="nav-link" routerLink="/users" routerLinkActive="active">Users</a>
-        </li>
+        <a class="nav-link" routerLink="/users" routerLinkActive="active">Users</a>
+      </li>
       <li *ngIf="auth.isLoggedIn() && !auth.isAgent()" class="nav-item">
         <a class="nav-link" routerLink="/options" routerLinkActive="active">Options</a>
+      </li>
+      <li *ngIf="auth.isLoggedIn() && auth.isAdmin()" class="nav-item">
+        <a class="nav-link" routerLink="/inactive" routerLinkActive="active">Inactive Leads</a>
       </li>
     </ul>
 

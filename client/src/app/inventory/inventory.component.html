@@ -25,31 +25,65 @@
             <label class="form-check-label" for="inlineRadio3">Kanal</label>
           </div>
 
-          <!-- <br><br>
-          <form (submit)="filterByArea()">
-            <label>
-              Min
-              <input type="number" name="min" id="min" [(ngModel)]="minA" />
-            </label>
-            <label>
-              Max
-              <input type="number" name="max" id="max" [(ngModel)]="maxA" />
-            </label>
-            <button class="btn btn-primary" type="submit">Filter by Area</button>
-          </form> -->
+          <br>
+          <br>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <h5>Size</h5>
+              <label>
+                Min
+                <input type="number" class="px100" [(ngModel)]="minA" (keyup)="filter()" />
+              </label>
+              <label>
+                Max
+                <input type="number" class="px100" [(ngModel)]="maxA" (keyup)="filter()" />
+              </label>
+            </div>
 
-          <br><br>
-          <form (submit)="filterByDemand()">
-            <label>
-              Min
-              <input type="number" name="min" id="min" [(ngModel)]="minD" />
-            </label>
-            <label>
-              Max
-              <input type="number" name="max" id="max" [(ngModel)]="maxD" />
-            </label>
-            <button class="btn btn-primary" type="submit">Filter by Demand</button>
-          </form>
+            <br>
+            <br>
+            <div class="form-group col-md-6">
+              <h5>Price</h5>
+              <label>
+                Min
+                <input type="number" class="px100" [(ngModel)]="minD" (keyup)="filter()" />
+              </label>
+              <label>
+                Max
+                <input type="number" class="px100" [(ngModel)]="maxD" (keyup)="filter()" />
+              </label>
+            </div>
+          </div>
+
+          <div class="form-row">
+
+            <div class="formgroup col-md-4">
+              <label for="inputCity"><b>City</b></label>
+              <select class="form-control" id="selectCity" name="cityId" (change)="onCityChange($event.target.value)">
+                <option value="0" selected>Select city</option>
+                <option *ngFor="let city of newcities" value="{{ city?._id }}">{{ city?.name }}</option>
+              </select>
+            </div>
+
+            <div class="formgroup col-md-4">
+              <label for="locId"><b>Location</b></label>
+              <select class="form-control" id="selectLocation" name="locId" (change)="onLocationChange($event.target.value)">
+                <option value="0" selected>Select location</option>
+                <option *ngFor="let loc of newLocations" value="{{ loc?._id }}">{{ loc?.location }}</option>
+              </select>
+            </div>
+
+            <div class="formgroup col-md-4">
+              <label for="inputType"><b>Type</b></label>
+              <select class="form-control" id="selectPropertyType" name="propTypeId" (change)="onTypeChange($event.target.value)">
+                <option value="0" selected>Select property type</option>
+                <option *ngFor="let type of propertytypes" value="{{ type?._id }}">{{ type?.type }}</option>
+              </select>
+            </div>
+          </div>
+
+          <br>
+          <button class="btn btn-info" (click)="resetSearch()">Reset</button>
 
         </div>
       </div>
@@ -58,7 +92,8 @@
 
 
       <p *ngIf="!resultInventories">Please wait...</p>
-      <table *ngIf="resultInventories" datatable class="table table-bordered table-hover" id="datatableId" [dtOptions]="dtOptions">
+      <table *ngIf="resultInventories" datatable [dtTrigger]="dtTrigger" class="table table-bordered table-hover" id="datatableId"
+        [dtOptions]="dtOptions">
         <thead>
           <tr>
             <th>ID</th>
@@ -92,35 +127,6 @@
             </td>
           </tr>
         </tbody>
-
-        <tfoot>
-          <tr>
-            <th>
-              <input id="invInput21" type="text" placeholder="Search ID" />
-            </th>
-            <th>
-              <input id="invInput21" type="text" placeholder="Search Location" />
-            </th>
-            <th>
-              <input id="invInput21" type="text" placeholder="Search Area" />
-            </th>
-            <th>
-              <input id="invInput21" type="text" placeholder="Search Type" />
-            </th>
-            <th>
-              <input id="invInput21" type="text" placeholder="Search Demand" />
-            </th>
-            <th>
-              <input id="invInput21" type="text" placeholder="Search Purpose" />
-            </th>
-            <th>
-              <input id="invInput21" type="text" placeholder="Search Beds" />
-            </th>
-            <th>
-              <i class="fab fa-searchengin" style="font-size:1.8rem;"></i>
-            </th>
-          </tr>
-        </tfoot>
 
       </table>
 

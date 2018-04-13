@@ -95,7 +95,8 @@ export interface Lead {
   phoneNumber: String,
   assignedTo: Number,  
   leadAdminStatus: Number,
-  leadAgentStatus: Number
+  leadAgentStatus: Number,
+  cmt: String
 }
 
 export interface Leads {

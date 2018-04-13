@@ -164,7 +164,8 @@ export class AddLeadComponent implements OnInit {
     phoneNumber: null,
     assignedTo: 0,
     leadAdminStatus: 0,
-    leadAgentStatus: 0
+    leadAgentStatus: 0,
+    cmt: null
   };
 
   addLead() {

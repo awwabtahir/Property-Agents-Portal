@@ -25,6 +25,9 @@ var leadSchema = new mongoose.Schema({
     },
     inventoryId : {
         type: Number
+    },
+    cmt: {
+        type: String
     }
 });
 

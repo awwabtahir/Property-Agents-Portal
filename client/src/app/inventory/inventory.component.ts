@@ -1,9 +1,10 @@
-import { Status } from './../authentication.service';
+import { Status, Locations, Inventories } from './../authentication.service';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
 import { LeadService } from '../lead.service';
 import { Router } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-inventory',
@@ -23,6 +24,8 @@ export class InventoryComponent implements OnInit, AfterViewInit {
 
   dtOptions: any = {};
 
+  dtTrigger: Subject<any> = new Subject();
+
   constructor(private auth: AuthenticationService, private router: Router,
     private leadService: LeadService) { }
 
@@ -35,13 +38,28 @@ export class InventoryComponent implements OnInit, AfterViewInit {
 
     // We need to call the $.fn.dataTable like this because DataTables typings do not have the "ext" property
     $.fn['dataTable'].ext.search.push((settings, data, dataIndex) => {
-      const demand = parseFloat(data[4]) || 4; // use data for the id column
-      if ((isNaN(this.minD) && isNaN(this.maxD)) ||
-        (isNaN(this.minD) && demand <= this.maxD) ||
-        (this.minD <= demand && isNaN(this.maxD)) ||
+      const demand = parseFloat(data[4]); // use data for the demand column
+      const area = parseFloat(data[2].split(" ")[0]); // use data for the area column
+
+      if ((!(this.minA) && area <= this.maxA) ||
+        (this.minA <= area && !(this.maxA)) ||
+        (this.minA <= area && area <= this.maxA)) {
+        return true;
+      }
+
+
+      if ((!(this.minD) && demand <= this.maxD) ||
+        (this.minD <= demand && !(this.maxD)) ||
         (this.minD <= demand && demand <= this.maxD)) {
         return true;
       }
+
+      if((!(this.minA) && !(this.maxA)) &&
+      (!(this.minD) && !(this.maxD))) {
+        console.log("true");
+        return true;
+      }
+
       return false;
     });
 
@@ -54,33 +72,27 @@ export class InventoryComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
 
     setTimeout(() => {
-
-      this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.columns().every(function () {
-          const that = this;
-          $('#invInput21', this.footer()).on('keyup change', function () {
-            if (that.search() !== this['value']) {
-              that
-                .search(this['value'])
-                .draw();
-            }
-          });
-        });
-        $('#datatableId tfoot tr').appendTo('#datatableId thead');
-      });
-
+      this.dtTrigger.next();
     }, 3000);
-
 
   }
 
-  filterByDemand(): void {
+  resetSearch() {
+    this.resultInventories = this.inventories;
+    this.setInv();
+    this.redrawTable();
+  }
+
+  redrawTable(): void {
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.draw();
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.dtTrigger.next();
     });
   }
 
-  filterByArea(): void {
+  filter(): void {
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.draw();
     });
@@ -116,7 +128,7 @@ export class InventoryComponent implements OnInit, AfterViewInit {
       var cur = this.inventories[i];
       for (var j = 0; j < this.leads.length; j++) {
         if (cur.leadId == this.leads[j]._id) {
-          
+
           if (this.leads[j].leadAdminStatus == 0) {
             this.inventories.splice(i, 1);
             console.log("hello");
@@ -146,6 +158,15 @@ export class InventoryComponent implements OnInit, AfterViewInit {
     });
   }
 
+  onLocationChange(id) {
+    this.resultInventories = this.newRInventories;
+    this.resultInventories = this.resultInventories.filter(function (inventory) {
+      return inventory.locationId == id;
+    });
+    this.setInv();
+    this.redrawTable();
+  }
+
   propertytypes;
 
   getPropTypes() {
@@ -157,15 +178,50 @@ export class InventoryComponent implements OnInit, AfterViewInit {
     });
   }
 
+  onTypeChange(id) {
+    this.resultInventories = this.inventories;
+    this.resultInventories = this.resultInventories.filter(function (inventory) {
+      return inventory.propTypeId == id;
+    });
+    this.setInv();
+    this.redrawTable();
+  }
+
   cities;
+  newcities;
 
   getCities() {
     this.auth.getCities().subscribe(cities => {
       this.cities = cities;
+      this.newcities = cities;
       this.getInventories();
     }, (err) => {
       console.error(err);
     });
+  }
+
+  newLocations: Locations;
+  newRInventories;
+  onCityChange(id) {
+    this.newLocations = this.locations.filter(function (location) {
+      return location.cityId == id;
+    });
+
+    this.resultInventories = this.inventories;
+
+    this.resultInventories = this.resultInventories.filter(function (inventory) {
+      return inventory.cityId == id;
+    });
+
+    this.newRInventories = this.resultInventories;
+
+    this.cities = this.newcities;
+
+    this.cities = this.cities.filter(function (city) {
+      return city._id == id;
+    });
+    this.setInv();
+    this.redrawTable();
   }
 
   public static areaUnits = {
@@ -181,41 +237,41 @@ export class InventoryComponent implements OnInit, AfterViewInit {
 
   setInv() {
 
-    for (var i = 0; i < this.inventories.length; i++) {
+    for (var i = 0; i < this.resultInventories.length; i++) {
       var type;
 
       for (var j = 0; j < this.propertytypes.length; j++) {
-        if (this.propertytypes[j]._id == this.inventories[i].propTypeId) {
-          this.inventories[i].type = this.propertytypes[j].type;
-          type = this.inventories[i].type;
+        if (this.propertytypes[j]._id == this.resultInventories[i].propTypeId) {
+          this.resultInventories[i].type = this.propertytypes[j].type;
+          type = this.resultInventories[i].type;
           break;
         }
       }
 
-      this.inventories[i].location = type + " # " + this.inventories[i].propNumber + " ,St # " + this.inventories[i].street + ", ";
+      this.resultInventories[i].location = type + " # " + this.resultInventories[i].propNumber + " ,St # " + this.resultInventories[i].street + ", ";
 
       for (var j = 0; j < this.locations.length; j++) {
-        if (this.locations[j]._id == this.inventories[i].locationId) {
-          this.inventories[i].location += this.locations[j].location + ", ";
+        if (this.locations[j]._id == this.resultInventories[i].locationId) {
+          this.resultInventories[i].location += this.locations[j].location + ", ";
           break;
         }
       }
 
       for (var j = 0; j < this.cities.length; j++) {
-        if (this.cities[j]._id == this.inventories[i].cityId) {
-          this.inventories[i].location += this.cities[j].name;
+        if (this.cities[j]._id == this.resultInventories[i].cityId) {
+          this.resultInventories[i].location += this.cities[j].name;
           break;
         }
       }
 
-      if (this.inventories[i].areaUnit == 1) {
-        this.inventories[i].newarea = this.inventories[i].area + " " + InventoryComponent.areaUnits.ONE;
+      if (this.resultInventories[i].areaUnit == 1) {
+        this.resultInventories[i].newarea = this.resultInventories[i].area + " " + InventoryComponent.areaUnits.ONE;
       }
-      if (this.inventories[i].areaUnit == 2) {
-        this.inventories[i].newarea = this.inventories[i].area + " " + InventoryComponent.areaUnits.TWO;
+      if (this.resultInventories[i].areaUnit == 2) {
+        this.resultInventories[i].newarea = this.resultInventories[i].area + " " + InventoryComponent.areaUnits.TWO;
       }
-      if (this.inventories[i].areaUnit == 3) {
-        this.inventories[i].newarea = this.inventories[i].area + " " + InventoryComponent.areaUnits.THREE;
+      if (this.resultInventories[i].areaUnit == 3) {
+        this.resultInventories[i].newarea = this.resultInventories[i].area + " " + InventoryComponent.areaUnits.THREE;
       }
 
     }
@@ -365,6 +421,7 @@ export class InventoryComponent implements OnInit, AfterViewInit {
         return entry;
       });
       this.setInv();
+      this.redrawTable();
     }
 
     if (value == 2) {
@@ -380,6 +437,7 @@ export class InventoryComponent implements OnInit, AfterViewInit {
         return entry;
       });
       this.setInv();
+      this.redrawTable();
     }
 
     if (value == 3) {
@@ -395,7 +453,10 @@ export class InventoryComponent implements OnInit, AfterViewInit {
         return entry;
       });
       this.setInv();
+      this.redrawTable();
     }
   }
+
+
 
 }

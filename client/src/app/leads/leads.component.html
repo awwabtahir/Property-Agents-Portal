@@ -7,7 +7,6 @@
       </p>
       <div class="button-group mb-3">
         <button (click)="addLead()" class="btn btn-primary">Add New</button>
-        <button class="btn btn-primary">Search</button>
       </div>
       <p *ngIf="!(resultLeads && inventories && cities && propertytypes && locations && users && statusTypes)">Please wait...</p>
       <table *ngIf="resultLeads && inventories && cities && propertytypes && locations && users && statusTypes" datatable class="table table-bordered table-hover"
@@ -43,7 +42,8 @@
               <span *ngIf="getInventory(l._id).areaUnit == 3">Kanal</span>
               <b>Demand</b>: {{ getInventory(l._id).demand }}
               <b>{{ getPropertyType(l._id).type }} #</b>: {{ getInventory(l._id).propNumber }}
-              <b>Street</b>: {{ getInventory(l._id).street }}
+              <b>Street</b>: {{ getInventory(l._id).street }} <br>
+              <b>Comment</b>: {{ l.cmt }}
             </td>
             <td>{{ l.phoneNumber }}</td>
 
@@ -75,25 +75,25 @@
         <tfoot>
           <tr>
             <th>
-              <input id="leadInput21" type="text" placeholder="Search ID" />
+              <input id="leadInput21" type="text" size="4" placeholder="ID" />
             </th>
             <th>
-              <input id="leadInput21" type="text" placeholder="Search Lead Info" />
+              <input id="leadInput21" type="text" placeholder="Lead Info" />
             </th>
             <th>
-              <input id="leadInput21" type="text" placeholder="Search Contact" />
+              <input id="leadInput21" type="text" placeholder="Contact" />
             </th>
             <th>
-              <input id="leadInput21" type="text" placeholder="Search Type" />
+              <input id="leadInput21" type="text" placeholder="Type" />
             </th>
             <th>
-              <input id="leadInput21" type="text" placeholder="Search Assigned To" />
+              <input id="leadInput21" type="text" placeholder="Assigned To" />
             </th>
             <th *ngIf="auth.isAdmin()">
-              <input id="leadInput21" type="text" placeholder="Search Admin Status" />
+              <input id="leadInput21" type="text" placeholder="" />
             </th>
             <th>
-              <input id="leadInput21" type="text" placeholder="Search Agent Status" />
+              <input id="leadInput21" type="text" placeholder="" />
             </th>
             <th>
               <i class="fab fa-searchengin" style="font-size:1.8rem;"></i>

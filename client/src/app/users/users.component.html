@@ -3,6 +3,7 @@
       <!-- /.panel-heading -->
       <div class="panel-body">
         <button class="btn btn-info btn-sm mb-3" routerLink="/register">Add new user</button>
+        <button class="btn btn-info btn-sm mb-3">Send Message</button>
           <p *ngIf="!users">Please wait...</p>
           <table *ngIf="users" datatable="ng" class="table table-bordered table-hover" id="datatableId" [dtOptions]="dtOptions">
             <thead>

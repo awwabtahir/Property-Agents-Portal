@@ -24,13 +24,13 @@
             <label class="form-check-label" for="purpose3">
               Rent
             </label>
-          </div>         
+          </div>
 
         </div>
         <p *ngIf="!(purpose.touched || purpose.dirty)" style="color:blue">
-            <b>Step 1: Select the purpose</b>
+          <b>Step 1: Select the purpose</b>
         </p>
-        
+
         <div class="form-row">
           <!-- Get city names here -->
           <div class="form-group col-md-6">
@@ -41,19 +41,20 @@
               <option *ngFor="let city of cities" value="{{ city?._id }}">{{ city?.name }}</option>
             </select>
             <p *ngIf="!(cityId.touched || cityId.dirty)" style="color:blue">
-                <b>Step 2: Select the city</b>
+              <b>Step 2: Select the city</b>
             </p>
           </div>
 
           <!-- Get Property Types here -->
           <div class="form-group col-md-6">
             <label for="inputType"></label>
-            <select class="form-control" id="selectPropertyType" name="propTypeId" [(ngModel)]="lead.propTypeId" #propTypeId="ngModel" required>
+            <select class="form-control" id="selectPropertyType" name="propTypeId" [(ngModel)]="lead.propTypeId" #propTypeId="ngModel"
+              required>
               <option value="0" selected>Select property type</option>
               <option *ngFor="let type of propTypes" value="{{ type?._id }}">{{ type?.type }}</option>
             </select>
             <p *ngIf="!(propTypeId.touched || propTypeId.dirty)" style="color:blue">
-                <b>Step 3: Select the property type</b>
+              <b>Step 3: Select the property type</b>
             </p>
           </div>
 
@@ -68,23 +69,25 @@
               <option *ngFor="let loc of newLocations" value="{{ loc?._id }}">{{ loc?.location }}</option>
             </select>
             <p *ngIf="!(locId.touched || locId.dirty)" style="color:blue">
-                <b>Step 4: Select the location</b>
+              <b>Step 4: Select the location</b>
             </p>
           </div>
 
           <div class="form-group col-md-3">
             <label for="propNumber">{{ getPropertyType }} #</label>
-            <input type="text" class="form-control" name="propNumber" [(ngModel)]="lead.propNumber" #propNumber="ngModel" required id="inputPropNumber" placeholder="{{ getPropertyType }} #">
+            <input type="text" class="form-control" name="propNumber" [(ngModel)]="lead.propNumber" #propNumber="ngModel" required id="inputPropNumber"
+              placeholder="{{ getPropertyType }} #">
             <p *ngIf="!propNumber.valid" style="color:blue">
-                <b>Step 5: Enter {{ getPropertyType }} number</b>
+              <b>Step 5: Enter {{ getPropertyType }} number</b>
             </p>
           </div>
 
           <div class="form-group col-md-3">
             <label for="street">Street #</label>
-            <input type="text" class="form-control" name="street" [(ngModel)]="lead.street" #street="ngModel" required id="inputStreet" placeholder="Street #">
+            <input type="text" class="form-control" name="street" [(ngModel)]="lead.street" #street="ngModel" required id="inputStreet"
+              placeholder="Street #">
             <p *ngIf="!street.valid" style="color:blue">
-                <b>Step 6: Enter street number (optional)</b>
+              <b>Step 6: Enter street number (optional)</b>
             </p>
           </div>
 
@@ -95,7 +98,7 @@
             <label for="inputDemand">Demand (Rs)</label>
             <input type="text" class="form-control" name="demand" [(ngModel)]="lead.demand" #demand="ngModel" required id="inputDemand">
             <p *ngIf="!demand.valid" style="color:blue">
-                <b>Step 7: Enter demand</b>
+              <b>Step 7: Enter demand</b>
             </p>
           </div>
 
@@ -103,7 +106,7 @@
             <label for="inputArea">Land Area</label>
             <input type="text" class="form-control" name="area" [(ngModel)]="lead.area" #area="ngModel" required id="inputArea">
             <p *ngIf="!area.valid" style="color:blue">
-                <b>Step 8: Enter area</b>
+              <b>Step 8: Enter area</b>
             </p>
           </div>
 
@@ -122,8 +125,13 @@
             <label for="inputBeds">No. of beds</label>
             <input type="text" class="form-control" name="beds" [(ngModel)]="lead.beds" #beds="ngModel" required id="inputBeds">
             <p *ngIf="!beds.valid" style="color:blue">
-                <b>Optional: Enter number of beds</b>
+              <b>Optional: Enter number of beds</b>
             </p>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label *ngIf="isLead" for="inputCmt">Comment</label>
+            <input *ngIf="isLead" type="text" class="form-control" name="cmt" [(ngModel)]="lead.cmt" id="inputCmt">
           </div>
 
         </div>
@@ -132,9 +140,10 @@
         <div class="form-row">
 
           <div class="form-group col-md-6">
-            <input type="text" class="form-control" name="clientName" [(ngModel)]="lead.clientName" #clientName="ngModel" required id="inputName" placeholder="Client Name">
+            <input type="text" class="form-control" name="clientName" [(ngModel)]="lead.clientName" #clientName="ngModel" required id="inputName"
+              placeholder="Client Name">
             <p *ngIf="!clientName.valid" style="color:blue">
-                <b>Step 9: Enter client name</b>
+              <b>Step 9: Enter client name</b>
             </p>
           </div>
 
@@ -145,7 +154,7 @@
               <option value="2">Dealer</option>
             </select>
             <p *ngIf="!(clientType.touched || clientType.dirty)" style="color:blue">
-                <b>Step 10: Select the client type</b>
+              <b>Step 10: Select the client type</b>
             </p>
           </div>
 
@@ -154,9 +163,10 @@
         <div class="form-row">
 
           <div class="form-group col-md-6">
-            <input type="text" class="form-control" name="phoneNumber" [(ngModel)]="lead.phoneNumber" #phoneNumber="ngModel" required id="inputPhone" placeholder="Phone #">
+            <input type="text" class="form-control" name="phoneNumber" [(ngModel)]="lead.phoneNumber" #phoneNumber="ngModel" required
+              id="inputPhone" placeholder="Phone #">
             <p *ngIf="!phoneNumber.valid" style="color:blue">
-                <b>Step 11: Enter client phone number</b>
+              <b>Step 11: Enter client phone number</b>
             </p>
           </div>
 

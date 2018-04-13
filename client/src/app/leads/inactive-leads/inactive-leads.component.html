@@ -1,0 +1,45 @@
+<div class="col col-lg-12">
+  <div class="panel panel-default mt-4">
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+      <div class="button-group mb-3">
+        <button class="btn btn-primary">Send Promotional Message</button>
+      </div>
+      <p *ngIf="!resultLeads">Please wait...</p>
+      <table *ngIf="resultLeads" datatable class="table table-bordered table-hover" style="table-layout:auto;" [dtOptions]="dtOptions"
+        id="datatableId">
+
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th data-priority="1">Client Name</th>
+            <th>Contact #</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr class="odd gradeX" *ngFor="let l of resultLeads">
+            <td>{{ l._id }}</td>
+            <td style="text-transform:capitalize;">{{ l.clientName.toLowerCase() }}</td>
+            <td>{{ l.phoneNumber }}</td>
+          </tr>
+        </tbody>
+
+        <tfoot>
+            <tr>
+              <th>
+                <input id="leadInput21" type="text" size="4" placeholder="ID" />
+              </th>
+              <th>
+                <input id="leadInput21" type="text" placeholder="Client Name" />
+              </th>
+              <th>
+                <input id="leadInput21" type="text" placeholder="Contact" />
+              </th>
+            </tr>
+          </tfoot>
+          </table>
+
+    </div>
+  </div>
+</div>

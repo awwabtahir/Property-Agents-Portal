@@ -20,6 +20,7 @@ import { EditLeadComponent } from './leads/edit-lead/edit-lead.component';
 import { UsersComponent } from './users/users.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { StatusComponent } from './options/status/status.component';
+import { InactiveLeadsComponent } from './leads/inactive-leads/inactive-leads.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -32,7 +33,8 @@ const routes: Routes = [
   { path: 'users', component: UsersComponent, canActivate: [AuthGuardService] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
   { path: 'edituser', component: EditUserComponent, canActivate: [AuthGuardService] },
-  { path: 'options', component: OptionsComponent, canActivate: [AuthGuardService] }
+  { path: 'options', component: OptionsComponent, canActivate: [AuthGuardService] },
+  { path: 'inactive', component: InactiveLeadsComponent, canActivate: [AuthGuardService] }
 ];
 
 @NgModule({
@@ -48,7 +50,8 @@ const routes: Routes = [
     EditLeadComponent,
     UsersComponent,
     EditUserComponent,
-    StatusComponent
+    StatusComponent,
+    InactiveLeadsComponent
   ],
   imports: [
     BrowserModule,

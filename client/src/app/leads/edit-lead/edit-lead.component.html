@@ -81,6 +81,11 @@
             <input type="text" class="form-control" name="beds" [(ngModel)]="lead.beds" id="inputBeds">
           </div>
 
+          <div class="form-group col-md-6">
+              <label *ngIf="isLead" for="inputCmt">Comment</label>
+              <input *ngIf="isLead" type="text" class="form-control" name="cmt" [(ngModel)]="lead.cmt" id="inputCmt">
+            </div>
+
         </div>
         <hr>
         <h6>Client Details</h6>

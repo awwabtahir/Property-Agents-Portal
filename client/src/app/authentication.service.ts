@@ -159,7 +159,7 @@ export class AuthenticationService {
     this.id = id;
   }
 
-  private getId() {
+  public getId() {
     if (!this.id) {
       this.id = localStorage.getItem('mean-id');
     }

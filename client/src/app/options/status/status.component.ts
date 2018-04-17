@@ -25,8 +25,8 @@ export class StatusComponent implements OnInit {
   isAdmin;
 
   setIsAdmin() {
-    if(this.auth.isAdmin) this.isAdmin = true;
-    else this.isAdmin = false;
+    if(this.auth.isAdmin()) this.isAdmin = true;
+    if(this.auth.isAgent()) this.isAdmin = false;
   }
 
   getStatus() {

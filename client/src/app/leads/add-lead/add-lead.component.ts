@@ -14,6 +14,12 @@ export class AddLeadComponent implements OnInit {
     private LeadService: LeadService) { }
 
   ngOnInit() {
+    this.auth.profile().subscribe(user => {
+      this.LeadService.setUserId(user._id);
+    }, (err) => {
+      console.error(err);
+    });
+
     this.getCities();
     this.getLocations();
     this.getPropTypes();

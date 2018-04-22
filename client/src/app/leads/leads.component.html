@@ -8,8 +8,8 @@
       <div class="button-group mb-3">
         <button (click)="addLead()" class="btn btn-primary">Add New</button>
       </div>
-      <p *ngIf="!(resultLeads && inventories && cities && propertytypes && locations && users && statusTypes && sublocations)">Please wait...</p>
-      <table *ngIf="resultLeads && inventories && cities && propertytypes && locations && users && statusTypes && sublocations" datatable class="table table-bordered table-hover"
+      <p *ngIf="!(resultLeads && inventories && cities && propertytypes && locations && users && statusTypes)">Please wait...</p>
+      <table *ngIf="resultLeads && inventories && cities && propertytypes && locations && users && statusTypes" datatable class="table table-bordered table-hover"
         style="table-layout:auto;" [dtOptions]="dtOptions" id="datatableId">
         <thead>
           <tr>

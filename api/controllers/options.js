@@ -125,8 +125,8 @@ module.exports.getSubLocations = function (req, res) {
     } else {
         subLocation
             .find()
-            .exec(function (err, locs) {
-                res.status(200).json(locs);
+            .exec(function (err, slocs) {
+                res.status(200).json(slocs);
             });
     }
 }

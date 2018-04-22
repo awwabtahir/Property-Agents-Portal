@@ -34,7 +34,8 @@
                 "buy the {{ getPropertyType(l._id).type }}"</span>
               <span *ngIf="getInventory(l._id).purpose == 3">
                 "rent the {{ getPropertyType(l._id).type }}"</span>
-              in {{ getLocation(l._id).location }}, {{ getCity(l._id).name }}.
+              in <span *ngIf="getSubLocation(l._id).sublocation">{{ getSubLocation(l._id).sublocation }},</span> 
+              {{ getLocation(l._id).location }}, {{ getCity(l._id).name }}.
               <br>
               <b>Area</b>: {{ getInventory(l._id).area }}
               <span *ngIf="getInventory(l._id).areaUnit == 1">Sq. Feet</span>

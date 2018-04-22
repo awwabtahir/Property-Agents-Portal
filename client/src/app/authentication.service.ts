@@ -46,7 +46,8 @@ export interface City {
 
 export interface Location {
   cityId: Number,
-  location: string
+  location: string,
+  sublocation: string
 }
 
 export interface Locations {
@@ -83,6 +84,7 @@ export interface Lead {
   purpose: Number,
   cityId: Number,
   locationId: Number,
+  sublocationId: Number,
   propTypeId: Number,
   propNumber: String,
   street: String,
@@ -120,6 +122,7 @@ export interface Inventories {
   purpose: Number,
   cityId: Number,
   locationId: Number,
+  sublocationId: Number,
   propTypeId: Number,
   propNumber: String,
   street: String,
@@ -226,7 +229,7 @@ export class AuthenticationService {
     type?: 'login' | 'register' | 'profile' | 'getUsers' | 'addCity' | 'getCities' |
       'addLoc' | 'getLocations' | 'addPropType' | 'getPropTypes' | 'addLead' | 'getLeads' |
       'getInventories' | 'updateLead' | 'updateUser' | 'addStatusType' | 'getStatusTypes' | 
-      'updateStatus',
+      'updateStatus' | 'getSubLocations',
     template?: TokenPayload | City | Location | PropertyType | Lead | Status):
     Observable<any> {
 
@@ -293,6 +296,10 @@ export class AuthenticationService {
 
   public getLocations(): Observable<any> {
     return this.request('get', 'getLocations');
+  }
+
+  public getSubLocations(): Observable<any> {
+    return this.request('get', 'getSubLocations');
   }
 
   // For property type

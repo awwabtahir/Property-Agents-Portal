@@ -9,7 +9,7 @@ import { DataTableDirective } from 'angular-datatables';
   templateUrl: './leads.component.html',
   styleUrls: ['./leads.component.css']
 })
-export class LeadsComponent implements OnInit, AfterViewInit  {
+export class LeadsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(DataTableDirective)
   datatableElement: DataTableDirective;
@@ -24,13 +24,14 @@ export class LeadsComponent implements OnInit, AfterViewInit  {
     this.getLeads();
     this.getCities();
     this.getLocations();
+    this.getSubLocations();
     this.getPropTypes();
     this.getStatusTypes();
     this.getUsers();
 
     this.dtOptions = {
       responsive: true,
-      order: [[ 0, "desc" ]]
+      order: [[0, "desc"]]
     };
   }
 
@@ -184,6 +185,25 @@ export class LeadsComponent implements OnInit, AfterViewInit  {
     }
   }
 
+  sublocations;
+
+  getSubLocations() {
+    this.auth.getSubLocations().subscribe(sublocations => {
+      this.sublocations = sublocations;
+    }, (err) => {
+      console.error(err);
+    });
+  }
+
+  getSubLocation(id) {
+    for (var j = 0; j < this.sublocations.length; j++) {
+      if (this.sublocations[j]._id == this.getInventory(id).sublocationId) {
+        return this.sublocations[j];
+      }
+    }
+    return false;
+  }
+
   users;
 
   getUsers() {
@@ -253,15 +273,23 @@ export class LeadsComponent implements OnInit, AfterViewInit  {
 
     let isAdmin;
 
-    if (this.auth.isAdmin) isAdmin = true;
-    else isAdmin = false;
+    if(this.auth.isAdmin()) isAdmin = true;
+    if(this.auth.isAgent()) isAdmin = false;
 
-    console.log(isAdmin);
+    let status: Status;
 
-    let status: Status = {
-      "sid": 0,
-      "lid": id,
-      "isAdmin": isAdmin
+    if (isAdmin) {
+      status = {
+        "sid": 0,
+        "lid": id,
+        "isAdmin": isAdmin
+      }
+    } else {
+      status = {
+        "sid": 6,
+        "lid": id,
+        "isAdmin": isAdmin
+      }
     }
 
     this.auth.updateStatus(status).subscribe(() => {

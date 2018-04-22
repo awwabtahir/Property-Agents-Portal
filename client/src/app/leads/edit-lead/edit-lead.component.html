@@ -37,8 +37,12 @@
           <!-- Get Locations here -->
           <div class="form-group col-md-6">
             <label for="locId">Location</label>
-            <select class="form-control" id="selectLocation" name="locId" [(ngModel)]="lead.locationId">
+            <select class="form-control" id="selectLocation" name="locId" [(ngModel)]="lead.locationId"  (change)="onLocChange($event.target.value)">
               <option *ngFor="let loc of newLocations" value="{{ loc?._id }}">{{ loc?.location }}</option>
+            </select>
+            <label for="locId" class="mt-2">Sub Location</label>
+            <select class="form-control" id="selectSubLocation" name="sublocId" [(ngModel)]="lead.sublocationId">
+              <option *ngFor="let sloc of newSubLocations" value="{{ sloc?._id }}">{{ sloc?.sublocation }}</option>
             </select>
           </div>
 
@@ -82,9 +86,9 @@
           </div>
 
           <div class="form-group col-md-6">
-              <label *ngIf="isLead" for="inputCmt">Comment</label>
-              <input *ngIf="isLead" type="text" class="form-control" name="cmt" [(ngModel)]="lead.cmt" id="inputCmt">
-            </div>
+            <label *ngIf="isLead" for="inputCmt">Comment</label>
+            <input *ngIf="isLead" type="text" class="form-control" name="cmt" [(ngModel)]="lead.cmt" id="inputCmt">
+          </div>
 
         </div>
         <hr>

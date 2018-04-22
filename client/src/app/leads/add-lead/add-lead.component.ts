@@ -22,6 +22,7 @@ export class AddLeadComponent implements OnInit {
 
     this.getCities();
     this.getLocations();
+    this.getSubLocations();
     this.getPropTypes();
     this.getUsers();
     this.getIsLead();
@@ -69,6 +70,26 @@ export class AddLeadComponent implements OnInit {
   getLocations() {
     this.auth.getLocations().subscribe(locations => {
       this.locations = locations;
+    }, (err) => {
+      console.error(err);
+    });
+  }
+
+  // Location onLocChange()
+  newSubLocations;
+  isLocation = false;
+  onLocChange(id) {
+    this.isLocation = true;
+    this.newSubLocations = this.sublocations.filter(function (sublocations) {
+      return sublocations.locationId == id;
+    });
+  }
+
+  sublocations;
+
+  getSubLocations() {
+    this.auth.getSubLocations().subscribe(sublocations => {
+      this.sublocations = sublocations;
     }, (err) => {
       console.error(err);
     });
@@ -158,6 +179,7 @@ export class AddLeadComponent implements OnInit {
     purpose: 1,
     cityId: 0,
     locationId: 0,
+    sublocationId: 0,
     propTypeId: 0,
     propNumber: null,
     street: null,

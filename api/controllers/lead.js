@@ -14,6 +14,7 @@ module.exports.addLead = function (req, res) {
     inventory.purpose = req.body.purpose;
     inventory.cityId = req.body.cityId;
     inventory.locationId = req.body.locationId;
+    inventory.sublocationId = req.body.sublocationId;
     inventory.propTypeId = req.body.propTypeId;
     inventory.propNumber = req.body.propNumber;
     inventory.street = req.body.street;
@@ -99,6 +100,7 @@ module.exports.updateLead = function (req, res) {
     inventory.purpose = req.body.purpose;
     inventory.cityId = req.body.cityId;
     inventory.locationId = req.body.locationId;
+    inventory.sublocationId = req.body.sublocationId;
     inventory.propTypeId = req.body.propTypeId;
     inventory.propNumber = req.body.propNumber;
     inventory.street = req.body.street;
@@ -106,7 +108,6 @@ module.exports.updateLead = function (req, res) {
     inventory.area = req.body.area;
     inventory.areaUnit = req.body.areaUnit;
     inventory.beds = req.body.beds;
-    inventory.inventoryStatus = req.body.leadStatus;
     inventory.leadId = req.body.leadId;
 
     var lead = {};
@@ -116,7 +117,12 @@ module.exports.updateLead = function (req, res) {
     lead.phoneNumber = req.body.phoneNumber;
     lead.assignedTo = req.body.assignedTo;
     lead.inventoryId = req.body.inventoryId;
+    lead.leadAdminStatus = req.body.leadAdminStatus;
+    lead.leadAgentStatus = req.body.leadAgentStatus;
     lead.cmt = req.body.cmt;
+
+    console.log(lead);
+    console.log(inventory);
 
     var conditions = { _id: req.body.leadId }
         , update = { $set: lead }

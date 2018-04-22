@@ -19,8 +19,8 @@ module.exports.addCity = function (req, res) {
     city.save(function (err) {
         res.status(200);
         res.json({
-            "message" : "success"
-          });
+            "message": "success"
+        });
     });
 
 }
@@ -41,6 +41,7 @@ module.exports.getCities = function (req, res) {
 
 // For location operations
 var Location = mongoose.model('Location');
+var subLocation = mongoose.model('SubLocation');
 
 module.exports.addLoc = function (req, res) {
 
@@ -51,15 +52,53 @@ module.exports.addLoc = function (req, res) {
     }
 
     var loc = new Location();
+    var sloc = new subLocation();
 
     loc.cityId = req.body.cityId;
     loc.location = req.body.location;
 
-    loc.save(function (err) {
-        res.status(200);
-        res.json({
-            "message" : "success"
-          });
+    if (req.body.sublocation !== '') {
+        sloc.sublocation = req.body.sublocation;
+        sloc.locationId = 0;
+    }
+
+    loc.save(function (err, l) {
+        if (err) {
+            Location
+                .findOne({ 'location': req.body.location })
+                .exec(function (err, loc) {
+                    sloc.save(function (errr, sl) {
+                        if(errr) {
+                            console.log(errr);
+                            return; 
+                        }
+                        sl.locationId = loc._id;
+                        sl.save();
+                        res.status(200);
+                        res.json({
+                            "message": "success"
+                        });
+                    });
+                });
+        } else {
+            if (req.body.sublocation !== '') {
+                sloc.save(function (errr, sl) {
+                    sl.locationId = l._id;
+                    l.save();
+                    sl.save();
+                    res.status(200);
+                    res.json({
+                        "message": "success"
+                    });
+                });
+            } else {
+                l.save();
+                res.status(200);
+                res.json({
+                    "message": "success"
+                });
+            }
+        }
     });
 
 }
@@ -71,6 +110,20 @@ module.exports.getLocations = function (req, res) {
         });
     } else {
         Location
+            .find()
+            .exec(function (err, locs) {
+                res.status(200).json(locs);
+            });
+    }
+}
+
+module.exports.getSubLocations = function (req, res) {
+    if (!req.payload._id) {
+        res.status(401).json({
+            "message": "UnauthorizedError: private profile"
+        });
+    } else {
+        subLocation
             .find()
             .exec(function (err, locs) {
                 res.status(200).json(locs);
@@ -96,9 +149,9 @@ module.exports.addPropType = function (req, res) {
     propType.save(function (err) {
         res.status(200);
         res.json({
-            "message" : "success"
-          });
-    });    
+            "message": "success"
+        });
+    });
 
 }
 
@@ -134,9 +187,9 @@ module.exports.addStatusType = function (req, res) {
     statusType.save(function (err) {
         res.status(200);
         res.json({
-            "message" : "success"
-          });
-    });    
+            "message": "success"
+        });
+    });
 
 }
 
@@ -167,7 +220,7 @@ module.exports.updateStatus = function (req, res) {
 
     status.isAdmin = req.body.isAdmin;
 
-    if(status.isAdmin === true) {
+    if (status.isAdmin === true) {
         lead.leadAdminStatus = parseInt(req.body.sid);
     } else {
         lead.leadAgentStatus = parseInt(req.body.sid);

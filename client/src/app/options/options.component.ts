@@ -54,16 +54,18 @@ export class OptionsComponent implements OnInit {
    For location operations
   *****************/
 
-  // For adding location
+  // For adding location & sub-locations
 
   location: Location = {
     cityId: 0,
-    location: ''
+    location: '',
+    sublocation: ''
   };
 
   addLoc() {
     this.auth.addLoc(this.location).subscribe(() => {
       this.getLocations();
+      this.getSubLocations()
       this.router.navigateByUrl('/options');
     }, (err) => {
       console.error(err);
@@ -77,6 +79,24 @@ export class OptionsComponent implements OnInit {
   getLocations() {
     this.auth.getLocations().subscribe(locations => {
       this.locations = locations;
+    }, (err) => {
+      console.error(err);
+    });
+  }
+
+  // Location onLocChange()
+  newSubLocations;
+  onLocChange(id) {
+    this.newSubLocations = this.sublocations.filter(function (sublocations) {
+      return sublocations.locationId == id;
+    });
+  }
+
+  sublocations;
+
+  getSubLocations() {
+    this.auth.getSubLocations().subscribe(sublocations => {
+      this.sublocations = sublocations;
     }, (err) => {
       console.error(err);
     });
@@ -157,6 +177,7 @@ export class OptionsComponent implements OnInit {
   ngOnInit() {    
     this.getCities();
     this.getLocations();
+    this.getSubLocations();
     this.getPropTypes();
     this.getStatusTypes();
   } 

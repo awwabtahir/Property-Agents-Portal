@@ -28,6 +28,7 @@ router.post('/updateLead', ctrlLead.updateLead);
 // get options
 router.get('/getCities', auth, ctrlOptions.getCities);
 router.get('/getLocations', auth, ctrlOptions.getLocations);
+router.get('/getSubLocations', auth, ctrlOptions.getSubLocations);
 router.get('/getPropTypes', auth, ctrlOptions.getPropTypes);
 router.get('/getStatusTypes', auth, ctrlOptions.getStatusTypes);
 router.get('/getLeads', auth, ctrlLead.getLeads);

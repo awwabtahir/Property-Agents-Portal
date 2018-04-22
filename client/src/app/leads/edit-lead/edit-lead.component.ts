@@ -17,7 +17,7 @@ export class EditLeadComponent implements OnInit {
     this.isLead = this.leadService.getIsLead();
   }
 
-    // For city
+  // For city
 
   // Get cities
 
@@ -51,6 +51,26 @@ export class EditLeadComponent implements OnInit {
     this.auth.getLocations().subscribe(locations => {
       this.locations = locations;
       this.newLocations = locations;
+    }, (err) => {
+      console.error(err);
+    });
+  }
+
+  // Location onLocChange()
+  newSubLocations;
+  onLocChange(id) {
+    this.newSubLocations = this.sublocations.filter(function (sublocations) {
+      return sublocations.locationId == id;
+    });
+  }
+
+
+  sublocations;
+
+  getSubLocations() {
+    this.auth.getSubLocations().subscribe(sublocations => {
+      this.sublocations = sublocations;
+      this.newSubLocations = sublocations;
     }, (err) => {
       console.error(err);
     });
@@ -107,13 +127,16 @@ export class EditLeadComponent implements OnInit {
   }
 
   updateLead() {
-    if(this.lead.assignedTo == 0) {
+    if (this.lead.assignedTo == 0) {
       var userId = this.leadService.getUserId();
       this.lead.assignedTo = userId;
     }
 
     this.auth.updateLead(this.lead).subscribe(() => {
-      this.router.navigateByUrl('/leads');
+      if (this.isLead)
+        this.router.navigateByUrl('/leads');
+      else
+        this.router.navigateByUrl('/inventory');
     }, (err) => {
       console.error(err);
     });
@@ -125,6 +148,7 @@ export class EditLeadComponent implements OnInit {
   ngOnInit() {
     this.getCities();
     this.getLocations();
+    this.getSubLocations();
     this.getPropTypes();
     this.getLead();
     this.getUsers();

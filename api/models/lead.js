@@ -43,6 +43,9 @@ var inventorySchema = new mongoose.Schema({
     locationId : {
         type: Number
     },
+    sublocationId : {
+        type: Number
+    },
     propTypeId : {
         type: Number
     },

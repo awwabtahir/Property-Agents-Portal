@@ -64,9 +64,14 @@
           <!-- Get Locations here -->
           <div class="form-group col-md-6">
             <label for="locId">Select location</label>
-            <select class="form-control" id="selectLocation" name="locId" [(ngModel)]="lead.locationId" #locId="ngModel" required>
+            <select class="form-control" id="selectLocation" name="locId" [(ngModel)]="lead.locationId" #locId="ngModel" (change)="onLocChange($event.target.value)"
+              required>
               <option value="0" selected>Select location</option>
               <option *ngFor="let loc of newLocations" value="{{ loc?._id }}">{{ loc?.location }}</option>
+            </select>
+            <select *ngIf="isLocation" class="form-control mt-2" id="selectSubLocation" name="sublocId" [(ngModel)]="lead.sublocationId">
+              <option value="0" selected>Select Sub Location</option>
+              <option *ngFor="let sloc of newSubLocations" value="{{ sloc?._id }}">{{ sloc?.sublocation }}</option>
             </select>
             <p *ngIf="!(locId.touched || locId.dirty)" style="color:blue">
               <b>Step 4: Select the location</b>

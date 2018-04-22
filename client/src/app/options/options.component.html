@@ -70,6 +70,11 @@
           <input type="text" class="form-control" name="location" id="inputLocation" placeholder="Enter location" [(ngModel)]="location.location">
         </div>
 
+        <!-- New location will be entered here -->
+        <div class="form-group">
+          <input type="text" class="form-control" name="sublocation" id="inputSubLocation" placeholder="Enter sub location" [(ngModel)]="location.sublocation">
+        </div>
+
         <button type="submit" class="btn btn-primary">Add Location</button>
       </form>
     </div>
@@ -88,8 +93,14 @@
 
         <!-- Location is get here for editing and deleting -->
         <div class="form-group">
-          <select class="form-control" id="selectLocation" name="locId">
+          <select class="form-control" id="selectLocation" name="locId" (change)="onLocChange($event.target.value)">
             <option *ngFor="let loc of newLocations" value="{{ loc?._id }}">{{ loc?.location }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <select class="form-control" id="selectSubLocation" name="locId">
+            <option *ngFor="let sloc of newSubLocations" value="{{ sloc?._id }}">{{ sloc?.sublocation }}</option>
           </select>
         </div>
 

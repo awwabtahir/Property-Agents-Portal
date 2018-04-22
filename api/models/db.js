@@ -49,6 +49,7 @@ process.on('SIGTERM', function() {
 require('./users');
 require("./city");
 require("./location");
+require("./sublocation");
 require("./PropertyType");
 require("./StatusType");
 require("./lead");

@@ -110,13 +110,15 @@ export class InventoryComponent implements OnInit, AfterViewInit {
   }
 
   inventories;
+  newinventories;
   resultInventories;
 
   getInventories() {
     this.auth.getInventories().subscribe(inventories => {
       this.inventories = inventories;
+      this.newinventories = inventories;
       this.cleaner();
-      this.resultInventories = this.inventories;
+      this.resultInventories = this.newinventories;
       this.setInv();
     }, (err) => {
       console.error(err);
@@ -124,20 +126,20 @@ export class InventoryComponent implements OnInit, AfterViewInit {
   }
 
   cleaner() {
-    for (var i = 0; i < this.inventories.length; i++) {
-      var cur = this.inventories[i];
+    for (var i = 0; i < this.newinventories.length; i++) {
+      var cur = this.newinventories[i];
       for (var j = 0; j < this.leads.length; j++) {
         if (cur.leadId == this.leads[j]._id) {
 
           if (this.leads[j].leadAdminStatus == 0) {
-            this.inventories.splice(i, 1);
+            this.newinventories.splice(i, 1);
             console.log("hello");
             break;
           }
 
           if (this.auth.isAgent) {
             if (this.leads[j].leadAgentStatus == 0) {
-              this.inventories.splice(i, 1);
+              this.newinventories.splice(i, 1);
               break;
             }
           }
@@ -153,6 +155,7 @@ export class InventoryComponent implements OnInit, AfterViewInit {
     this.auth.getLocations().subscribe(locations => {
       this.locations = locations;
       this.getCities();
+      this.getSubLocations();
     }, (err) => {
       console.error(err);
     });
@@ -165,6 +168,16 @@ export class InventoryComponent implements OnInit, AfterViewInit {
     });
     this.setInv();
     this.redrawTable();
+  }
+
+  sublocations;
+
+  getSubLocations() {
+    this.auth.getSubLocations().subscribe(sublocations => {
+      this.sublocations = sublocations;
+    }, (err) => {
+      console.error(err);
+    });
   }
 
   propertytypes;
@@ -249,6 +262,13 @@ export class InventoryComponent implements OnInit, AfterViewInit {
       }
 
       this.resultInventories[i].location = type + " # " + this.resultInventories[i].propNumber + " ,St # " + this.resultInventories[i].street + ", ";
+
+      for (var j = 0; j < this.sublocations.length; j++) {
+        if (this.sublocations[j]._id == this.resultInventories[i].sublocationId) {
+          this.resultInventories[i].location += this.sublocations[j].sublocation + ", ";
+          break;
+        }
+      }
 
       for (var j = 0; j < this.locations.length; j++) {
         if (this.locations[j]._id == this.resultInventories[i].locationId) {

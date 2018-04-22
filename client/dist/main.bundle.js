@@ -1534,6 +1534,7 @@ var LeadsComponent = /** @class */ (function () {
         this.getLeads();
         this.getCities();
         this.getLocations();
+        this.getSubLocations();
         this.getPropTypes();
         this.getStatusTypes();
         this.getUsers();

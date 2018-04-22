@@ -41,7 +41,7 @@ module.exports.getCities = function (req, res) {
 
 // For location operations
 var Location = mongoose.model('Location');
-var subLocation = mongoose.model('SubLocation');
+var SubLocation = mongoose.model('SubLocation');
 
 module.exports.addLoc = function (req, res) {
 
@@ -52,7 +52,7 @@ module.exports.addLoc = function (req, res) {
     }
 
     var loc = new Location();
-    var sloc = new subLocation();
+    var sloc = new SubLocation();
 
     loc.cityId = req.body.cityId;
     loc.location = req.body.location;
@@ -123,7 +123,7 @@ module.exports.getSubLocations = function (req, res) {
             "message": "UnauthorizedError: private profile"
         });
     } else {
-        subLocation
+        SubLocation
             .find()
             .exec(function (err, slocs) {
                 res.status(200).json(slocs);

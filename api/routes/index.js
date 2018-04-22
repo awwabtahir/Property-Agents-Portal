@@ -31,6 +31,7 @@ router.get('/getLocations', auth, ctrlOptions.getLocations);
 router.get('/getPropTypes', auth, ctrlOptions.getPropTypes);
 router.get('/getStatusTypes', auth, ctrlOptions.getStatusTypes);
 router.get('/getSLocations', auth, ctrlOptions.getSLocations);
+router.get('/myLocations', auth, ctrlOptions.getSLocations);
 router.get('/getLeads', auth, ctrlLead.getLeads);
 router.get('/getInventories', auth, ctrlLead.getInventories);
 

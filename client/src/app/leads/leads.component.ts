@@ -108,6 +108,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
         return this.inventories[i];
       }
     }
+    console.log("invalid -> " + id);
   }
 
   cities;

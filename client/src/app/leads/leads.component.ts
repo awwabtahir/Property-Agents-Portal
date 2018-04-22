@@ -24,7 +24,6 @@ export class LeadsComponent implements OnInit, AfterViewInit {
     this.getLeads();
     this.getCities();
     this.getLocations();
-    this.getSubLocations();
     this.getPropTypes();
     this.getStatusTypes();
     this.getUsers();
@@ -192,7 +191,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
     this.auth.getSubLocations().subscribe(sublocations => {
       this.sublocations = sublocations;
     }, (err) => {
-      //console.error(err);
+      console.error(err);
     });
   }
 

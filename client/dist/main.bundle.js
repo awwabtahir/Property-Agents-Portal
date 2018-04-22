@@ -1534,7 +1534,6 @@ var LeadsComponent = /** @class */ (function () {
         this.getLeads();
         this.getCities();
         this.getLocations();
-        this.getSubLocations();
         this.getPropTypes();
         this.getStatusTypes();
         this.getUsers();
@@ -1666,7 +1665,7 @@ var LeadsComponent = /** @class */ (function () {
         this.auth.getSubLocations().subscribe(function (sublocations) {
             _this.sublocations = sublocations;
         }, function (err) {
-            //console.error(err);
+            console.error(err);
         });
     };
     LeadsComponent.prototype.getSubLocation = function (id) {

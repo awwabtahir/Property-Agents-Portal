@@ -361,8 +361,8 @@ var AuthenticationService = /** @class */ (function () {
     AuthenticationService.prototype.getLocations = function () {
         return this.request('get', 'getLocations');
     };
-    AuthenticationService.prototype.getSubLocations = function () {
-        return this.request('get', 'getSubLocations');
+    AuthenticationService.prototype.getSLocations = function () {
+        return this.request('get', 'getSLocations');
     };
     // For property type
     AuthenticationService.prototype.addPropType = function (propType) {
@@ -596,7 +596,7 @@ var InventoryComponent = /** @class */ (function () {
     };
     InventoryComponent.prototype.getSubLocations = function () {
         var _this = this;
-        this.auth.getSubLocations().subscribe(function (sublocations) {
+        this.auth.getSLocations().subscribe(function (sublocations) {
             _this.sublocations = sublocations;
         }, function (err) {
             console.error(err);
@@ -1122,7 +1122,7 @@ var AddLeadComponent = /** @class */ (function () {
     };
     AddLeadComponent.prototype.getSubLocations = function () {
         var _this = this;
-        this.auth.getSubLocations().subscribe(function (sublocations) {
+        this.auth.getSLocations().subscribe(function (sublocations) {
             _this.sublocations = sublocations;
         }, function (err) {
             console.error(err);
@@ -1294,7 +1294,7 @@ var EditLeadComponent = /** @class */ (function () {
     };
     EditLeadComponent.prototype.getSubLocations = function () {
         var _this = this;
-        this.auth.getSubLocations().subscribe(function (sublocations) {
+        this.auth.getSLocations().subscribe(function (sublocations) {
             _this.sublocations = sublocations;
             _this.newSubLocations = sublocations;
         }, function (err) {
@@ -1663,7 +1663,7 @@ var LeadsComponent = /** @class */ (function () {
     };
     LeadsComponent.prototype.getSubLocations = function () {
         var _this = this;
-        this.auth.getSubLocations().subscribe(function (sublocations) {
+        this.auth.getSLocations().subscribe(function (sublocations) {
             _this.sublocations = sublocations;
         }, function (err) {
             console.error(err);
@@ -1971,7 +1971,7 @@ var OptionsComponent = /** @class */ (function () {
     };
     OptionsComponent.prototype.getSubLocations = function () {
         var _this = this;
-        this.auth.getSubLocations().subscribe(function (sublocations) {
+        this.auth.getSLocations().subscribe(function (sublocations) {
             _this.sublocations = sublocations;
         }, function (err) {
             console.error(err);

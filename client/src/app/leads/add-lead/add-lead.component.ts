@@ -88,7 +88,7 @@ export class AddLeadComponent implements OnInit {
   sublocations;
 
   getSubLocations() {
-    this.auth.getSubLocations().subscribe(sublocations => {
+    this.auth.getSLocations().subscribe(sublocations => {
       this.sublocations = sublocations;
     }, (err) => {
       console.error(err);

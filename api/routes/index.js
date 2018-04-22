@@ -30,7 +30,7 @@ router.get('/getCities', auth, ctrlOptions.getCities);
 router.get('/getLocations', auth, ctrlOptions.getLocations);
 router.get('/getPropTypes', auth, ctrlOptions.getPropTypes);
 router.get('/getStatusTypes', auth, ctrlOptions.getStatusTypes);
-router.get('/getSubLocations', auth, ctrlOptions.getSubLocations);
+router.get('/getSLocations', auth, ctrlOptions.getSLocations);
 router.get('/getLeads', auth, ctrlLead.getLeads);
 router.get('/getInventories', auth, ctrlLead.getInventories);
 

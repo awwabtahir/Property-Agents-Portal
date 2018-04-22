@@ -189,7 +189,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
   sublocations;
 
   getSubLocations() {
-    this.auth.getSubLocations().subscribe(sublocations => {
+    this.auth.getSLocations().subscribe(sublocations => {
       this.sublocations = sublocations;
     }, (err) => {
       console.error(err);

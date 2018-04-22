@@ -229,7 +229,7 @@ export class AuthenticationService {
     type?: 'login' | 'register' | 'profile' | 'getUsers' | 'addCity' | 'getCities' |
       'addLoc' | 'getLocations' | 'addPropType' | 'getPropTypes' | 'addLead' | 'getLeads' |
       'getInventories' | 'updateLead' | 'updateUser' | 'addStatusType' | 'getStatusTypes' | 
-      'updateStatus' | 'getSubLocations',
+      'updateStatus' | 'getSLocations',
     template?: TokenPayload | City | Location | PropertyType | Lead | Status):
     Observable<any> {
 
@@ -298,8 +298,8 @@ export class AuthenticationService {
     return this.request('get', 'getLocations');
   }
 
-  public getSubLocations(): Observable<any> {
-    return this.request('get', 'getSubLocations');
+  public getSLocations(): Observable<any> {
+    return this.request('get', 'getSLocations');
   }
 
   // For property type

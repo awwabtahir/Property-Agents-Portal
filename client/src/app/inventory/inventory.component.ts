@@ -54,8 +54,8 @@ export class InventoryComponent implements OnInit, AfterViewInit {
         return true;
       }
 
-      if((!(this.minA) && !(this.maxA)) &&
-      (!(this.minD) && !(this.maxD))) {
+      if ((!(this.minA) && !(this.maxA)) &&
+        (!(this.minD) && !(this.maxD))) {
         console.log("true");
         return true;
       }
@@ -126,18 +126,21 @@ export class InventoryComponent implements OnInit, AfterViewInit {
   }
 
   cleaner() {
-    for (var i = 0; i < this.newinventories.length; i++) {
-      var cur = this.newinventories[i];
-      for (var j = 0; j < this.leads.length; j++) {
-        if (cur.leadId == this.leads[j]._id) {
 
+    for (var i = (this.newinventories.length) - 1; i >= 0; i-=1) {
+      var cur = this.newinventories[i];
+      var leadless = true;
+      for (var j = 0; j < this.leads.length; j++) {
+
+        if (cur.leadId == this.leads[j]._id) {
+          leadless = false;
           if (this.leads[j].leadAdminStatus == 0) {
             this.newinventories.splice(i, 1);
-            console.log("hello");
+            console.log("deleted -> " + cur._id);
             break;
           }
 
-          if (this.auth.isAgent) {
+          if (this.auth.isAgent()) {
             if (this.leads[j].leadAgentStatus == 0) {
               this.newinventories.splice(i, 1);
               break;
@@ -146,6 +149,7 @@ export class InventoryComponent implements OnInit, AfterViewInit {
 
         }
       }
+      if(leadless) this.newinventories.splice(i, 1);
     }
   }
 
@@ -389,16 +393,16 @@ export class InventoryComponent implements OnInit, AfterViewInit {
 
     let isAdmin;
 
-    if (this.auth.isAdmin) isAdmin = true;
-    else isAdmin = false;
-
-    console.log(isAdmin);
+    if (this.auth.isAdmin()) isAdmin = true;
+    if (this.auth.isAgent()) isAdmin = false;
 
     let status: Status = {
       "sid": 0,
       "lid": id,
       "isAdmin": isAdmin
     }
+
+    console.log(isAdmin);
 
     this.auth.updateStatus(status).subscribe(() => {
       console.log("success");

@@ -557,16 +557,18 @@ var InventoryComponent = /** @class */ (function () {
         });
     };
     InventoryComponent.prototype.cleaner = function () {
-        for (var i = 0; i < this.newinventories.length; i++) {
+        for (var i = (this.newinventories.length) - 1; i >= 0; i -= 1) {
             var cur = this.newinventories[i];
+            var leadless = true;
             for (var j = 0; j < this.leads.length; j++) {
                 if (cur.leadId == this.leads[j]._id) {
+                    leadless = false;
                     if (this.leads[j].leadAdminStatus == 0) {
                         this.newinventories.splice(i, 1);
-                        console.log("hello");
+                        console.log("deleted -> " + cur._id);
                         break;
                     }
-                    if (this.auth.isAgent) {
+                    if (this.auth.isAgent()) {
                         if (this.leads[j].leadAgentStatus == 0) {
                             this.newinventories.splice(i, 1);
                             break;
@@ -574,6 +576,8 @@ var InventoryComponent = /** @class */ (function () {
                     }
                 }
             }
+            if (leadless)
+                this.newinventories.splice(i, 1);
         }
     };
     InventoryComponent.prototype.getLocations = function () {
@@ -756,16 +760,16 @@ var InventoryComponent = /** @class */ (function () {
             }
         }
         var isAdmin;
-        if (this.auth.isAdmin)
+        if (this.auth.isAdmin())
             isAdmin = true;
-        else
+        if (this.auth.isAgent())
             isAdmin = false;
-        console.log(isAdmin);
         var status = {
             "sid": 0,
             "lid": id,
             "isAdmin": isAdmin
         };
+        console.log(isAdmin);
         this.auth.updateStatus(status).subscribe(function () {
             console.log("success");
         }, function (err) {

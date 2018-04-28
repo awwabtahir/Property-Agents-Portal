@@ -16,6 +16,8 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   dtOptions: any = {};
 
+  leadId;
+
   constructor(private auth: AuthenticationService, private router: Router,
     private leadService: LeadService) { }
 
@@ -263,7 +265,14 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   }
 
-  deleteLead(id) {
+  delModal(id) {
+    this.leadId = id;
+    console.log(this.leadId);
+  }
+
+  deleteLead() {
+
+    let id = this.leadId;
 
     for (var i = 0; i < this.leads.length; i++) {
       if (this.leads[i]._id == id) {

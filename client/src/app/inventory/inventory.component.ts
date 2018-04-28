@@ -22,6 +22,8 @@ export class InventoryComponent implements OnInit, AfterViewInit {
   minA: number;
   maxA: number;
 
+  inventoryId;
+
   dtOptions: any = {};
 
   dtTrigger: Subject<any> = new Subject();
@@ -67,6 +69,7 @@ export class InventoryComponent implements OnInit, AfterViewInit {
       responsive: true,
       order: [[0, "desc"]]
     };
+
   }
 
   ngAfterViewInit(): void {
@@ -127,7 +130,7 @@ export class InventoryComponent implements OnInit, AfterViewInit {
 
   cleaner() {
 
-    for (var i = (this.newinventories.length) - 1; i >= 0; i-=1) {
+    for (var i = (this.newinventories.length) - 1; i >= 0; i -= 1) {
       var cur = this.newinventories[i];
       var leadless = true;
       for (var j = 0; j < this.leads.length; j++) {
@@ -149,7 +152,7 @@ export class InventoryComponent implements OnInit, AfterViewInit {
 
         }
       }
-      if(leadless) this.newinventories.splice(i, 1);
+      if (leadless) this.newinventories.splice(i, 1);
     }
   }
 
@@ -382,7 +385,14 @@ export class InventoryComponent implements OnInit, AfterViewInit {
 
   }
 
-  deleteLead(id) {
+  delModal(id) {
+    this.inventoryId = id;
+    console.log(this.inventoryId);
+  }
+
+  deleteLead() {
+
+    let id = this.inventoryId;
 
     for (var i = 0; i < this.inventories.length; i++) {
       if (this.inventories[i].leadId == id) {
@@ -480,7 +490,5 @@ export class InventoryComponent implements OnInit, AfterViewInit {
       this.redrawTable();
     }
   }
-
-
 
 }

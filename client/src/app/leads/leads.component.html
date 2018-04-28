@@ -9,8 +9,8 @@
         <button (click)="addLead()" class="btn btn-primary">Add New</button>
       </div>
       <p *ngIf="!(resultLeads && inventories && cities && propertytypes && locations && users && statusTypes && sublocations)">Please wait...</p>
-      <table *ngIf="resultLeads && inventories && cities && propertytypes && locations && users && statusTypes && sublocations" datatable class="table table-bordered table-hover"
-        style="table-layout:auto;" [dtOptions]="dtOptions" id="datatableId">
+      <table *ngIf="resultLeads && inventories && cities && propertytypes && locations && users && statusTypes && sublocations"
+        datatable class="table table-bordered table-hover" style="table-layout:auto;" [dtOptions]="dtOptions" id="datatableId">
         <thead>
           <tr>
             <th>ID</th>
@@ -34,7 +34,8 @@
                 "buy the {{ getPropertyType(l._id).type }}"</span>
               <span *ngIf="getInventory(l._id).purpose == 3">
                 "rent the {{ getPropertyType(l._id).type }}"</span>
-              in <span *ngIf="getSubLocation(l._id).sublocation">{{ getSubLocation(l._id).sublocation }},</span> 
+              in
+              <span *ngIf="getSubLocation(l._id).sublocation">{{ getSubLocation(l._id).sublocation }},</span>
               {{ getLocation(l._id).location }}, {{ getCity(l._id).name }}.
               <br>
               <b>Area</b>: {{ getInventory(l._id).area }}
@@ -43,7 +44,8 @@
               <span *ngIf="getInventory(l._id).areaUnit == 3">Kanal</span>
               <b>Demand</b>: {{ getInventory(l._id).demand }}
               <b>{{ getPropertyType(l._id).type }} #</b>: {{ getInventory(l._id).propNumber }}
-              <b>Street</b>: {{ getInventory(l._id).street }} <br>
+              <b>Street</b>: {{ getInventory(l._id).street }}
+              <br>
               <b>Comment</b>: {{ l.cmt }}
             </td>
             <td>{{ l.phoneNumber }}</td>
@@ -65,9 +67,9 @@
               <a (click)="editLead(l._id)" class="btn btn-sm btn-default">
                 <i class="fas fa-edit" style="font-size:1.2rem"></i>
               </a>
-              <a (click)="deleteLead(l._id)" class="btn btn-sm btn-default">
+              <button (click)="delModal(l._id)" class="btn btn-sm btn-default" data-toggle="modal" data-target="#delModal">
                 <i class="fas fa-trash" style="font-size:1.2rem"></i>
-              </a>
+              </button>
             </td>
           </tr>
 
@@ -103,6 +105,27 @@
         </tfoot>
 
       </table>
+
+      <!-- Delete Modal -->
+      <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="delModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Alert!!</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Are you sure?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button id="deletebtn" (click)="deleteLead()" type="button" class="btn btn-danger" data-dismiss="modal">Yes, delete it</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div>
     <!-- /.panel-body -->

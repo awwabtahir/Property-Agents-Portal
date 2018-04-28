@@ -58,7 +58,9 @@
           <div class="form-row">
 
             <div class="formgroup col-md-4">
-              <label for="inputCity"><b>City</b></label>
+              <label for="inputCity">
+                <b>City</b>
+              </label>
               <select class="form-control" id="selectCity" name="cityId" (change)="onCityChange($event.target.value)">
                 <option value="0" selected>Select city</option>
                 <option *ngFor="let city of newcities" value="{{ city?._id }}">{{ city?.name }}</option>
@@ -66,7 +68,9 @@
             </div>
 
             <div class="formgroup col-md-4">
-              <label for="locId"><b>Location</b></label>
+              <label for="locId">
+                <b>Location</b>
+              </label>
               <select class="form-control" id="selectLocation" name="locId" (change)="onLocationChange($event.target.value)">
                 <option value="0" selected>Select location</option>
                 <option *ngFor="let loc of newLocations" value="{{ loc?._id }}">{{ loc?.location }}</option>
@@ -74,7 +78,9 @@
             </div>
 
             <div class="formgroup col-md-4">
-              <label for="inputType"><b>Type</b></label>
+              <label for="inputType">
+                <b>Type</b>
+              </label>
               <select class="form-control" id="selectPropertyType" name="propTypeId" (change)="onTypeChange($event.target.value)">
                 <option value="0" selected>Select property type</option>
                 <option *ngFor="let type of propertytypes" value="{{ type?._id }}">{{ type?.type }}</option>
@@ -92,8 +98,8 @@
 
 
       <p *ngIf="!(resultInventories && sublocations)">Please wait...</p>
-      <table *ngIf="resultInventories && sublocations" datatable [dtTrigger]="dtTrigger" class="table table-bordered table-hover" id="datatableId"
-        [dtOptions]="dtOptions">
+      <table *ngIf="resultInventories && sublocations" datatable [dtTrigger]="dtTrigger" class="table table-bordered table-hover"
+        id="datatableId" [dtOptions]="dtOptions">
         <thead>
           <tr>
             <th>ID</th>
@@ -121,14 +127,35 @@
               <a (click)="editLead(inv.leadId)" class="btn btn-sm btn-default">
                 <i class="fas fa-edit" style="font-size:1.2rem"></i> Edit
               </a>
-              <a (click)="deleteLead(inv.leadId)" *ngIf="auth.isAdmin()" class="btn btn-sm btn-default">
+              <button (click)="delModal(inv.leadId)" *ngIf="auth.isAdmin()" class="btn btn-sm btn-default" data-toggle="modal" data-target="#delModal">
                 <i class="fas fa-trash" style="font-size:1.2rem"></i>
-              </a>
+              </button>
             </td>
           </tr>
         </tbody>
 
       </table>
+
+      <!-- Delete Modal -->
+      <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="delModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Alert!!</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Are you sure?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button id="deletebtn" (click)="deleteLead()" type="button" class="btn btn-danger" data-dismiss="modal">Yes, delete it</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div>
     <!-- /.panel-body -->

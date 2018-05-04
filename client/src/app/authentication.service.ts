@@ -229,7 +229,8 @@ export class AuthenticationService {
     type?: 'login' | 'register' | 'profile' | 'getUsers' | 'addCity' | 'getCities' |
       'addLoc' | 'getLocations' | 'addPropType' | 'getPropTypes' | 'addLead' | 'getLeads' |
       'getInventories' | 'updateLead' | 'updateUser' | 'addStatusType' | 'getStatusTypes' | 
-      'updateStatus' | 'getSLocations',
+      'updateStatus' | 'getSLocations' | 'updateCity' | 'deleteCity' | 'updateLoc' | 'deleteLoc' |
+      'updatePropType' | 'deletePropType' | 'updateStatusType' | 'deleteStatusType',
     template?: TokenPayload | City | Location | PropertyType | Lead | Status):
     Observable<any> {
 
@@ -288,6 +289,14 @@ export class AuthenticationService {
     return this.request('get', 'getCities');
   }
 
+  public updateCity(city): Observable<any> {
+    return this.request('post', 'updateCity', city);
+  }
+
+  public deleteCity(city): Observable<any> {
+    return this.request('post', 'deleteCity', city);
+  }
+
   // For location
 
   public addLoc(location: Location): Observable<any> {
@@ -302,6 +311,14 @@ export class AuthenticationService {
     return this.request('get', 'getSLocations');
   }
 
+  public updateLocation(location): Observable<any> {
+    return this.request('post', 'updateLoc', location);
+  }
+
+  public deleteLocation(location): Observable<any> {
+    return this.request('post', 'deleteLoc', location);
+  }
+
   // For property type
 
   public addPropType(propType: PropertyType): Observable<any> {
@@ -310,6 +327,14 @@ export class AuthenticationService {
 
   public getPropTypes(): Observable<any> {
     return this.request('get', 'getPropTypes');
+  }
+
+  public updatePropType(propType): Observable<any> {
+    return this.request('post', 'updatePropType', propType);
+  }
+
+  public deletePropType(propType): Observable<any> {
+    return this.request('post', 'deletePropType', propType);
   }
 
   // For status type
@@ -324,6 +349,14 @@ export class AuthenticationService {
 
   public getStatusTypes(): Observable<any> {
     return this.request('get', 'getStatusTypes');
+  }
+
+  public updateStatusType(statusType): Observable<any> {
+    return this.request('post', 'updateStatusType', statusType);
+  }
+
+  public deleteStatusType(statusType): Observable<any> {
+    return this.request('post', 'deleteStatusType', statusType);
   }
 
   // For lead

@@ -354,6 +354,12 @@ var AuthenticationService = /** @class */ (function () {
     AuthenticationService.prototype.getCities = function () {
         return this.request('get', 'getCities');
     };
+    AuthenticationService.prototype.updateCity = function (city) {
+        return this.request('post', 'updateCity', city);
+    };
+    AuthenticationService.prototype.deleteCity = function (city) {
+        return this.request('post', 'deleteCity', city);
+    };
     // For location
     AuthenticationService.prototype.addLoc = function (location) {
         return this.request('post', 'addLoc', location);
@@ -364,12 +370,24 @@ var AuthenticationService = /** @class */ (function () {
     AuthenticationService.prototype.getSLocations = function () {
         return this.request('get', 'getSLocations');
     };
+    AuthenticationService.prototype.updateLocation = function (location) {
+        return this.request('post', 'updateLoc', location);
+    };
+    AuthenticationService.prototype.deleteLocation = function (location) {
+        return this.request('post', 'deleteLoc', location);
+    };
     // For property type
     AuthenticationService.prototype.addPropType = function (propType) {
         return this.request('post', 'addPropType', propType);
     };
     AuthenticationService.prototype.getPropTypes = function () {
         return this.request('get', 'getPropTypes');
+    };
+    AuthenticationService.prototype.updatePropType = function (propType) {
+        return this.request('post', 'updatePropType', propType);
+    };
+    AuthenticationService.prototype.deletePropType = function (propType) {
+        return this.request('post', 'deletePropType', propType);
     };
     // For status type
     AuthenticationService.prototype.addStatusType = function (statusType) {
@@ -380,6 +398,12 @@ var AuthenticationService = /** @class */ (function () {
     };
     AuthenticationService.prototype.getStatusTypes = function () {
         return this.request('get', 'getStatusTypes');
+    };
+    AuthenticationService.prototype.updateStatusType = function (statusType) {
+        return this.request('post', 'updateStatusType', statusType);
+    };
+    AuthenticationService.prototype.deleteStatusType = function (statusType) {
+        return this.request('post', 'deleteStatusType', statusType);
     };
     // For lead
     AuthenticationService.prototype.addLead = function (lead) {
@@ -1874,7 +1898,7 @@ var LoginComponent = /** @class */ (function () {
 /***/ "../../../../../src/app/options/options.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container mb-4\">\n  <!-- \n  Manage Cities \n  - add city\n  - edit city\n  - delete city\n-->\n  <div class=\"alert alert-success mt-3\">\n    <b>Cities</b>\n  </div>\n  <div class=\"row\">\n    <div class=\"col mt-3\">\n      <p>\n        <b>Add New City</b>\n      </p>\n      <form (submit)=\"addCity()\">\n\n        <!-- New city name is entered in this input -->\n        <div class=\"form-group\">\n          <input type=\"text\" name=\"name\" class=\"form-control\" id=\"name\" placeholder=\"Enter city\" [(ngModel)]=\"city.name\">\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-primary\">Add City</button>\n      </form>\n    </div>\n    <div class=\"col mt-3\">\n      <p>\n        <b>Added Cities</b>\n      </p>\n      <form>\n\n        <!-- Get city names here for editing -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectCity\" name=\"cityId\">\n            <option *ngFor=\"let city of cities\" value=\"{{ city?._id }}\">{{ city?.name }}</option>\n          </select>\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-primary\">Edit</button>\n        <button type=\"submit\" class=\"btn btn-danger\">Delete</button>\n      </form>\n    </div>\n  </div>\n\n  <!-- \n  Manage Locations \n  - add Location\n  - edit Location\n  - delete Location\n-->\n  <div class=\"alert alert-success mt-3\">\n    <b>Locations</b>\n  </div>\n  <div class=\"row\">\n    <div class=\"col mt-3\">\n      <p>\n        <b>Add New Location</b>\n      </p>\n      <form (submit)=\"addLoc()\">\n\n        <!-- City names are get here to add location -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectCity\" name=\"cityId\" [(ngModel)]=\"location.cityId\">\n            <option *ngFor=\"let city of cities\" value=\"{{ city?._id }}\">{{ city?.name }}</option>\n          </select>\n        </div>\n\n        <!-- New location will be entered here -->\n        <div class=\"form-group\">\n          <input type=\"text\" class=\"form-control\" name=\"location\" id=\"inputLocation\" placeholder=\"Enter location\" [(ngModel)]=\"location.location\">\n        </div>\n\n        <!-- New location will be entered here -->\n        <div class=\"form-group\">\n          <input type=\"text\" class=\"form-control\" name=\"sublocation\" id=\"inputSubLocation\" placeholder=\"Enter sub location\" [(ngModel)]=\"location.sublocation\">\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-primary\">Add Location</button>\n      </form>\n    </div>\n    <div class=\"col mt-3\">\n      <p>\n        <b>Added Locations</b>\n      </p>\n      <form>\n\n        <!-- Get city names here for editing location -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectCity\" name=\"cityId\" (change)=\"onChange($event.target.value)\">\n            <option *ngFor=\"let city of cities\" value=\"{{ city?._id }}\">{{ city?.name }}</option>\n          </select>\n        </div>\n\n        <!-- Location is get here for editing and deleting -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectLocation\" name=\"locId\" (change)=\"onLocChange($event.target.value)\">\n            <option *ngFor=\"let loc of newLocations\" value=\"{{ loc?._id }}\">{{ loc?.location }}</option>\n          </select>\n        </div>\n\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectSubLocation\" name=\"locId\">\n            <option *ngFor=\"let sloc of newSubLocations\" value=\"{{ sloc?._id }}\">{{ sloc?.sublocation }}</option>\n          </select>\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-primary\">Edit</button>\n        <button type=\"submit\" class=\"btn btn-danger\">Delete</button>\n      </form>\n    </div>\n  </div>\n\n  <!-- \n  Manage Property Types\n-->\n  <div class=\"alert alert-success mt-3\">\n    <b>Property Types</b>\n  </div>\n  <div class=\"row\">\n    <div class=\"col mt-3\">\n      <p>\n        <b>Add New Type</b>\n      </p>\n      <form (submit)=\"addPropType()\">\n\n        <!-- New property type is entered here for adding in DB -->\n        <div class=\"form-group\">\n          <input type=\"text\" class=\"form-control\" name=\"type\" id=\"inputType\" placeholder=\"Enter property type\" [(ngModel)]=\"propType.type\">\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-primary\">Add Property Type</button>\n      </form>\n    </div>\n    <div class=\"col mt-3\">\n      <p>\n        <b>Added Types</b>\n      </p>\n      <form>\n\n        <!-- Property type is get here for editing and deleting -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectPropertyType\" name=\"propTypeId\">\n            <option *ngFor=\"let type of propTypes\" value=\"{{ type?._id }}\">{{ type?.type }}</option>\n          </select>\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-primary\">Edit</button>\n        <button type=\"submit\" class=\"btn btn-danger\">Delete</button>\n      </form>\n    </div>\n  </div>\n\n  <!-- \n  Manage Status Types\n-->\n  <div class=\"alert alert-success mt-3\">\n    <b>Status Types</b>\n  </div>\n  <div class=\"row\">\n    <div class=\"col mt-3\">\n      <p>\n        <b>Add New Status</b>\n      </p>\n      <form (submit)=\"addStatusType()\">\n\n        <!-- New status type is entered here for adding in DB -->\n        <div class=\"form-group\">\n          <input type=\"text\" class=\"form-control\" name=\"type\" id=\"inputType\" placeholder=\"Enter status type\" [(ngModel)]=\"statusType.type\">\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-primary\">Add Status Type</button>\n      </form>\n    </div>\n    <div class=\"col mt-3\">\n      <p>\n        <b>Added Status</b>\n      </p>\n      <form>\n\n        <!-- Status type is get here for editing and deleting -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectStatusType\" name=\"statusTypeId\">\n            <option *ngFor=\"let type of statusTypes\" value=\"{{ type?._id }}\">{{ type?.type }}</option>\n          </select>\n        </div>\n      </form>\n    </div>\n  </div>\n\n</div>"
+module.exports = "<div class=\"container mb-4\">\n  <!-- \n  Manage Cities \n  - add city\n  - edit city\n  - delete city\n-->\n  <div class=\"alert alert-success mt-3\">\n    <b>Cities</b>\n  </div>\n  <div class=\"row\">\n    <div class=\"col mt-3\">\n      <p>\n        <b *ngIf=\"!editCityClick\">Add New City</b>\n        <b *ngIf=\"editCityClick\" style=\"color: red;\">Edit City</b>\n      </p>\n      <form>\n\n        <!-- New city name is entered in this input -->\n        <div class=\"form-group\">\n          <input type=\"text\" name=\"name\" class=\"form-control\" id=\"cityName\" placeholder=\"Enter city\" [(ngModel)]=\"city.name\">\n        </div>\n        <!-- Button for adding and editing city name -->\n        <button *ngIf=\"!editCityClick\" (click)=\"addCity()\" class=\"btn btn-primary\">Add City</button>\n        <button *ngIf=\"editCityClick\" (click)=\"editCity()\" class=\"btn btn-primary\">Edit City</button>\n        <p *ngIf=\"cityAdded == true\" style=\"color: blue;\">Successfully Added!</p>\n        <p *ngIf=\"cityUpdated\" style=\"color: blue;\">Successfully Updated!</p>\n      \n      </form>\n    </div>\n    <div class=\"col mt-3\">\n      <p>\n        <b>Added Cities</b>\n      </p>\n      <form>\n\n        <!-- Get city names here for editing -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectCity\" name=\"cityId\" [(ngModel)]=\"selectedCity\">\n            <option *ngFor=\"let city of cities\" value=\"{{ city?._id }}\">{{ city?.name }}</option>\n          </select>\n        </div>\n\n        <button (click)=\"editCityBtnClicked()\" type=\"submit\" class=\"btn btn-primary\">Edit</button>\n        <button *ngIf=\"!deleteCityBtn\" (click)=\"deleteCityBtnPressed()\" class=\"btn btn-danger\">Delete</button>\n        <button *ngIf=\"deleteCityBtn\" (click)=\"deleteCityBtnClicked()\" class=\"btn btn-danger\">Click again to delete</button>\n      </form>\n    </div>\n  </div>\n\n  <!-- \n  Manage Locations \n  - add Location\n  - edit Location\n  - delete Location\n-->\n  <div class=\"alert alert-success mt-3\">\n    <b>Locations</b>\n  </div>\n  <div class=\"row\">\n    <div class=\"col mt-3\">\n      <p>\n        <b>Add New Location</b>\n      </p>\n      <form>\n\n        <!-- City names are get here to add location -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectCity\" name=\"locCityId\" [(ngModel)]=\"location.cityId\">\n            <option *ngFor=\"let city of cities\" value=\"{{ city?._id }}\">{{ city?.name }}</option>\n          </select>\n        </div>\n\n        <!-- New location will be entered here -->\n        <div class=\"form-group\">\n          <input type=\"text\" class=\"form-control\" name=\"location\" id=\"inputLocation\" placeholder=\"Enter location\" [(ngModel)]=\"location.location\">\n        </div>\n\n        <!-- New location will be entered here -->\n        <div class=\"form-group\">\n          <input type=\"text\" class=\"form-control\" name=\"sublocation\" id=\"inputSubLocation\" placeholder=\"Enter sub location\" [(ngModel)]=\"location.sublocation\">\n        </div>\n\n        <button *ngIf=\"!editLocClicked\" (click)=\"addLoc()\" class=\"btn btn-primary\">Add Location</button>\n        <button *ngIf=\"editLocClicked\" (click)=\"editLoc()\" class=\"btn btn-primary\">Edit Location</button>\n        <p *ngIf=\"locAdded\" style=\"color: blue;\">Successfully Added!</p>\n        <p *ngIf=\"locUpdated\" style=\"color: blue;\">Successfully Updated!</p>\n\n      </form>\n    </div>\n    <div class=\"col mt-3\">\n      <p>\n        <b>Added Locations</b>\n      </p>\n      <form>\n\n        <!-- Get city names here for editing location -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectCity\" name=\"cityId\" (change)=\"onChange($event.target.value)\" [(ngModel)]=\"selectedLocCity\">\n            <option *ngFor=\"let city of cities\" value=\"{{ city?._id }}\">{{ city?.name }}</option>\n          </select>\n        </div>\n\n        <!-- Location is get here for editing and deleting -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectLocation\" name=\"locId\" (change)=\"onLocChange($event.target.value)\" [(ngModel)]=\"selectedLoc\">\n            <option *ngFor=\"let loc of newLocations\" value=\"{{ loc?._id }}\">{{ loc?.location }}</option>\n          </select>\n        </div>\n\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectSubLocation\" name=\"locId\" [(ngModel)]=\"selectedSubLoc\">\n            <option *ngFor=\"let sloc of newSubLocations\" value=\"{{ sloc?._id }}\">{{ sloc?.sublocation }}</option>\n          </select>\n        </div>\n\n        <button (click)=\"editLocBtnClicked()\" class=\"btn btn-primary\">Edit</button>\n        <button *ngIf=\"!locDelBtn\" (click)=\"locDelBtnPressed()\" class=\"btn btn-danger\">Delete</button>\n        <button *ngIf=\"locDelBtn\" (click)=\"locDelBtnClicked()\" class=\"btn btn-danger\">Click again to confirm deletion</button>\n      </form>\n    </div>\n  </div>\n\n  <!-- \n  Manage Property Types\n-->\n  <div class=\"alert alert-success mt-3\">\n    <b>Property Types</b>\n  </div>\n  <div class=\"row\">\n    <div class=\"col mt-3\">\n      <p>\n        <b>Add New Type</b>\n      </p>\n      <form>\n\n        <!-- New property type is entered here for adding in DB -->\n        <div class=\"form-group\">\n          <input type=\"text\" class=\"form-control\" name=\"type\" id=\"inputType\" placeholder=\"Enter property type\" [(ngModel)]=\"propType.type\">\n        </div>\n\n        <button *ngIf=\"!editProp\" (click)=\"addPropType()\" class=\"btn btn-primary\">Add Property Type</button>\n        <button *ngIf=\"editProp\" (click)=\"editPropType()\" class=\"btn btn-primary\">Edit Property Type</button>\n        <p *ngIf=\"propTypeAdded\" style=\"color: blue;\">Successfully Added!</p>\n      </form>\n    </div>\n    <div class=\"col mt-3\">\n      <p>\n        <b>Added Types</b>\n      </p>\n      <form>\n\n        <!-- Property type is get here for editing and deleting -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectPropertyType\" name=\"propTypeId\" [(ngModel)]=\"selectedPropType\">\n            <option *ngFor=\"let type of propTypes\" value=\"{{ type?._id }}\">{{ type?.type }}</option>\n          </select>\n        </div>\n\n        <button (click)=\"editPropTypeClicked()\" class=\"btn btn-primary\">Edit</button>\n        <button *ngIf=\"!deletePropBtn\" (click)=\"deletePropBtnClicked()\" class=\"btn btn-danger\">Delete</button>\n        <button *ngIf=\"deletePropBtn\" (click)=\"deletePropType()\" class=\"btn btn-danger\">Click again to confirm deletion</button>\n      </form>\n    </div>\n  </div>\n\n  <!-- \n  Manage Status Types\n-->\n  <div class=\"alert alert-success mt-3\">\n    <b>Status Types</b>\n  </div>\n  <div class=\"row\">\n    <div class=\"col mt-3\">\n      <p>\n        <b>Add New Status</b>\n      </p>\n      <form>\n\n        <!-- New status type is entered here for adding in DB -->\n        <div class=\"form-group\">\n          <input type=\"text\" class=\"form-control\" name=\"type\" id=\"inputStatusType\" placeholder=\"Enter status type\" [(ngModel)]=\"statusType.type\">\n        </div>\n\n        <button *ngIf=\"!editStatusBtn\" (click)=\"addStatusType()\" class=\"btn btn-primary\">Add Status Type</button>\n        <button *ngIf=\"editStatusBtn\" (click)=\"editStatusType()\" class=\"btn btn-primary\">Edit Status Type</button>\n        <p *ngIf=\"statusTypeAdded\" style=\"color: blue;\">Successfully Added!</p>\n      </form>\n    </div>\n    <div class=\"col mt-3\">\n      <p>\n        <b>Added Status</b>\n      </p>\n      <form>\n\n        <!-- Status type is get here for editing and deleting -->\n        <div class=\"form-group\">\n          <select class=\"form-control\" id=\"selectStatusType\" name=\"statusTypeId\" [(ngModel)]=\"selectedStatusType\">\n            <option *ngFor=\"let type of statusTypes\" value=\"{{ type?._id }}\">{{ type?.type }}</option>\n          </select>\n        </div>\n\n        <button (click)=\"editStatusClicked()\" class=\"btn btn-primary\">Edit</button>\n        <button *ngIf=\"!deleteStatusBtn\" (click)=\"deleteStatusBtnClicked()\" class=\"btn btn-danger\">Delete</button>\n        <button *ngIf=\"deleteStatusBtn\" (click)=\"deleteStatusType()\" class=\"btn btn-danger\">Click again to confirm deletion</button>\n      </form>\n    </div>\n  </div>\n\n</div>"
 
 /***/ }),
 
@@ -1910,6 +1934,10 @@ var OptionsComponent = /** @class */ (function () {
         this.city = {
             name: ''
         };
+        this.cityAdded = false;
+        this.editCityClick = false;
+        this.cityUpdated = false;
+        this.deleteCityBtn = false;
         ///////////////////////////////////////////////
         /***************
          For location operations
@@ -1920,6 +1948,11 @@ var OptionsComponent = /** @class */ (function () {
             location: '',
             sublocation: ''
         };
+        this.locAdded = false;
+        this.editLocClicked = false;
+        this.locUpdated = false;
+        // delete location
+        this.locDelBtn = false;
         ///////////////////////////////////////////////
         /***************
          For property type operations
@@ -1928,6 +1961,10 @@ var OptionsComponent = /** @class */ (function () {
         this.propType = {
             type: ""
         };
+        this.propTypeAdded = false;
+        this.editProp = false;
+        // deleting property type
+        this.deletePropBtn = false;
         /////////////////////////////////////////////////////////
         ///////////////////////////////////////////////
         /***************
@@ -1937,6 +1974,10 @@ var OptionsComponent = /** @class */ (function () {
         this.statusType = {
             type: ""
         };
+        this.statusTypeAdded = false;
+        this.editStatusBtn = false;
+        // delete status type
+        this.deleteStatusBtn = false;
     }
     OptionsComponent.prototype.addCity = function () {
         var _this = this;
@@ -1946,6 +1987,11 @@ var OptionsComponent = /** @class */ (function () {
         }, function (err) {
             console.error(err);
         });
+        this.cityAdded = true;
+        setTimeout(function () {
+            this.cityAdded = false;
+            console.log(this.cityAdded);
+        }, 3000);
     };
     OptionsComponent.prototype.getCities = function () {
         var _this = this;
@@ -1960,6 +2006,55 @@ var OptionsComponent = /** @class */ (function () {
             return locations.cityId == id;
         });
     };
+    OptionsComponent.prototype.editCityBtnClicked = function () {
+        this.editCityClick = true;
+        this.cityUpdated = false;
+        var selectedCity = this.selectedCity;
+        this.selectedCityData = this.cities.filter(function (city) {
+            return city._id == selectedCity;
+        });
+        $("#cityName").val(this.selectedCityData[0].name);
+    };
+    OptionsComponent.prototype.editCity = function () {
+        if (this.city.name !== "")
+            this.selectedCityData[0].name = this.city.name;
+        var city = {
+            _id: 0,
+            name: ""
+        };
+        city._id = this.selectedCityData[0]._id;
+        city.name = this.selectedCityData[0].name;
+        this.auth.updateCity(city).subscribe(function () {
+            console.log("success");
+        }, function (err) {
+            console.error(err);
+        });
+        this.editCityClick = false;
+        this.cityUpdated = true;
+        $("#cityName").val("");
+    };
+    OptionsComponent.prototype.deleteCityBtnPressed = function () {
+        this.deleteCityBtn = true;
+    };
+    OptionsComponent.prototype.deleteCityBtnClicked = function () {
+        console.log(this.selectedCity);
+        var id = this.selectedCity;
+        var city = {
+            _id: id
+        };
+        this.auth.deleteCity(city).subscribe(function () {
+            console.log("success");
+        }, function (err) {
+            console.error(err);
+        });
+        for (var i = 0; i < this.cities.length; i++) {
+            if (this.cities[i]._id == id) {
+                this.cities.splice(i, 1);
+                break;
+            }
+        }
+        this.deleteCityBtn = false;
+    };
     OptionsComponent.prototype.addLoc = function () {
         var _this = this;
         this.auth.addLoc(this.location).subscribe(function () {
@@ -1969,6 +2064,10 @@ var OptionsComponent = /** @class */ (function () {
         }, function (err) {
             console.error(err);
         });
+        this.locAdded = true;
+        setTimeout(function () {
+            this.locAdded = false;
+        }, 3000);
     };
     OptionsComponent.prototype.getLocations = function () {
         var _this = this;
@@ -1991,6 +2090,86 @@ var OptionsComponent = /** @class */ (function () {
             console.error(err);
         });
     };
+    OptionsComponent.prototype.editLocBtnClicked = function () {
+        this.editLocClicked = true;
+        this.locUpdated = false;
+        var selectedLoc = this.selectedLoc;
+        var selectedSubLoc = this.selectedSubLoc;
+        this.location.cityId = this.selectedLocCity;
+        this.selectedLocData = this.locations.filter(function (loc) {
+            return loc._id == selectedLoc;
+        });
+        $("#inputLocation").val(this.selectedLocData[0].location);
+        if (selectedSubLoc) {
+            this.selectedSubLocData = this.sublocations.filter(function (loc) {
+                return loc._id == selectedSubLoc;
+            });
+            $("#inputSubLocation").val(this.selectedSubLocData[0].sublocation);
+        }
+    };
+    OptionsComponent.prototype.editLoc = function () {
+        var _this = this;
+        // location to update
+        var location = {
+            cityId: this.selectedLocCity,
+            locationId: this.selectedLoc,
+            location: $("#inputLocation").val(),
+            sublocationId: 0,
+            sublocation: $("#inputSubLocation").val()
+        };
+        if (this.selectedSubLoc) {
+            location.sublocationId = this.selectedSubLoc;
+        }
+        console.log(location);
+        this.auth.updateLocation(location).subscribe(function () {
+            console.log("success");
+            _this.getLocations();
+            _this.getSubLocations();
+        }, function (err) {
+            console.error(err);
+        });
+        this.editLocClicked = false;
+        this.locUpdated = true;
+        $("#inputLocation").val("");
+        $("#inputSubLocation").val("");
+    };
+    OptionsComponent.prototype.locDelBtnPressed = function () {
+        this.locDelBtn = true;
+    };
+    OptionsComponent.prototype.locDelBtnClicked = function () {
+        var location = {
+            locationId: this.selectedLoc,
+            sublocationId: 0
+        };
+        if (this.selectedSubLoc) {
+            location.sublocationId = this.selectedSubLoc;
+            for (var i = 0; i < this.sublocations.length; i++) {
+                if (this.sublocations[i]._id == this.selectedSubLoc) {
+                    this.sublocations.splice(i, 1);
+                    break;
+                }
+            }
+        }
+        else {
+            for (var i = 0; i < this.locations.length; i++) {
+                if (this.locations[i]._id == this.selectedLoc) {
+                    this.locations.splice(i, 1);
+                    break;
+                }
+            }
+            for (var i = 0; i < this.sublocations.length; i++) {
+                if (this.sublocations[i].locationId == this.selectedLoc) {
+                    this.sublocations.splice(i, 1);
+                }
+            }
+        }
+        this.auth.deleteLocation(location).subscribe(function () {
+            console.log("success");
+        }, function (err) {
+            console.error(err);
+        });
+        this.locDelBtn = false;
+    };
     OptionsComponent.prototype.addPropType = function () {
         var _this = this;
         this.auth.addPropType(this.propType).subscribe(function () {
@@ -1999,6 +2178,10 @@ var OptionsComponent = /** @class */ (function () {
         }, function (err) {
             console.error(err);
         });
+        this.propTypeAdded = true;
+        setTimeout(function () {
+            this.propTypeAdded = false;
+        }, 3000);
     };
     OptionsComponent.prototype.getPropTypes = function () {
         var _this = this;
@@ -2008,6 +2191,46 @@ var OptionsComponent = /** @class */ (function () {
             console.error(err);
         });
     };
+    OptionsComponent.prototype.editPropTypeClicked = function () {
+        this.editProp = true;
+        var propTypeId = this.selectedPropType;
+        this.selectedPropTypeData = this.propTypes.filter(function (prop) {
+            return prop._id == propTypeId;
+        });
+        $("#inputType").val(this.selectedPropTypeData[0].type);
+    };
+    OptionsComponent.prototype.editPropType = function () {
+        var _this = this;
+        var type = {
+            typeId: this.selectedPropType,
+            type: $("#inputType").val()
+        };
+        console.log(type);
+        this.auth.updatePropType(type).subscribe(function () {
+            console.log("success");
+            _this.getPropTypes();
+        }, function (err) {
+            console.error(err);
+        });
+        this.editProp = false;
+        $("#inputType").val("");
+    };
+    OptionsComponent.prototype.deletePropBtnClicked = function () {
+        this.deletePropBtn = true;
+    };
+    OptionsComponent.prototype.deletePropType = function () {
+        var _this = this;
+        var propType = {
+            _id: this.selectedPropType
+        };
+        this.auth.deletePropType(propType).subscribe(function () {
+            console.log("success");
+            _this.getPropTypes();
+        }, function (err) {
+            console.error(err);
+        });
+        this.deletePropBtn = false;
+    };
     OptionsComponent.prototype.addStatusType = function () {
         var _this = this;
         this.auth.addStatusType(this.statusType).subscribe(function () {
@@ -2016,14 +2239,69 @@ var OptionsComponent = /** @class */ (function () {
         }, function (err) {
             console.error(err);
         });
+        this.statusTypeAdded = true;
+        setTimeout(function () {
+            this.statusTypeAdded = false;
+        }, 3000);
     };
     OptionsComponent.prototype.getStatusTypes = function () {
         var _this = this;
         this.auth.getStatusTypes().subscribe(function (statusTypes) {
             _this.statusTypes = statusTypes;
+            _this.statusTypes = _this.statusTypes.filter(function (status) {
+                return status._id !== 0;
+            });
+            _this.statusTypes = _this.statusTypes.filter(function (status) {
+                return status._id !== 1;
+            });
+            _this.statusTypes = _this.statusTypes.filter(function (status) {
+                return status._id !== 2;
+            });
+            _this.statusTypes = _this.statusTypes.filter(function (status) {
+                return status._id !== 6;
+            });
         }, function (err) {
             console.error(err);
         });
+    };
+    OptionsComponent.prototype.editStatusClicked = function () {
+        this.editStatusBtn = true;
+        var statusTypeId = this.selectedStatusType;
+        this.selectedStatusTypeData = this.statusTypes.filter(function (status) {
+            return status._id == statusTypeId;
+        });
+        $("#inputStatusType").val(this.selectedStatusTypeData[0].type);
+    };
+    OptionsComponent.prototype.editStatusType = function () {
+        var _this = this;
+        var statusType = {
+            _id: this.selectedStatusType,
+            type: $("#inputStatusType").val()
+        };
+        this.auth.updateStatusType(statusType).subscribe(function () {
+            console.log("success");
+            _this.getStatusTypes();
+        }, function (err) {
+            console.error(err);
+        });
+        this.editStatusBtn = false;
+        $("#inputStatusType").val("");
+    };
+    OptionsComponent.prototype.deleteStatusBtnClicked = function () {
+        this.deleteStatusBtn = true;
+    };
+    OptionsComponent.prototype.deleteStatusType = function () {
+        var _this = this;
+        var statusType = {
+            _id: this.selectedStatusType
+        };
+        this.auth.deleteStatusType(statusType).subscribe(function () {
+            console.log("success");
+            _this.getStatusTypes();
+        }, function (err) {
+            console.error(err);
+        });
+        this.deleteStatusBtn = false;
     };
     OptionsComponent.prototype.ngOnInit = function () {
         this.getCities();

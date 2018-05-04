@@ -25,6 +25,49 @@ module.exports.addCity = function (req, res) {
 
 }
 
+module.exports.updateCity = function (req, res) {
+
+    if (!req.body) {
+        console.log(req.body);
+        console.log("error");
+        return;
+    }
+
+    var city = {};
+    city._id = req.body._id;
+    city.name = req.body.name;
+
+    console.log(city);
+
+    var conditions = { _id: req.body._id }
+        , update = { $set: city }
+        , options = { multi: true };
+
+    City.update(conditions, update, options, callback);
+
+    function callback(err, numAffected) {
+        if (err) console.log(err);
+        console.log("City updated: " + numAffected.n);
+        res.status(200).json(numAffected);
+    };
+
+}
+
+module.exports.deleteCity = function (req, res) {
+
+    if (!req.body) {
+        console.log(req.body);
+        console.log("error");
+        return;
+    }
+
+    City.remove({ _id: req.body._id }, function (err) {
+        if (err) throw err;
+        res.status(200).json("Deleted");
+    });
+
+}
+
 module.exports.getCities = function (req, res) {
     if (!req.payload._id) {
         res.status(401).json({
@@ -68,9 +111,9 @@ module.exports.addLoc = function (req, res) {
                 .findOne({ 'location': req.body.location })
                 .exec(function (err, loc) {
                     sloc.save(function (errr, sl) {
-                        if(errr) {
+                        if (errr) {
                             console.log(errr);
-                            return; 
+                            return;
                         }
                         sl.locationId = loc._id;
                         sl.save();
@@ -100,6 +143,83 @@ module.exports.addLoc = function (req, res) {
             }
         }
     });
+
+}
+
+module.exports.updateLoc = function (req, res) {
+
+    if (!req.body) {
+        console.log(req.body);
+        console.log("error");
+        return;
+    }
+
+    if (req.body.sublocationId != 0) {
+        var sublocation = {};
+        sublocation._id = req.body.sublocationId;
+        sublocation.locationId = req.body.locationId;
+        sublocation.sublocation = req.body.sublocation;
+
+        var conditions = { _id: sublocation._id }
+            , update = { $set: sublocation }
+            , options = { multi: true };
+
+        SubLocation.update(conditions, update, options, callback);
+
+        function callback(err, numAffected) {
+            if (err) console.log(err);
+            console.log("Sub Location updated: " + numAffected.n);
+        };
+    }
+
+    var location = {};
+    location._id = req.body.locationId;
+    location.cityId = req.body.cityId;
+    location.location = req.body.location;
+
+    console.log(location);
+
+    var conditions = { _id: location._id }
+        , update = { $set: location }
+        , options = { multi: true };
+
+    Location.update(conditions, update, options, callback);
+
+    function callback(err, numAffected) {
+        if (err) console.log(err);
+        console.log("Location updated: " + numAffected.n);
+        res.status(200).json(numAffected);
+    };
+
+}
+
+module.exports.deleteLoc = function (req, res) {
+
+    if (!req.body) {
+        console.log(req.body);
+        console.log("error");
+        return;
+    }
+
+    if(req.body.sublocationId != 0) {
+
+        SubLocation.remove({ _id: req.body.sublocationId }, function (err) {
+            if (err) throw err;
+        });
+
+    } else {
+
+        SubLocation.remove({ locationId: req.body.locationId }, function (err) {
+            if (err) throw err;
+        });
+
+        Location.remove({ _id: req.body.locationId }, function (err) {
+            if (err) throw err;
+            res.status(200).json("Deleted");
+        });
+    }
+
+    
 
 }
 
@@ -155,6 +275,49 @@ module.exports.addPropType = function (req, res) {
 
 }
 
+module.exports.updatePropType = function (req, res) {
+
+    if (!req.body) {
+        console.log(req.body);
+        console.log("error");
+        return;
+    }
+
+    var propType = {};
+    propType._id = req.body.typeId;
+    propType.type = req.body.type;
+
+    console.log(propType);
+
+    var conditions = { _id: req.body.typeId }
+        , update = { $set: propType }
+        , options = { multi: true };
+
+    PropertyType.update(conditions, update, options, callback);
+
+    function callback(err, numAffected) {
+        if (err) console.log(err);
+        console.log("Property Type updated: " + numAffected.n);
+        res.status(200).json(numAffected);
+    };
+
+}
+
+module.exports.deletePropType = function (req, res) {
+
+    if (!req.body) {
+        console.log(req.body);
+        console.log("error");
+        return;
+    }
+
+    PropertyType.remove({ _id: req.body._id }, function (err) {
+        if (err) throw err;
+        res.status(200).json("Deleted");
+    });
+
+}
+
 module.exports.getPropTypes = function (req, res) {
     if (!req.payload._id) {
         res.status(401).json({
@@ -205,6 +368,47 @@ module.exports.getStatusTypes = function (req, res) {
                 res.status(200).json(statusTypes);
             });
     }
+}
+
+module.exports.updateStatusType = function (req, res) {
+    if (!req.body) {
+        console.log(req.body);
+        console.log("error");
+        return;
+    }
+
+    var statusType = {};
+    statusType._id = req.body._id;
+    statusType.type = req.body.type;
+
+    console.log(statusType);
+
+    var conditions = { _id: req.body._id }
+        , update = { $set: statusType }
+        , options = { multi: true };
+
+    StatusType.update(conditions, update, options, callback);
+
+    function callback(err, numAffected) {
+        if (err) console.log(err);
+        console.log("Status Type updated: " + numAffected.n);
+        res.status(200).json(numAffected);
+    };
+}
+
+module.exports.deleteStatusType = function (req, res) {
+
+    if (!req.body) {
+        console.log(req.body);
+        console.log("error");
+        return;
+    }
+
+    StatusType.remove({ _id: req.body._id }, function (err) {
+        if (err) throw err;
+        res.status(200).json("Deleted");
+    });
+
 }
 
 module.exports.updateStatus = function (req, res) {

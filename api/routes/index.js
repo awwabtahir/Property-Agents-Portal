@@ -18,9 +18,17 @@ router.post('/updateUser', ctrlProfile.updateUser);
 
 // add options
 router.post('/addCity', ctrlOptions.addCity);
+router.post('/updateCity', ctrlOptions.updateCity);
+router.post('/deleteCity', ctrlOptions.deleteCity);
 router.post('/addLoc', ctrlOptions.addLoc);
+router.post('/updateLoc', ctrlOptions.updateLoc);
+router.post('/deleteLoc', ctrlOptions.deleteLoc);
 router.post('/addPropType', ctrlOptions.addPropType);
+router.post('/updatePropType', ctrlOptions.updatePropType);
+router.post('/deletePropType', ctrlOptions.deletePropType);
 router.post('/addStatusType', ctrlOptions.addStatusType);
+router.post('/updateStatusType', ctrlOptions.updateStatusType);
+router.post('/deleteStatusType', ctrlOptions.deleteStatusType);
 router.post('/updateStatus', ctrlOptions.updateStatus);
 router.post('/addLead', ctrlLead.addLead);
 router.post('/updateLead', ctrlLead.updateLead);

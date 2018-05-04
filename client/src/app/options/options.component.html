@@ -11,16 +11,21 @@
   <div class="row">
     <div class="col mt-3">
       <p>
-        <b>Add New City</b>
+        <b *ngIf="!editCityClick">Add New City</b>
+        <b *ngIf="editCityClick" style="color: red;">Edit City</b>
       </p>
-      <form (submit)="addCity()">
+      <form>
 
         <!-- New city name is entered in this input -->
         <div class="form-group">
-          <input type="text" name="name" class="form-control" id="name" placeholder="Enter city" [(ngModel)]="city.name">
+          <input type="text" name="name" class="form-control" id="cityName" placeholder="Enter city" [(ngModel)]="city.name">
         </div>
-
-        <button type="submit" class="btn btn-primary">Add City</button>
+        <!-- Button for adding and editing city name -->
+        <button *ngIf="!editCityClick" (click)="addCity()" class="btn btn-primary">Add City</button>
+        <button *ngIf="editCityClick" (click)="editCity()" class="btn btn-primary">Edit City</button>
+        <p *ngIf="cityAdded == true" style="color: blue;">Successfully Added!</p>
+        <p *ngIf="cityUpdated" style="color: blue;">Successfully Updated!</p>
+      
       </form>
     </div>
     <div class="col mt-3">
@@ -31,13 +36,14 @@
 
         <!-- Get city names here for editing -->
         <div class="form-group">
-          <select class="form-control" id="selectCity" name="cityId">
+          <select class="form-control" id="selectCity" name="cityId" [(ngModel)]="selectedCity">
             <option *ngFor="let city of cities" value="{{ city?._id }}">{{ city?.name }}</option>
           </select>
         </div>
 
-        <button type="submit" class="btn btn-primary">Edit</button>
-        <button type="submit" class="btn btn-danger">Delete</button>
+        <button (click)="editCityBtnClicked()" type="submit" class="btn btn-primary">Edit</button>
+        <button *ngIf="!deleteCityBtn" (click)="deleteCityBtnPressed()" class="btn btn-danger">Delete</button>
+        <button *ngIf="deleteCityBtn" (click)="deleteCityBtnClicked()" class="btn btn-danger">Click again to delete</button>
       </form>
     </div>
   </div>
@@ -56,11 +62,11 @@
       <p>
         <b>Add New Location</b>
       </p>
-      <form (submit)="addLoc()">
+      <form>
 
         <!-- City names are get here to add location -->
         <div class="form-group">
-          <select class="form-control" id="selectCity" name="cityId" [(ngModel)]="location.cityId">
+          <select class="form-control" id="selectCity" name="locCityId" [(ngModel)]="location.cityId">
             <option *ngFor="let city of cities" value="{{ city?._id }}">{{ city?.name }}</option>
           </select>
         </div>
@@ -75,7 +81,11 @@
           <input type="text" class="form-control" name="sublocation" id="inputSubLocation" placeholder="Enter sub location" [(ngModel)]="location.sublocation">
         </div>
 
-        <button type="submit" class="btn btn-primary">Add Location</button>
+        <button *ngIf="!editLocClicked" (click)="addLoc()" class="btn btn-primary">Add Location</button>
+        <button *ngIf="editLocClicked" (click)="editLoc()" class="btn btn-primary">Edit Location</button>
+        <p *ngIf="locAdded" style="color: blue;">Successfully Added!</p>
+        <p *ngIf="locUpdated" style="color: blue;">Successfully Updated!</p>
+
       </form>
     </div>
     <div class="col mt-3">
@@ -86,26 +96,27 @@
 
         <!-- Get city names here for editing location -->
         <div class="form-group">
-          <select class="form-control" id="selectCity" name="cityId" (change)="onChange($event.target.value)">
+          <select class="form-control" id="selectCity" name="cityId" (change)="onChange($event.target.value)" [(ngModel)]="selectedLocCity">
             <option *ngFor="let city of cities" value="{{ city?._id }}">{{ city?.name }}</option>
           </select>
         </div>
 
         <!-- Location is get here for editing and deleting -->
         <div class="form-group">
-          <select class="form-control" id="selectLocation" name="locId" (change)="onLocChange($event.target.value)">
+          <select class="form-control" id="selectLocation" name="locId" (change)="onLocChange($event.target.value)" [(ngModel)]="selectedLoc">
             <option *ngFor="let loc of newLocations" value="{{ loc?._id }}">{{ loc?.location }}</option>
           </select>
         </div>
 
         <div class="form-group">
-          <select class="form-control" id="selectSubLocation" name="locId">
+          <select class="form-control" id="selectSubLocation" name="locId" [(ngModel)]="selectedSubLoc">
             <option *ngFor="let sloc of newSubLocations" value="{{ sloc?._id }}">{{ sloc?.sublocation }}</option>
           </select>
         </div>
 
-        <button type="submit" class="btn btn-primary">Edit</button>
-        <button type="submit" class="btn btn-danger">Delete</button>
+        <button (click)="editLocBtnClicked()" class="btn btn-primary">Edit</button>
+        <button *ngIf="!locDelBtn" (click)="locDelBtnPressed()" class="btn btn-danger">Delete</button>
+        <button *ngIf="locDelBtn" (click)="locDelBtnClicked()" class="btn btn-danger">Click again to confirm deletion</button>
       </form>
     </div>
   </div>
@@ -121,14 +132,16 @@
       <p>
         <b>Add New Type</b>
       </p>
-      <form (submit)="addPropType()">
+      <form>
 
         <!-- New property type is entered here for adding in DB -->
         <div class="form-group">
           <input type="text" class="form-control" name="type" id="inputType" placeholder="Enter property type" [(ngModel)]="propType.type">
         </div>
 
-        <button type="submit" class="btn btn-primary">Add Property Type</button>
+        <button *ngIf="!editProp" (click)="addPropType()" class="btn btn-primary">Add Property Type</button>
+        <button *ngIf="editProp" (click)="editPropType()" class="btn btn-primary">Edit Property Type</button>
+        <p *ngIf="propTypeAdded" style="color: blue;">Successfully Added!</p>
       </form>
     </div>
     <div class="col mt-3">
@@ -139,13 +152,14 @@
 
         <!-- Property type is get here for editing and deleting -->
         <div class="form-group">
-          <select class="form-control" id="selectPropertyType" name="propTypeId">
+          <select class="form-control" id="selectPropertyType" name="propTypeId" [(ngModel)]="selectedPropType">
             <option *ngFor="let type of propTypes" value="{{ type?._id }}">{{ type?.type }}</option>
           </select>
         </div>
 
-        <button type="submit" class="btn btn-primary">Edit</button>
-        <button type="submit" class="btn btn-danger">Delete</button>
+        <button (click)="editPropTypeClicked()" class="btn btn-primary">Edit</button>
+        <button *ngIf="!deletePropBtn" (click)="deletePropBtnClicked()" class="btn btn-danger">Delete</button>
+        <button *ngIf="deletePropBtn" (click)="deletePropType()" class="btn btn-danger">Click again to confirm deletion</button>
       </form>
     </div>
   </div>
@@ -161,14 +175,16 @@
       <p>
         <b>Add New Status</b>
       </p>
-      <form (submit)="addStatusType()">
+      <form>
 
         <!-- New status type is entered here for adding in DB -->
         <div class="form-group">
-          <input type="text" class="form-control" name="type" id="inputType" placeholder="Enter status type" [(ngModel)]="statusType.type">
+          <input type="text" class="form-control" name="type" id="inputStatusType" placeholder="Enter status type" [(ngModel)]="statusType.type">
         </div>
 
-        <button type="submit" class="btn btn-primary">Add Status Type</button>
+        <button *ngIf="!editStatusBtn" (click)="addStatusType()" class="btn btn-primary">Add Status Type</button>
+        <button *ngIf="editStatusBtn" (click)="editStatusType()" class="btn btn-primary">Edit Status Type</button>
+        <p *ngIf="statusTypeAdded" style="color: blue;">Successfully Added!</p>
       </form>
     </div>
     <div class="col mt-3">
@@ -179,10 +195,14 @@
 
         <!-- Status type is get here for editing and deleting -->
         <div class="form-group">
-          <select class="form-control" id="selectStatusType" name="statusTypeId">
+          <select class="form-control" id="selectStatusType" name="statusTypeId" [(ngModel)]="selectedStatusType">
             <option *ngFor="let type of statusTypes" value="{{ type?._id }}">{{ type?.type }}</option>
           </select>
         </div>
+
+        <button (click)="editStatusClicked()" class="btn btn-primary">Edit</button>
+        <button *ngIf="!deleteStatusBtn" (click)="deleteStatusBtnClicked()" class="btn btn-danger">Delete</button>
+        <button *ngIf="deleteStatusBtn" (click)="deleteStatusType()" class="btn btn-danger">Click again to confirm deletion</button>
       </form>
     </div>
   </div>

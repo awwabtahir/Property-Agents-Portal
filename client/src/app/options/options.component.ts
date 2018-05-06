@@ -148,9 +148,13 @@ export class OptionsComponent implements OnInit {
   locations;
 
   getLocations() {
+    let curCity = this.selectedLocCity;
     this.auth.getLocations().subscribe(locations => {
       this.locations = locations;
-      this.onChange(this.location.cityId);
+      if(curCity !== undefined)
+        this.onChange(curCity);
+      else
+        this.onChange(this.auth.getlocation());
     }, (err) => {
       console.error(err);
     });
@@ -273,9 +277,9 @@ export class OptionsComponent implements OnInit {
         }
       }
     }
-
     this.auth.deleteLocation(location).subscribe(() => {
       console.log("success");
+      this.getLocations();
     }, (err) => {
       console.error(err);
     });
@@ -497,6 +501,7 @@ export class OptionsComponent implements OnInit {
     this.getPropTypes();
     this.getStatusTypes();
 
+    
     if(this.auth.isCityManager() == 'yes') {
       this.isCityManager = true;
       this.location.cityId = parseInt(this.auth.getlocation());

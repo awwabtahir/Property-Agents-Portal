@@ -100,7 +100,6 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   isCityManager = false;
   setLeads(leads) {
-
     if (this.auth.isCityManager() == 'yes') {
       this.isCityManager = true;
       let invs = this.inventories;

@@ -99,7 +99,7 @@ export interface Lead {
   clientName: String,
   clientType: Number,
   phoneNumber: String,
-  assignedTo: Number,  
+  assignedTo: Number,
   leadAdminStatus: Number,
   leadAgentStatus: Number,
   cmt: String
@@ -110,7 +110,7 @@ export interface Leads {
   inventoryId: Number,
   clientName: String,
   clientType: Number,
-  phoneNumber: String,  
+  phoneNumber: String,
   leadAdminStatus: Number,
   leadAgentStatus: Number,
   assignedTo: String
@@ -158,7 +158,7 @@ export class AuthenticationService {
 
   private saveToken(token: string, privelege: string): void {
     localStorage.setItem('mean-token', token);
-    localStorage.setItem('mean-privelege', privelege);    
+    localStorage.setItem('mean-privelege', privelege);
     this.token = token;
     this.privelege = privelege;
   }
@@ -193,6 +193,8 @@ export class AuthenticationService {
   }
 
   public isCityManager() {
+    this.cityManager = localStorage.getItem('mean-cityManager');
+    if (this.cityManager == null) return null;
     if (!this.cityManager) {
       this.cityManager = localStorage.getItem('mean-cityManager');
     }
@@ -258,7 +260,7 @@ export class AuthenticationService {
     method: 'post' | 'get',
     type?: 'login' | 'register' | 'profile' | 'getUsers' | 'addCity' | 'getCities' |
       'addLoc' | 'getLocations' | 'addPropType' | 'getPropTypes' | 'addLead' | 'getLeads' |
-      'getInventories' | 'updateLead' | 'updateUser' | 'addStatusType' | 'getStatusTypes' | 
+      'getInventories' | 'updateLead' | 'updateUser' | 'addStatusType' | 'getStatusTypes' |
       'updateStatus' | 'getSLocations' | 'updateCity' | 'deleteCity' | 'updateLoc' | 'deleteLoc' |
       'updatePropType' | 'deletePropType' | 'updateStatusType' | 'deleteStatusType' | 'deleteUser',
     template?: TokenPayload | City | Location | PropertyType | Lead | Status):
@@ -275,12 +277,13 @@ export class AuthenticationService {
     const request = base.pipe(
       map((data: TokenResponse) => {
         if (data.token) {
-          if(data.access == 1) data.privelege = 'ADMIN';
-          if(data.access == 2) data.privelege = 'AGENT';
+          if (data.access == 1) data.privelege = 'ADMIN';
+          if (data.access == 2) data.privelege = 'AGENT';
           this.saveToken(data.token, data.privelege);
           this.saveId(data.id);
           this.saveLocation(data.location);
-          if(data.cityManager == 1) this.saveCityManager("yes");
+          if (data.cityManager == 1) this.saveCityManager("yes");
+          else this.saveCityManager(null);
         }
         return data;
       })
@@ -407,12 +410,12 @@ export class AuthenticationService {
 
   public getLeads(): Observable<any> {
 
-    if(this.isAgent()) {
+    if (this.isAgent()) {
       return this.http.get("/api/getLeads", {
         params: { user_id: this.getId() },
         headers: { Authorization: `Bearer ${this.getToken()}` }
       });
-    }   
+    }
 
     return this.request('get', 'getLeads');
   }

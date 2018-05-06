@@ -18,12 +18,18 @@ var userSchema = new mongoose.Schema({
   location: {
     type: String
   },
+  city: {
+    type: String
+  },
   status: {
     type: Number
   },
   access: {
     type: Number,
     required: true
+  },
+  cityManager: {
+    type: Number
   },
   hash: String,
   salt: String

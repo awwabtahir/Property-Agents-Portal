@@ -19,6 +19,8 @@ interface TokenResponse {
   access: number;
   privelege?: string;
   id?: string;
+  location?: string;
+  cityManager?: number;
 }
 
 export interface TokenPayload {
@@ -27,7 +29,9 @@ export interface TokenPayload {
   name?: string;
   phone?: string;
   location?: string;
+  city?: string;
   access?: Number;
+  cityManager?: Number;
   status?: Number;
 }
 
@@ -149,6 +153,8 @@ export class AuthenticationService {
   private token: string;
   private privelege: string;
   private id: string;
+  private location: string;
+  private cityManager: string;
 
   private saveToken(token: string, privelege: string): void {
     localStorage.setItem('mean-token', token);
@@ -167,6 +173,30 @@ export class AuthenticationService {
       this.id = localStorage.getItem('mean-id');
     }
     return this.id;
+  }
+
+  private saveLocation(location: string) {
+    localStorage.setItem('mean-location', location);
+    this.location = location;
+  }
+
+  public getlocation() {
+    if (!this.location) {
+      this.location = localStorage.getItem('mean-location');
+    }
+    return this.location;
+  }
+
+  private saveCityManager(cityManager: string) {
+    localStorage.setItem('mean-cityManager', cityManager);
+    this.cityManager = cityManager;
+  }
+
+  public isCityManager() {
+    if (!this.cityManager) {
+      this.cityManager = localStorage.getItem('mean-cityManager');
+    }
+    return this.cityManager;
   }
 
   private getToken(): string {
@@ -230,7 +260,7 @@ export class AuthenticationService {
       'addLoc' | 'getLocations' | 'addPropType' | 'getPropTypes' | 'addLead' | 'getLeads' |
       'getInventories' | 'updateLead' | 'updateUser' | 'addStatusType' | 'getStatusTypes' | 
       'updateStatus' | 'getSLocations' | 'updateCity' | 'deleteCity' | 'updateLoc' | 'deleteLoc' |
-      'updatePropType' | 'deletePropType' | 'updateStatusType' | 'deleteStatusType',
+      'updatePropType' | 'deletePropType' | 'updateStatusType' | 'deleteStatusType' | 'deleteUser',
     template?: TokenPayload | City | Location | PropertyType | Lead | Status):
     Observable<any> {
 
@@ -249,6 +279,8 @@ export class AuthenticationService {
           if(data.access == 2) data.privelege = 'AGENT';
           this.saveToken(data.token, data.privelege);
           this.saveId(data.id);
+          this.saveLocation(data.location);
+          if(data.cityManager == 1) this.saveCityManager("yes");
         }
         return data;
       })
@@ -277,6 +309,10 @@ export class AuthenticationService {
 
   public updateUser(user): Observable<any> {
     return this.request('post', 'updateUser', user);
+  }
+
+  public deleteUser(user): Observable<any> {
+    return this.request('post', 'deleteUser', user);
   }
 
   // For city

@@ -21,6 +21,8 @@ export class UsersComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getUsers();
+    this.getLocations();
+    this.getCities();
 
     this.dtOptions = {
       responsive: true
@@ -53,7 +55,16 @@ export class UsersComponent implements OnInit, AfterViewInit {
   users;
 
   getUsers() {
+    let loc = "0";
+    if(this.auth.isCityManager() == 'yes') {
+      loc = this.auth.getlocation();
+    }
     this.auth.getUsers().subscribe(users => {
+      if(loc !== "0") {
+        users = users.filter(function (user) {
+          return user.city == loc;
+        });
+      }
       this.users = users;
     }, (err) => {
       console.error(err);
@@ -72,6 +83,55 @@ export class UsersComponent implements OnInit, AfterViewInit {
       this.router.navigateByUrl("/edituser");
     }
 
+  }
+
+  selectedUser;
+  delModel(userId) {
+    this.selectedUser = userId;
+  }
+
+  deleteUser() {
+    let user = {
+      _id : this.selectedUser
+    }
+    this.auth.deleteUser(user).subscribe(() => {
+      console.log("success");
+      this.getUsers();
+    }, (err) => {
+      console.error(err);
+    });
+  }
+
+  cities;
+  getCities() {
+    this.auth.getCities().subscribe(cities => {
+      this.cities = cities;
+    }, (err) => {
+      console.error(err);
+    });
+  }
+
+  locations;
+  getLocations() {
+    this.auth.getLocations().subscribe(locations => {
+      this.locations = locations;
+    }, (err) => {
+      console.error(err);
+    });
+  }
+
+  getCity(id) {
+    let city = this.cities.filter(function (city) {
+      return city._id == id;
+    });
+    return city;
+  }
+
+  getLocation(id) {
+    let location = this.locations.filter(function (location) {
+      return location._id == id;
+    });
+    return location;
   }
 
 }

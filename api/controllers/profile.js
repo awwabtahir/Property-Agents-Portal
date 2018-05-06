@@ -46,9 +46,12 @@ module.exports.updateUser = function (req, res) {
   user.name = req.body.name;
   user.email = req.body.email;
   user.phone = req.body.phone;
+  user.city = req.body.city;
   user.location = req.body.location;
   user.status = req.body.status;
   user.access = req.body.access;
+  user.cityManager = req.body.cityManager;
+
 
   var conditions = { _id: req.body._id }
     , update = { $set: user }
@@ -61,5 +64,20 @@ module.exports.updateUser = function (req, res) {
     console.log("user updated: " + numAffected.n);
     res.status(200).json(numAffected);
   }
+
+}
+
+module.exports.deleteUser = function (req, res) {
+
+  if (!req.body) {
+      console.log(req.body);
+      console.log("error");
+      return;
+  }
+
+  User.remove({ _id: req.body._id }, function (err) {
+      if (err) throw err;
+      res.status(200).json("Deleted");
+  });
 
 }

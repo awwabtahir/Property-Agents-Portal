@@ -15,15 +15,30 @@
           <label for="contact">Contact #</label>
           <input type="text" class="form-control" name="contact" placeholder="Enter phone number" [(ngModel)]="credentials.phone">
         </div>
-        <div class="form-group">
-          <label for="contact">Location</label>
-          <input type="text" class="form-control" name="location" placeholder="Enter location of user" [(ngModel)]="credentials.location">
+        <div class="form-group" *ngIf="!isCityManager">
+          <label>Select City</label>
+          <select class="form-control" id="selectCity" name="cityId" (change)="onChange($event.target.value)" [(ngModel)]="credentials.city">
+            <option *ngFor="let city of cities" value="{{ city?._id }}">{{ city?.name }}</option>
+          </select>
         </div>
         <div class="form-group">
+          <label>Select Location</label>
+          <select class="form-control" id="selectLocation" name="locId" [(ngModel)]="credentials.location">
+            <option *ngFor="let loc of newLocations" value="{{ loc?._id }}">{{ loc?.location }}</option>
+          </select>
+        </div>
+        <div class="form-group" *ngIf="!isCityManager">
           <p>User Access</p>
-          <select class="form-control" id="selectAccess" name="access" [(ngModel)]="credentials.access">
+          <select class="form-control" id="selectAccess" name="access" [(ngModel)]="credentials.access" (change)="onAdminChange()">
             <option value="1">Admin</option>
             <option value="2">Agent</option>
+          </select>
+        </div>
+        <div class="form-group" *ngIf="!agentSelected">
+          <p>City Manager</p>
+          <select class="form-control" id="selectAccess" name="cityManager" [(ngModel)]="credentials.cityManager">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
           </select>
         </div>
         <div class="form-group">

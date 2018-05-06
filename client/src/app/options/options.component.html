@@ -5,10 +5,10 @@
   - edit city
   - delete city
 -->
-  <div class="alert alert-success mt-3">
+  <div class="alert alert-success mt-3" *ngIf="!isCityManager">
     <b>Cities</b>
   </div>
-  <div class="row">
+  <div class="row" *ngIf="!isCityManager">
     <div class="col mt-3">
       <p>
         <b *ngIf="!editCityClick">Add New City</b>
@@ -65,7 +65,7 @@
       <form>
 
         <!-- City names are get here to add location -->
-        <div class="form-group">
+        <div class="form-group" *ngIf="!isCityManager">
           <select class="form-control" id="selectCity" name="locCityId" [(ngModel)]="location.cityId">
             <option *ngFor="let city of cities" value="{{ city?._id }}">{{ city?.name }}</option>
           </select>
@@ -95,7 +95,7 @@
       <form>
 
         <!-- Get city names here for editing location -->
-        <div class="form-group">
+        <div class="form-group" *ngIf="!isCityManager">
           <select class="form-control" id="selectCity" name="cityId" (change)="onChange($event.target.value)" [(ngModel)]="selectedLocCity">
             <option *ngFor="let city of cities" value="{{ city?._id }}">{{ city?.name }}</option>
           </select>

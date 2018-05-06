@@ -21,9 +21,11 @@ module.exports.register = function(req, res) {
   user.name = req.body.name;
   user.email = req.body.email;
   user.phone = req.body.phone;
+  user.city = req.body.city;
   user.location = req.body.location;
   user.status = req.body.status;
   user.access = req.body.access;
+  user.cityManager = req.body.cityManager;
 
   user.setPassword(req.body.password);
 
@@ -59,11 +61,15 @@ module.exports.login = function(req, res) {
       token = user.generateJwt();
       access = user.access;
       id = '' + user._id;
+      location = '' + user.city;
+      cityManager = user.cityManager;
       res.status(200);
       res.json({
         "token" : token,
         "access" : access,
-        "id": id
+        "id": id,
+        "location" : location,
+        "cityManager" : cityManager
       });
     } else {
       // If user is not found

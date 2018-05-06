@@ -15,6 +15,7 @@ var ctrlLead = require('../controllers/lead');
 router.get('/profile', auth, ctrlProfile.profileRead);
 router.get('/getUsers', auth, ctrlProfile.getUsers);
 router.post('/updateUser', ctrlProfile.updateUser);
+router.post('/deleteUser', ctrlProfile.deleteUser);
 
 // add options
 router.post('/addCity', ctrlOptions.addCity);

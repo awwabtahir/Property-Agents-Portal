@@ -150,6 +150,7 @@ export class OptionsComponent implements OnInit {
   getLocations() {
     this.auth.getLocations().subscribe(locations => {
       this.locations = locations;
+      this.onChange(this.location.cityId);
     }, (err) => {
       console.error(err);
     });
@@ -487,13 +488,20 @@ export class OptionsComponent implements OnInit {
   /////////////////////////////////////////////////////////
 
   constructor(private auth: AuthenticationService, private router: Router) { }
-
+  
+  isCityManager = false;
   ngOnInit() {
     this.getCities();
     this.getLocations();
     this.getSubLocations();
     this.getPropTypes();
     this.getStatusTypes();
+
+    if(this.auth.isCityManager() == 'yes') {
+      this.isCityManager = true;
+      this.location.cityId = parseInt(this.auth.getlocation());
+      this.selectedLocCity = this.auth.getlocation();
+    }
   }
 
 }

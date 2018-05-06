@@ -5,9 +5,19 @@
       <p>
         <b>Leads Management</b>
       </p>
-      <div class="button-group mb-3">
-        <button (click)="addLead()" class="btn btn-primary">Add New</button>
-      </div>
+      <form class="mb-3">
+        <div class="form-row">
+          <div class="form-group col">
+            <button (click)="addLead()" class="btn btn-primary">Add New</button>
+          </div>
+          <div class="form-group col" *ngIf="!isCityManager">
+            <select class="form-control" id="selectCity" name="cityId" (change)="onCityChange()" [(ngModel)]="selectedCity" style="width: 200px;">
+              <option value="0">Select City</option>
+              <option *ngFor="let city of cities" value="{{ city?._id }}">{{ city?.name }}</option>
+            </select>
+          </div>
+        </div>
+      </form>
       <p *ngIf="!(resultLeads && inventories && cities && propertytypes && locations && users && statusTypes && sublocations)">Please wait...</p>
       <table *ngIf="resultLeads && inventories && cities && propertytypes && locations && users && statusTypes && sublocations"
         datatable class="table table-bordered table-hover" style="table-layout:auto;" [dtOptions]="dtOptions" id="datatableId">

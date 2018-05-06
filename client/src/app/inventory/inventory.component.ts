@@ -117,7 +117,16 @@ export class InventoryComponent implements OnInit, AfterViewInit {
   resultInventories;
 
   getInventories() {
+    let loc = "0";
+    if(this.auth.isCityManager() == 'yes') {
+      loc = this.auth.getlocation();
+    }
     this.auth.getInventories().subscribe(inventories => {
+      if(loc !== "0") {
+        inventories = inventories.filter(function (inventory) {
+          return inventory.cityId == loc;
+        });
+      }
       this.inventories = inventories;
       this.newinventories = inventories;
       this.cleaner();

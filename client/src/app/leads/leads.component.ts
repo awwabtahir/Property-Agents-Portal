@@ -23,7 +23,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getInventories();
-    this.getLeads();
+    //this.getLeads();
     this.getCities();
     this.getLocations();
     this.getSubLocations();
@@ -60,6 +60,12 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   }
 
+  searchTable(value) {
+    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.columns(1).search(value).draw();
+    });
+  }
+
 
   // For getting leads
 
@@ -84,8 +90,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
         });
       }
 
-      this.resultLeads = this.leads;
-
+      this.resultLeads = this.setLeads(this.leads);
       this.leadService.setLeads(this.leads);
 
     }, (err) => {
@@ -93,11 +98,41 @@ export class LeadsComponent implements OnInit, AfterViewInit {
     });
   }
 
+  isCityManager = false;
+  setLeads(leads) {
+
+    if (this.auth.isCityManager() == 'yes') {
+      this.isCityManager = true;
+      let invs = this.inventories;
+      let loc = this.auth.getlocation();
+      invs = invs.filter(function (inv) {
+        return inv.cityId == loc;
+      });
+
+      this.inventories = invs;
+
+      let newLeads = [];
+      for (let i = 0; i < leads.length; i++) {
+        for (let j = 0; j < invs.length; j++) {
+          if (leads[i]._id == invs[j].leadId) {
+            newLeads.push(leads[i]);
+          }
+        }
+      }
+      return newLeads;
+
+    } else {
+      return leads;
+    }
+
+  }
+
   inventories;
 
   getInventories() {
     this.auth.getInventories().subscribe(inventories => {
       this.inventories = inventories;
+      this.getLeads();
       this.leadService.setInventories(this.inventories);
     }, (err) => {
       console.error(err);
@@ -114,6 +149,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
   }
 
   cities;
+  selectedCity = 0;
 
   getCities() {
     this.auth.getCities().subscribe(cities => {
@@ -130,6 +166,21 @@ export class LeadsComponent implements OnInit, AfterViewInit {
         return this.cities[j];
       }
     }
+  }
+
+  onCityChange() {
+
+    let cityId = this.selectedCity;
+    if (cityId == 0) {
+      this.searchTable("");
+    } else {
+      let city = this.cities.filter(function (city) {
+        return city._id == cityId;
+      });
+      let cityName = city[0].name;
+      this.searchTable(cityName.toLowerCase());
+    }
+
   }
 
   propertytypes;
@@ -283,8 +334,8 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
     let isAdmin;
 
-    if(this.auth.isAdmin()) isAdmin = true;
-    if(this.auth.isAgent()) isAdmin = false;
+    if (this.auth.isAdmin()) isAdmin = true;
+    if (this.auth.isAgent()) isAdmin = false;
 
     let status: Status;
 

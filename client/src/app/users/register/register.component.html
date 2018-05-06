@@ -15,33 +15,52 @@
           <label for="contact">Contact #</label>
           <input type="text" class="form-control" name="contact" placeholder="Enter phone number" [(ngModel)]="credentials.phone">
         </div>
+        <div class="form-group" *ngIf="!isCityManager">
+          <label>Select City</label>
+          <select class="form-control" id="selectCity" name="cityId" (change)="onChange($event.target.value)" [(ngModel)]="credentials.city">
+            <option *ngFor="let city of cities" value="{{ city?._id }}">{{ city?.name }}</option>
+          </select>
+        </div>
         <div class="form-group">
-          <label for="contact">Location</label>
-          <input type="text" class="form-control" name="location" placeholder="Enter location of user" [(ngModel)]="credentials.location">
+          <label>Select Location</label>
+          <select class="form-control" id="selectLocation" name="locId" [(ngModel)]="credentials.location">
+            <option *ngFor="let loc of newLocations" value="{{ loc?._id }}">{{ loc?.location }}</option>
+          </select>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
           <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="credentials.password">
         </div>
-        <div class="form-group">
+        <div class="form-group" *ngIf="!isCityManager">
           <p>User Access</p>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" [(ngModel)]="credentials.access" name="access" id="inlineRadio1" value="1">
+            <input class="form-check-input" type="radio" [(ngModel)]="credentials.access" name="access" id="access1" value="1" (change)="onAdminChange()">
             <label class="form-check-label" for="access">Admin</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" [(ngModel)]="credentials.access" name="access" id="inlineRadio2" value="2">
+            <input class="form-check-input" type="radio" [(ngModel)]="credentials.access" name="access" id="access2" value="2" (change)="onAgentChange()">
             <label class="form-check-label" for="access">Agent</label>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="!agentSelected">
+          <p>City Manager?</p>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" [(ngModel)]="credentials.cityManager" name="cityManager" id="cityManager1" value="1">
+            <label class="form-check-label" for="cityManager">Yes</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" [(ngModel)]="credentials.cityManager" name="CityManager" id="cityManager2" value="0">
+            <label class="form-check-label" for="cityManager">No</label>
           </div>
         </div>
         <div class="form-group">
           <p>Status</p>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" [(ngModel)]="credentials.status" name="status" id="inlineRadio1" value="1">
+            <input class="form-check-input" type="radio" [(ngModel)]="credentials.status" name="status" id="status1" value="1">
             <label class="form-check-label" for="status">Active</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" [(ngModel)]="credentials.status" name="status" id="inlineRadio2" value="2">
+            <input class="form-check-input" type="radio" [(ngModel)]="credentials.status" name="status" id="status2" value="2">
             <label class="form-check-label" for="status">Inactive</label>
           </div>
         </div>

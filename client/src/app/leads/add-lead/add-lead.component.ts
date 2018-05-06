@@ -176,7 +176,7 @@ export class AddLeadComponent implements OnInit {
   // Add Lead
 
   lead: Lead = {
-    purpose: 1,
+    purpose: 0,
     cityId: 0,
     locationId: 0,
     sublocationId: 0,
@@ -196,19 +196,31 @@ export class AddLeadComponent implements OnInit {
     cmt: null
   };
 
+  required = false;
   addLead() {
     if(this.lead.assignedTo == 0) {
       var userId = this.LeadService.getUserId();
       this.lead.assignedTo = userId;
     }
-    this.auth.addLead(this.lead).subscribe(() => {
-      if (this.isLead)
-        this.router.navigateByUrl('/leads');
-      else
-        this.router.navigateByUrl('/inventory');
-    }, (err) => {
-      console.error(err);
-    });
+
+    let l = this.lead;
+
+    if(
+      (l.cityId == 0) && (l.locationId == 0) && (l.propTypeId == 0) && (!l.propNumber) &&
+      (!l.demand) && (!l.area) && (!l.clientName) && (l.clientType == 0) && (!l.phoneNumber) &&
+      (l.purpose == 0)
+     ) {
+      this.required = true;
+     } else {
+      this.auth.addLead(this.lead).subscribe(() => {
+        if (this.isLead)
+          this.router.navigateByUrl('/leads');
+        else
+          this.router.navigateByUrl('/inventory');
+      }, (err) => {
+        console.error(err);
+      });
+     }    
   }
 
 

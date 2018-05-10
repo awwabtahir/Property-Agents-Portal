@@ -11,7 +11,6 @@ var sublocationSchema = new mongoose.Schema({
     },
     sublocation : {
         type: String,
-        unique: true,
         required: true
     }
 });

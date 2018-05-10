@@ -104,6 +104,7 @@ module.exports.addLoc = function (req, res) {
         sloc.sublocation = req.body.sublocation;
         sloc.locationId = 0;
     }
+    
 
     loc.save(function (err, l) {
         if (err) {

@@ -130,9 +130,16 @@ export class OptionsComponent implements OnInit {
   
   locAdded = false;
   addLoc() {
+    let sl = this.selectedLoc;
+    if((this.selectedLoc != 0) && (this.selectedLoc != undefined)) {
+      this.location.location = this.locations.filter(function (locations) {
+        return locations._id == sl;
+      });
+      this.location.location = this.location.location[0]['location'];
+    }
     this.auth.addLoc(this.location).subscribe(() => {
       this.getLocations();
-      this.getSubLocations()
+      this.getSubLocations();
       this.router.navigateByUrl('/options');
     }, (err) => {
       console.error(err);
@@ -171,8 +178,11 @@ export class OptionsComponent implements OnInit {
   sublocations;
 
   getSubLocations() {
+    let sl = this.selectedLoc;
     this.auth.getSLocations().subscribe(sublocations => {
       this.sublocations = sublocations;
+      if(sl)
+        this.onLocChange(sl);
     }, (err) => {
       console.error(err);
     });
@@ -233,6 +243,7 @@ export class OptionsComponent implements OnInit {
       console.log("success");
       this.getLocations();
       this.getSubLocations();
+      this.onChange(this.location.cityId);
     }, (err) => {
       console.error(err);
     });

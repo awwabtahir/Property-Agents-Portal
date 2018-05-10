@@ -66,18 +66,27 @@
 
         <!-- City names are get here to add location -->
         <div class="form-group" *ngIf="!isCityManager">
-          <select class="form-control" id="selectCity" name="locCityId" [(ngModel)]="location.cityId">
+          <label><b>Select City</b></label>
+          <select class="form-control" id="selectCity" (change)="onChange($event.target.value)" name="locCityId" [(ngModel)]="location.cityId">
             <option *ngFor="let city of cities" value="{{ city?._id }}">{{ city?.name }}</option>
           </select>
         </div>
 
         <!-- New location will be entered here -->
         <div class="form-group">
+          <label><b>Enter New Location</b></label>
           <input type="text" class="form-control" name="location" id="inputLocation" placeholder="Enter location" [(ngModel)]="location.location">
+          <p>Or</p>
+          <label><b>Select Added Location</b></label>
+          <select class="form-control" id="selectLocation" name="locId" [(ngModel)]="selectedLoc">
+            <option value="0">Select Location</option>
+            <option *ngFor="let loc of newLocations" value="{{ loc?._id }}">{{ loc?.location }}</option>
+          </select>
         </div>
 
         <!-- New location will be entered here -->
         <div class="form-group">
+          <label><b>Add Sub-Location (Optional)</b></label>
           <input type="text" class="form-control" name="sublocation" id="inputSubLocation" placeholder="Enter sub location" [(ngModel)]="location.sublocation">
         </div>
 
@@ -96,6 +105,7 @@
 
         <!-- Get city names here for editing location -->
         <div class="form-group" *ngIf="!isCityManager">
+          <label><b>Select City</b></label>
           <select class="form-control" id="selectCity" name="cityId" (change)="onChange($event.target.value)" [(ngModel)]="selectedLocCity">
             <option *ngFor="let city of cities" value="{{ city?._id }}">{{ city?.name }}</option>
           </select>
@@ -103,12 +113,14 @@
 
         <!-- Location is get here for editing and deleting -->
         <div class="form-group">
+          <label><b>Select Location</b></label>
           <select class="form-control" id="selectLocation" name="locId" (change)="onLocChange($event.target.value)" [(ngModel)]="selectedLoc">
             <option *ngFor="let loc of newLocations" value="{{ loc?._id }}">{{ loc?.location }}</option>
           </select>
         </div>
 
         <div class="form-group">
+          <label><b>Select Sub Location (Optional)</b></label>
           <select class="form-control" id="selectSubLocation" name="locId" [(ngModel)]="selectedSubLoc">
             <option *ngFor="let sloc of newSubLocations" value="{{ sloc?._id }}">{{ sloc?.sublocation }}</option>
           </select>

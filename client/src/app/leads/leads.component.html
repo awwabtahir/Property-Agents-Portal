@@ -62,6 +62,7 @@
 
             <td *ngIf="l.clientType == 1">Owner</td>
             <td *ngIf="l.clientType == 2">Dealer</td>
+            <td *ngIf="l.clientType == 3">Buyer</td>
 
             <td>{{ getUser(l.assignedTo).name }}</td>
 

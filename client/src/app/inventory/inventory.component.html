@@ -78,6 +78,20 @@
             </div>
 
             <div class="formgroup col-md-4">
+              <label for="locId">
+                <b>Sub Location</b>
+              </label>
+              <select class="form-control" id="selectSubLocation" name="locId" (change)="onSubLocationChange($event.target.value)">
+                <option value="0" selected>Select Sub Location</option>
+                <option *ngFor="let sloc of newSubLocations" value="{{ sloc?._id }}">{{ sloc?.sublocation }}</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div class="form-row">
+
+            <div class="formgroup col-md-4">
               <label for="inputType">
                 <b>Type</b>
               </label>

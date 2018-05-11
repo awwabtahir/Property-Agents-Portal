@@ -58,7 +58,7 @@ export class InventoryComponent implements OnInit, AfterViewInit {
 
       if ((!(this.minA) && !(this.maxA)) &&
         (!(this.minD) && !(this.maxD))) {
-        console.log("true");
+        //console.log("true");
         return true;
       }
 
@@ -148,7 +148,7 @@ export class InventoryComponent implements OnInit, AfterViewInit {
           leadless = false;
           if (this.leads[j].leadAdminStatus == 0) {
             this.newinventories.splice(i, 1);
-            console.log("deleted -> " + cur._id);
+            //console.log("deleted -> " + cur._id);
             break;
           }
 
@@ -177,11 +177,17 @@ export class InventoryComponent implements OnInit, AfterViewInit {
     });
   }
 
+  newSubLocations;
+  newRRInventories;
   onLocationChange(id) {
+    this.newSubLocations = this.sublocations.filter(function (sublocations) {
+      return sublocations.locationId == id;
+    });
     this.resultInventories = this.newRInventories;
     this.resultInventories = this.resultInventories.filter(function (inventory) {
       return inventory.locationId == id;
     });
+    this.newRRInventories = this.resultInventories;
     this.setInv();
     this.redrawTable();
   }
@@ -194,6 +200,16 @@ export class InventoryComponent implements OnInit, AfterViewInit {
     }, (err) => {
       console.error(err);
     });
+  }
+
+  onSubLocationChange(id) {
+    let resultInv = this.newRRInventories;
+    this.resultInventories = resultInv.filter(function (inventory) {
+      return inventory.sublocationId == id;
+    });
+    //console.log(this.resultInventories);
+    this.setInv();
+    this.redrawTable();
   }
 
   propertytypes;
@@ -421,7 +437,7 @@ export class InventoryComponent implements OnInit, AfterViewInit {
       "isAdmin": isAdmin
     }
 
-    console.log(isAdmin);
+    //console.log(isAdmin);
 
     this.auth.updateStatus(status).subscribe(() => {
       console.log("success");

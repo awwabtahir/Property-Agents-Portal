@@ -198,7 +198,7 @@ export class AddLeadComponent implements OnInit {
 
   required = false;
   addLead() {
-    if(this.lead.assignedTo == 0) {
+    if((this.lead.assignedTo == 0) && this.isLead) {
       var userId = this.LeadService.getUserId();
       this.lead.assignedTo = userId;
     }
@@ -206,9 +206,9 @@ export class AddLeadComponent implements OnInit {
     let l = this.lead;
 
     if(
-      (l.cityId == 0) && (l.locationId == 0) && (l.propTypeId == 0) && (!l.propNumber) &&
-      (!l.demand) && (!l.area) && (!l.clientName) && (l.clientType == 0) && (!l.phoneNumber) &&
-      (l.purpose == 0)
+      (l.cityId == 0) || (l.locationId == 0) || (l.propTypeId == 0) || (l.propNumber == null) ||
+      (l.demand == null) || (l.area == null) || (l.clientName === null) || (l.clientType == 0) ||
+      (l.phoneNumber == null) || (l.purpose == 0)
      ) {
       this.required = true;
      } else {

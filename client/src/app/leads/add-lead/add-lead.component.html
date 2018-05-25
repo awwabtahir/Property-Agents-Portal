@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col align-self-center box-head">
       <p *ngIf="!(users && cities && propTypes && locations)">Please wait...</p>
-      <form *ngIf="users && cities && propTypes && locations" (submit)="addLead()">
+      <form *ngIf="users && cities && propTypes && locations">
         <div class="form-row">
 
           <b class="ml-2 mr-2">Purpose:</b>
@@ -186,7 +186,7 @@
         </div>
 
         <div class="text-left">
-          <button type="submit" class="btn btn-success">Save</button>
+          <button (click)="addLead()" class="btn btn-success">Save</button>
           <p *ngIf="required" style="color: red;">Please fill all required fields</p>
         </div>
 

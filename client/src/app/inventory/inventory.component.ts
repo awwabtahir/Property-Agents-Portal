@@ -293,7 +293,10 @@ export class InventoryComponent implements OnInit, AfterViewInit {
         }
       }
 
-      this.resultInventories[i].location = type + " # " + this.resultInventories[i].propNumber + " ,St # " + this.resultInventories[i].street + ", ";
+      if(this.resultInventories[i].street)
+        this.resultInventories[i].location = type + " # " + this.resultInventories[i].propNumber + " ,St # " + this.resultInventories[i].street + ", ";
+      else
+        this.resultInventories[i].location = type + " # " + this.resultInventories[i].propNumber + ", ";
 
       for (var j = 0; j < this.sublocations.length; j++) {
         if (this.sublocations[j]._id == this.resultInventories[i].sublocationId) {

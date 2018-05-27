@@ -262,7 +262,8 @@ export class AuthenticationService {
       'addLoc' | 'getLocations' | 'addPropType' | 'getPropTypes' | 'addLead' | 'getLeads' |
       'getInventories' | 'updateLead' | 'updateUser' | 'addStatusType' | 'getStatusTypes' |
       'updateStatus' | 'getSLocations' | 'updateCity' | 'deleteCity' | 'updateLoc' | 'deleteLoc' |
-      'updatePropType' | 'deletePropType' | 'updateStatusType' | 'deleteStatusType' | 'deleteUser',
+      'updatePropType' | 'deletePropType' | 'updateStatusType' | 'deleteStatusType' | 'deleteUser' | 
+      'sendMessage',
     template?: TokenPayload | City | Location | PropertyType | Lead | Status):
     Observable<any> {
 
@@ -422,6 +423,11 @@ export class AuthenticationService {
 
   public getInventories(): Observable<any> {
     return this.request('get', 'getInventories');
+  }
+
+  // For Message
+  public sendMessage(msg): Observable<any> {
+    return this.request('post', 'sendMessage', msg);
   }
 
   // For logout

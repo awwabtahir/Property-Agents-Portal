@@ -19,7 +19,8 @@ export class LeadsComponent implements OnInit, AfterViewInit {
   leadId;
 
   constructor(private auth: AuthenticationService, private router: Router,
-    private leadService: LeadService) { }
+    private leadService: LeadService) {
+  }
 
   ngOnInit() {
     this.getInventories();
@@ -30,6 +31,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
     this.getPropTypes();
     this.getStatusTypes();
     this.getUsers();
+    
 
     this.dtOptions = {
       responsive: true,
@@ -64,6 +66,20 @@ export class LeadsComponent implements OnInit, AfterViewInit {
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.columns(1).search(value).draw();
     });
+  }
+
+  // For sending message
+  sendMessage() {
+    let msg = {
+      "to": "923115868311",
+      "msg": "Hello"
+    }
+    this.auth.sendMessage(msg).subscribe(() => {
+      console.log("success");
+    }, (err) => {
+      console.error(err);
+    });
+
   }
 
 

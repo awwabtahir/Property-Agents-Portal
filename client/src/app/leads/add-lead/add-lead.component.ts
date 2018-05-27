@@ -203,6 +203,10 @@ export class AddLeadComponent implements OnInit {
       this.lead.assignedTo = userId;
     }
 
+    if((this.lead.assignedTo !== 0) && this.isLead) {
+      this.sendMessage();
+    }
+
     let l = this.lead;
 
     if(
@@ -221,6 +225,26 @@ export class AddLeadComponent implements OnInit {
         console.error(err);
       });
      }    
+  }
+
+  // For sending message
+  sendMessage() {
+    var lead = this.lead;
+    var user = this.users.filter(function (user) {
+      return user._id == lead.assignedTo;
+    });
+    var phone = user[0].phone;
+    phone = phone.replace("0","92");
+    let msg = {
+      "to": phone,
+      "msg": "You have assigned a new lead!"
+    }
+    this.auth.sendMessage(msg).subscribe(() => {
+      console.log("success");
+    }, (err) => {
+      console.error(err);
+    });
+
   }
 
 

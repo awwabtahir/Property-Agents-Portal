@@ -10,6 +10,7 @@ var ctrlProfile = require('../controllers/profile');
 var ctrlOptions = require('../controllers/options');
 var ctrlAuth = require('../controllers/authentication');
 var ctrlLead = require('../controllers/lead');
+var ctrlMessage = require('../controllers/message');
 
 // profile
 router.get('/profile', auth, ctrlProfile.profileRead);
@@ -33,6 +34,7 @@ router.post('/deleteStatusType', ctrlOptions.deleteStatusType);
 router.post('/updateStatus', ctrlOptions.updateStatus);
 router.post('/addLead', ctrlLead.addLead);
 router.post('/updateLead', ctrlLead.updateLead);
+router.post('/sendMessage', ctrlMessage.sendMessage);
 
 // get options
 router.get('/getCities', auth, ctrlOptions.getCities);

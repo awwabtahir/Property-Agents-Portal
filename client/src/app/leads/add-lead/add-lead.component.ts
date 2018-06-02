@@ -41,7 +41,7 @@ export class AddLeadComponent implements OnInit {
 
   // Get cities
 
-  cities: Cities;
+  cities;
 
   getCities() {
     this.auth.getCities().subscribe(cities => {
@@ -237,13 +237,79 @@ export class AddLeadComponent implements OnInit {
     phone = phone.replace("0","92");
     let msg = {
       "to": phone,
-      "msg": "You have assigned a new lead!"
+      "msg": this.contructMsg(lead)
     }
+    console.log(msg);
     this.auth.sendMessage(msg).subscribe(() => {
       console.log("success");
     }, (err) => {
       console.error(err);
     });
+
+  }
+
+  // Construct Msg
+  contructMsg(l : Lead) {
+    // Client name
+    let clientName = l.clientName;
+
+    // Purpose
+    let purpose = "";
+    if(l.purpose == 1) purpose = "sell";
+    if(l.purpose == 2) purpose = "buy";
+    if(l.purpose == 3) purpose = "rent";
+
+    // Property Type
+    let type = this.propTypes.filter(function (type) {
+      return type._id == l.propTypeId;
+    });
+    type = type[0].type;
+
+    // Sub-Location
+    let subLocation = this.sublocations.filter(function (sloc) {
+      return sloc._id == l.sublocationId;
+    });
+    subLocation = subLocation[0].sublocation;
+
+    // Location
+    let location = this.locations.filter(function (loc) {
+      return loc._id == l.locationId;
+    });
+    location = location[0].location;
+
+    // City
+    let city = this.cities.filter(function (city) {
+      return city._id == l.cityId;
+    });
+    city = city[0].name;
+
+    // Area
+    let area = "";
+    if(l.areaUnit == 1) area = l.area + " Sq. Feet";
+    if(l.areaUnit == 2) area = l.area + " Marla";
+    if(l.areaUnit == 3) area = l.area + " Kanal";
+
+    // Demand
+    let demand = l.demand;
+
+    // Property Number
+    let propNo = l.propNumber;
+
+    // Street
+    let street = l.street;
+
+    // Comment
+    let cmt = l.cmt;
+
+    // phone
+    let phone = l.phoneNumber;
+
+    let msg = "You have assigned a new lead.\n" + clientName + " want to " + purpose + " the " + type 
+              + " in " + subLocation + ", " + location + ", " + city + ".\n" + "Area: " + area + 
+              " Demand: Rs. " + demand + " " + type + " #: " + propNo + " Street: " + street + 
+              " Phone #:" + phone + " Comment: " + cmt;
+    
+    return msg;
 
   }
 

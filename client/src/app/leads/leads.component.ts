@@ -161,6 +161,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
       }
     }
     console.log("invalid -> " + id);
+    return false;
   }
 
   cities;
@@ -181,6 +182,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
         return this.cities[j];
       }
     }
+    return false;
   }
 
   onCityChange() {
@@ -225,6 +227,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
         return this.statusTypes[i].type;
       }
     }
+    return false;
   }
 
   getPropertyType(id) {
@@ -233,6 +236,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
         return this.propertytypes[j];
       }
     }
+    return false;
   }
 
   locations;
@@ -252,6 +256,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
         return this.locations[j];
       }
     }
+    return false;
   }
 
   sublocations;
@@ -289,6 +294,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
         return this.users[j];
       }
     }
+    return false;
   }
 
   public static areaUnits = {

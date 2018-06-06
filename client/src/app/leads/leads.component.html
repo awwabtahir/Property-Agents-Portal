@@ -39,11 +39,11 @@
             <td>
               <u style="text-transform:capitalize;">{{ l.clientName.toLowerCase() }}</u> want to
               <span *ngIf="getInventory(l._id).purpose == 1">
-                "sell the {{ getPropertyType(l._id).type }}"</span>
+                sell {{ getPropertyType(l._id).type }}</span>
               <span *ngIf="getInventory(l._id).purpose == 2">
-                "buy the {{ getPropertyType(l._id).type }}"</span>
+                buy {{ getPropertyType(l._id).type }}</span>
               <span *ngIf="getInventory(l._id).purpose == 3">
-                "rent the {{ getPropertyType(l._id).type }}"</span>
+                rent {{ getPropertyType(l._id).type }}</span>
               in
               <span *ngIf="getSubLocation(l._id).sublocation">{{ getSubLocation(l._id).sublocation }},</span>
               {{ getLocation(l._id).location }}, {{ getCity(l._id).name }}.

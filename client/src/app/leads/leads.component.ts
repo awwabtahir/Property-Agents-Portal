@@ -17,9 +17,14 @@ export class LeadsComponent implements OnInit, AfterViewInit {
   dtOptions: any = {};
 
   leadId;
+  isAgent = false;
 
   constructor(private auth: AuthenticationService, private router: Router,
     private leadService: LeadService) {
+
+      if(auth.isAgent) this.isAgent = true;
+      else this.isAgent = false;
+      
   }
 
   ngOnInit() {

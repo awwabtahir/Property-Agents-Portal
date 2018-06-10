@@ -203,10 +203,6 @@ export class AddLeadComponent implements OnInit {
       this.lead.assignedTo = userId;
     }
 
-    if((this.lead.assignedTo !== 0) && this.isLead) {
-      this.sendMessage();
-    }
-
     let l = this.lead;
 
     if(
@@ -216,6 +212,11 @@ export class AddLeadComponent implements OnInit {
      ) {
       this.required = true;
      } else {
+       
+      if((this.lead.assignedTo !== 0) && this.isLead) {
+        this.sendMessage();
+      }
+
       this.auth.addLead(this.lead).subscribe(() => {
         if (this.isLead)
           this.router.navigateByUrl('/leads');

@@ -160,7 +160,6 @@ export class LeadsComponent implements OnInit, AfterViewInit {
         return this.inventories[i];
       }
     }
-    console.log("invalid -> " + id);
     return false;
   }
 
@@ -339,7 +338,6 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   delModal(id) {
     this.leadId = id;
-    console.log(this.leadId);
   }
 
   deleteLead() {

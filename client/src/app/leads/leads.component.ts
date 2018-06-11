@@ -22,7 +22,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
   constructor(private auth: AuthenticationService, private router: Router,
     private leadService: LeadService) {
 
-      if(auth.isAgent) this.isAgent = true;
+      if(auth.isAgent()) this.isAgent = true;
       else this.isAgent = false;
       
   }

@@ -18,9 +18,14 @@
           </div>
         </div>
       </form>
-      <p *ngIf="!(resultLeads && inventories && cities && propertytypes && locations && users && statusTypes && sublocations)">Please wait...</p>
-      <table *ngIf="resultLeads && inventories && cities && propertytypes && locations && users && statusTypes && sublocations"
-        datatable class="table table-bordered table-hover" style="table-layout:auto;" [dtOptions]="dtOptions" id="datatableId">
+      <h3 *ngIf="loading">Please wait data is loading</h3>
+      <table
+        datatable 
+        [dtOptions]="dtOptions" 
+        [dtTrigger]="dtTrigger"
+        class="table table-bordered table-hover" 
+        style="table-layout:auto;" 
+        id="datatableId">
         <thead>
           <tr>
             <th>ID</th>
@@ -37,27 +42,38 @@
           <tr class="odd gradeX" *ngFor="let l of resultLeads">
             <td>{{ l._id }}</td>
             <td>
-              <u style="text-transform:capitalize;">{{ l.clientName.toLowerCase() }}</u> want to
+              <u class="capital">{{ l.clientName.toLowerCase() }}</u> 
+              want to
+
               <span *ngIf="getInventory(l._id).purpose == 1">
                 sell {{ getPropertyType(l._id).type }}</span>
               <span *ngIf="getInventory(l._id).purpose == 2">
                 buy {{ getPropertyType(l._id).type }}</span>
               <span *ngIf="getInventory(l._id).purpose == 3">
                 rent {{ getPropertyType(l._id).type }}</span>
+              
               in
-              <span *ngIf="getSubLocation(l._id).sublocation">{{ getSubLocation(l._id).sublocation }},</span>
+
+              <span *ngIf="getSubLocation(l._id).sublocation">
+                {{ getSubLocation(l._id).sublocation }},
+              </span>
               {{ getLocation(l._id).location }}, {{ getCity(l._id).name }}.
+
               <br>
               <b>Area</b>: {{ getInventory(l._id).area }}
+
               <span *ngIf="getInventory(l._id).areaUnit == 1">Sq. Feet</span>
               <span *ngIf="getInventory(l._id).areaUnit == 2">Marla</span>
               <span *ngIf="getInventory(l._id).areaUnit == 3">Kanal</span>
-              <b>Demand</b>: {{ getInventory(l._id).demand }}
-              <b>{{ getPropertyType(l._id).type }} #</b>: {{ getInventory(l._id).propNumber }}
+
+              <b>Demand</b>: Rs. {{ getInventory(l._id).demand | number:'1.0-0' }}
+
+              <b class="capital">{{ getPropertyType(l._id).type }} #</b>: {{ getInventory(l._id).propNumber }}
               <b>Street</b>: {{ getInventory(l._id).street }}
               <br>
               <b>Comment</b>: {{ l.cmt }}
             </td>
+
             <td>{{ l.phoneNumber }}</td>
 
             <td *ngIf="l.clientType == 1">Owner</td>
@@ -78,6 +94,7 @@
               <a (click)="editLead(l._id)" class="btn btn-sm btn-default">
                 <i class="fas fa-edit" style="font-size:1.2rem"></i>
               </a>
+              <br>
               <button (click)="delModal(l._id)" class="btn btn-sm btn-default" data-toggle="modal" data-target="#delModal">
                 <i class="fas fa-trash" style="font-size:1.2rem"></i>
               </button>
@@ -89,19 +106,19 @@
         <tfoot>
           <tr>
             <th>
-              <input id="leadInput21" type="text" size="4" placeholder="ID" />
+              <input id="leadInput21" type="text" placeholder="" />
             </th>
             <th>
-              <input id="leadInput21" type="text" placeholder="Lead Info" />
+              <input id="leadInput21" type="text" placeholder="" />
             </th>
             <th>
-              <input id="leadInput21" type="text" placeholder="Contact" />
+              <input id="leadInput21" type="text" placeholder="" />
             </th>
             <th>
-              <input id="leadInput21" type="text" placeholder="Type" />
+              <input id="leadInput21" type="text" placeholder="" />
             </th>
             <th>
-              <input id="leadInput21" type="text" placeholder="Assigned To" />
+              <input id="leadInput21" type="text" placeholder="" />
             </th>
             <th *ngIf="auth.isAdmin()">
               <input id="leadInput21" type="text" placeholder="" />
@@ -110,13 +127,12 @@
               <input id="leadInput21" type="text" placeholder="" />
             </th>
             <th>
-              <i class="fab fa-searchengin" style="font-size:1.8rem;"></i>
+              <i class="fa fa-search" style="font-size:1.8rem;"></i>
             </th>
           </tr>
         </tfoot>
 
       </table>
-
       <!-- Delete Modal -->
       <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="delModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

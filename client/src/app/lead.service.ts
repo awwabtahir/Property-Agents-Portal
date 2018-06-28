@@ -130,14 +130,13 @@ export class LeadService {
     return this.user;
   }
 
-  private isLead;
-
   setIsLead(isLead) {
-    this.isLead = isLead;
+    localStorage.setItem("isLead", isLead);
   }
 
-  getIsLead(): Observable<any>  {
-    return this.isLead;
+  getIsLead() {   
+    if(localStorage.getItem("isLead") === "true") return true;
+    return false;
   }
 
   private statusId;

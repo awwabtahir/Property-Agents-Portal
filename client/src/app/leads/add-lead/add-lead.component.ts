@@ -176,7 +176,7 @@ export class AddLeadComponent implements OnInit {
   // Add Lead
 
   lead: Lead = {
-    purpose: 0,
+    purpose: 1,
     cityId: 0,
     locationId: 0,
     sublocationId: 0,
@@ -196,36 +196,25 @@ export class AddLeadComponent implements OnInit {
     cmt: null
   };
 
-  required = false;
   addLead() {
-    if((this.lead.assignedTo == 0) && this.isLead) {
+    if ((this.lead.assignedTo == 0) && this.isLead) {
       var userId = this.LeadService.getUserId();
       this.lead.assignedTo = userId;
     }
 
-    let l = this.lead;
+    if ((this.lead.assignedTo !== 0) && this.isLead) {
+      this.sendMessage();
+    }
 
-    if(
-      (l.cityId == 0) || (l.locationId == 0) || (l.propTypeId == 0) || (l.propNumber == null) ||
-      (l.demand == null) || (l.area == null) || (l.clientName === null) || (l.clientType == 0) ||
-      (l.phoneNumber == null) || (l.purpose == 0)
-     ) {
-      this.required = true;
-     } else {
-       
-      if((this.lead.assignedTo !== 0) && this.isLead) {
-        this.sendMessage();
-      }
+    this.auth.addLead(this.lead).subscribe(() => {
+      if (this.isLead)
+        this.router.navigateByUrl('/leads');
+      else
+        this.router.navigateByUrl('/inventory');
+    }, (err) => {
+      console.error(err);
+    });
 
-      this.auth.addLead(this.lead).subscribe(() => {
-        if (this.isLead)
-          this.router.navigateByUrl('/leads');
-        else
-          this.router.navigateByUrl('/inventory');
-      }, (err) => {
-        console.error(err);
-      });
-     }    
   }
 
   // For sending message
@@ -235,7 +224,7 @@ export class AddLeadComponent implements OnInit {
       return user._id == lead.assignedTo;
     });
     var phone = user[0].phone;
-    phone = phone.replace("0","92");
+    phone = phone.replace("0", "92");
     let msg = {
       "to": phone,
       "msg": this.contructMsg(lead)
@@ -250,15 +239,15 @@ export class AddLeadComponent implements OnInit {
   }
 
   // Construct Msg
-  contructMsg(l : Lead) {
+  contructMsg(l: Lead) {
     // Client name
     let clientName = l.clientName;
 
     // Purpose
     let purpose = "";
-    if(l.purpose == 1) purpose = "sell";
-    if(l.purpose == 2) purpose = "buy";
-    if(l.purpose == 3) purpose = "rent";
+    if (l.purpose == 1) purpose = "sell";
+    if (l.purpose == 2) purpose = "buy";
+    if (l.purpose == 3) purpose = "rent";
 
     // Property Type
     let type = this.propTypes.filter(function (type) {
@@ -286,9 +275,9 @@ export class AddLeadComponent implements OnInit {
 
     // Area
     let area = "";
-    if(l.areaUnit == 1) area = l.area + " Sq. Feet";
-    if(l.areaUnit == 2) area = l.area + " Marla";
-    if(l.areaUnit == 3) area = l.area + " Kanal";
+    if (l.areaUnit == 1) area = l.area + " Sq. Feet";
+    if (l.areaUnit == 2) area = l.area + " Marla";
+    if (l.areaUnit == 3) area = l.area + " Kanal";
 
     // Demand
     let demand = l.demand;
@@ -305,11 +294,11 @@ export class AddLeadComponent implements OnInit {
     // phone
     let phone = l.phoneNumber;
 
-    let msg = "You have assigned a new lead.\n" + clientName + " want to " + purpose + " the " + type 
-              + " in " + subLocation + ", " + location + ", " + city + ".\n" + "Area: " + area + 
-              " Demand: Rs. " + demand + " " + type + " #: " + propNo + " Street: " + street + 
-              " Phone #:" + phone + " Comment: " + cmt;
-    
+    let msg = "You have assigned a new lead.\n" + clientName + " want to " + purpose + " the " + type
+      + " in " + subLocation + ", " + location + ", " + city + ".\n" + "Area: " + area +
+      " Demand: Rs. " + demand + " " + type + " #: " + propNo + " Street: " + street +
+      " Phone #:" + phone + " Comment: " + cmt;
+
     return msg;
 
   }

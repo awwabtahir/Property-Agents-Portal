@@ -2,34 +2,34 @@
   <div class="row">
     <div class="col align-self-center box-head">
       <p *ngIf="!(users && cities && propTypes && locations)">Please wait...</p>
-      <form *ngIf="users && cities && propTypes && locations">
+      <form *ngIf="users && cities && propTypes && locations" #f="ngForm">
+        <h3 *ngIf="!isLead">Important: You are adding inventory</h3>
         <div class="form-row">
 
           <b class="ml-2 mr-2">Purpose:</b>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="purpose" [(ngModel)]="lead.purpose" #purpose="ngModel" id="purpose1" value="1"
+            <input class="form-check-input" type="radio" name="purpose" [(ngModel)]="lead.purpose" #purpose="ngModel" id="purpose1" [value]="1"
               required>
             <label class="form-check-label" for="purpose1">
               Sell
             </label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="purpose" [(ngModel)]="lead.purpose" #purpose="ngModel" id="purpose2" value="2">
+            <input class="form-check-input" type="radio" name="purpose" [(ngModel)]="lead.purpose" #purpose="ngModel" id="purpose2" [value]="2" 
+            required>
             <label class="form-check-label" for="purpose2">
               Buy
             </label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="purpose" [(ngModel)]="lead.purpose" #purpose="ngModel" id="purpose3" value="3">
+            <input class="form-check-input" type="radio" name="purpose" [(ngModel)]="lead.purpose" #purpose="ngModel" id="purpose3" [value]="3" 
+            required>
             <label class="form-check-label" for="purpose3">
               Rent
             </label>
           </div>
 
         </div>
-        <p *ngIf="!(purpose.touched || purpose.dirty)" style="color:blue">
-          <b>Step 1: Select the purpose</b>
-        </p>
 
         <div class="form-row">
           <!-- Get city names here -->
@@ -89,11 +89,8 @@
 
           <div class="form-group col-md-3">
             <label for="street">Street #</label>
-            <input type="text" class="form-control" name="street" [(ngModel)]="lead.street" #street="ngModel" required id="inputStreet"
+            <input type="text" class="form-control" name="street" [(ngModel)]="lead.street" id="inputStreet"
               placeholder="Street #">
-            <p *ngIf="!street.valid" style="color:blue">
-              <b>Step 6: Enter street number (optional)</b>
-            </p>
           </div>
 
         </div>
@@ -186,8 +183,11 @@
         </div>
 
         <div class="text-left">
-          <button (click)="addLead()" class="btn btn-success">Save</button>
-          <p *ngIf="required" style="color: red;">Please fill all required fields</p>
+          <button 
+            [disabled]="!f.valid"
+            (click)="addLead()" 
+            class="btn btn-success">Save</button>
+          <p *ngIf="!f.valid" style="color: red;">Please fill all required fields</p>
         </div>
 
       </form>

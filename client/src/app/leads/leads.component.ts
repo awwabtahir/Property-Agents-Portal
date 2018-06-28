@@ -3,6 +3,7 @@ import { AuthenticationService, Leads, Inventories, Status } from '../authentica
 import { LeadService } from '../lead.service';
 import { Router } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-leads',
@@ -13,59 +14,46 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(DataTableDirective)
   datatableElement: DataTableDirective;
-
-  dtOptions: any = {};
+  dtOptions = { order: [[0, "desc"]] };
+  dtTrigger: Subject<any> = new Subject();
 
   leadId;
   isAgent = false;
+  isCityManager = false;
 
-  constructor(private auth: AuthenticationService, private router: Router,
-    private leadService: LeadService) {
+  public static areaUnits = {
+    ONE: "Sq. Feet",
+    TWO: "Marla",
+    THREE: "Kanal"
+  };
+  public static clientTypes = {
+    ONE: "Owner",
+    TWO: "Dealer"
+  };
 
-      if(auth.isAgent()) this.isAgent = true;
-      else this.isAgent = false;
-      
+  constructor(
+    private auth: AuthenticationService, 
+    private router: Router,
+    private leadService: LeadService) {      
   }
 
   ngOnInit() {
+    this.isAgent = this.auth.isAgent();
     this.getInventories();
-    //this.getLeads();
+    this.getLeads();
     this.getCities();
     this.getLocations();
     this.getSubLocations();
     this.getPropTypes();
     this.getStatusTypes();
     this.getUsers();
-    
-
-    this.dtOptions = {
-      responsive: true,
-      order: [[0, "desc"]]
-    };
   }
 
   ngAfterViewInit(): void {
-
-    setTimeout(() => {
-
-      this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.columns().every(function () {
-          const that = this;
-          $('#leadInput21', this.footer()).on('keyup change', function () {
-            if (that.search() !== this['value']) {
-              that
-                .search(this['value'])
-                .draw();
-            }
-          });
-        });
-        $('#datatableId tfoot tr').appendTo('#datatableId thead');
-      });
-
-    }, 3000);
-
-
+      this.drawTable();
   }
+
+  // For table  
 
   searchTable(value) {
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -73,89 +61,71 @@ export class LeadsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // For sending message
-  sendMessage() {
-    let msg = {
-      "to": "923115868311",
-      "msg": "Hello"
-    }
-    this.auth.sendMessage(msg).subscribe(() => {
-      console.log("success");
-    }, (err) => {
-      console.error(err);
+  private drawTable() {
+    this.dtTrigger.next();
+    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.columns().every(function () {
+        const that = this;
+        $('#leadInput21', this.footer()).on('keyup change', function () {
+          if (that.search() !== this['value']) 
+            that.search(this['value']).draw();
+        });
+      });
+      $('#datatableId tfoot tr').appendTo('#datatableId thead');
     });
-
   }
 
+  private redrawTable(): void {
+    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.drawTable();
+    });
+  }
 
-  // For getting leads
+  // For leads
 
-  rawleads;
-  leads;
-  resultLeads;
-
+  leads = [];
+  resultLeads = [];
+  loading = true;
   getLeads() {
     this.auth.getLeads().subscribe(leads => {
-
-      this.rawleads = leads.filter(function (leads) {
-        return leads.assignedTo !== "0";
-      });
-
-      this.leads = this.rawleads.filter(function (rawleads) {
-        return rawleads.leadAdminStatus !== 0;
-      });
-
-      if (this.auth.isAgent) {
-        this.leads = this.leads.filter(function (leads) {
-          return leads.leadAgentStatus !== 0;
-        });
-      }
-
+      this.applyLeadsFilter(leads);
       this.resultLeads = this.setLeads(this.leads);
+      this.redrawTable();
       this.leadService.setLeads(this.leads);
-
-    }, (err) => {
-      console.error(err);
+      this.loading = false;
     });
   }
 
-  isCityManager = false;
-  setLeads(leads) {
-    if (this.auth.isCityManager() == 'yes') {
-      this.isCityManager = true;
-      let invs = this.inventories;
-      let loc = this.auth.getlocation();
-      invs = invs.filter(function (inv) {
-        return inv.cityId == loc;
-      });
-
-      this.inventories = invs;
-
-      let newLeads = [];
-      for (let i = 0; i < leads.length; i++) {
-        for (let j = 0; j < invs.length; j++) {
-          if (leads[i]._id == invs[j].leadId) {
-            newLeads.push(leads[i]);
-          }
-        }
-      }
-      return newLeads;
-
-    } else {
-      return leads;
-    }
-
+  private applyLeadsFilter(leads) {
+    let rawleads = leads.filter(function (leads) { return leads.assignedTo !== "0"; });
+    this.leads = rawleads.filter(function (leads) { return leads.leadAdminStatus !== 0; });
+    if (this.auth.isAgent) 
+      this.leads = this.leads.filter(function (leads) { return leads.leadAgentStatus !== 0; });
   }
 
-  inventories;
+  private setLeads(leads) {
+    if (this.auth.isCityManager() !== 'yes') return leads;
 
+      this.isCityManager = true;
+
+      let loc = this.auth.getlocation();
+      this.inventories = this.inventories.filter(function (inv) { return inv.cityId == loc; });
+
+      let newLeads = [];
+      for (let i = 0; i < leads.length; i++) 
+        for (let j = 0; j < this.inventories.length; j++) 
+          if (leads[i]._id == this.inventories[j].leadId) newLeads.push(leads[i]);
+      return newLeads;
+  }
+
+  // For Inventories
+
+  inventories = [];
   getInventories() {
     this.auth.getInventories().subscribe(inventories => {
       this.inventories = inventories;
-      this.getLeads();
       this.leadService.setInventories(this.inventories);
-    }, (err) => {
-      console.error(err);
     });
   }
 
@@ -168,15 +138,14 @@ export class LeadsComponent implements OnInit, AfterViewInit {
     return false;
   }
 
-  cities;
-  selectedCity = 0;
+  // For cities
 
+  cities = [];
+  selectedCity = 0;
   getCities() {
     this.auth.getCities().subscribe(cities => {
       this.cities = cities;
       this.leadService.setCities(this.cities);
-    }, (err) => {
-      console.error(err);
     });
   }
 
@@ -190,38 +159,39 @@ export class LeadsComponent implements OnInit, AfterViewInit {
   }
 
   onCityChange() {
-
     let cityId = this.selectedCity;
-    if (cityId == 0) {
-      this.searchTable("");
-    } else {
-      let city = this.cities.filter(function (city) {
-        return city._id == cityId;
-      });
+    if (cityId == 0) this.searchTable("");
+    else {
+      let city = this.cities.filter(function (city) { return city._id == cityId; });
       let cityName = city[0].name;
       this.searchTable(cityName.toLowerCase());
     }
-
   }
 
-  propertytypes;
+  // For property types
 
+  propertytypes = [];
   getPropTypes() {
     this.auth.getPropTypes().subscribe(propertytypes => {
       this.propertytypes = propertytypes;
       this.leadService.setPropertyTypes(this.propertytypes);
-    }, (err) => {
-      console.error(err);
     });
   }
 
-  statusTypes;
+  getPropertyType(id) {
+    for (var j = 0; j < this.propertytypes.length; j++)
+      if (this.propertytypes[j]._id == this.getInventory(id).propTypeId) 
+        return this.propertytypes[j];
+    
+    return false;
+  }
 
+  // For status types
+
+  statusTypes = [];
   getStatusTypes() {
     this.auth.getStatusTypes().subscribe(statusTypes => {
       this.statusTypes = statusTypes;
-    }, (err) => {
-      console.error(err);
     });
   }
 
@@ -234,83 +204,54 @@ export class LeadsComponent implements OnInit, AfterViewInit {
     return false;
   }
 
-  getPropertyType(id) {
-    for (var j = 0; j < this.propertytypes.length; j++) {
-      if (this.propertytypes[j]._id == this.getInventory(id).propTypeId) {
-        return this.propertytypes[j];
-      }
-    }
-    return false;
-  }
+  // For locations
 
-  locations;
-
+  locations = [];
   getLocations() {
     this.auth.getLocations().subscribe(locations => {
       this.locations = locations;
       this.leadService.setLocations(this.locations);
-    }, (err) => {
-      console.error(err);
     });
   }
 
   getLocation(id) {
-    for (var j = 0; j < this.locations.length; j++) {
-      if (this.locations[j]._id == this.getInventory(id).locationId) {
+    for (var j = 0; j < this.locations.length; j++) 
+      if (this.locations[j]._id == this.getInventory(id).locationId) 
         return this.locations[j];
-      }
-    }
+      
     return false;
   }
 
-  sublocations;
-
+  sublocations = [];
   getSubLocations() {
     this.auth.getSLocations().subscribe(sublocations => {
       this.sublocations = sublocations;
-    }, (err) => {
-      console.error(err);
     });
   }
 
   getSubLocation(id) {
-    for (var j = 0; j < this.sublocations.length; j++) {
-      if (this.sublocations[j]._id == this.getInventory(id).sublocationId) {
+    for (var j = 0; j < this.sublocations.length; j++) 
+      if (this.sublocations[j]._id == this.getInventory(id).sublocationId) 
         return this.sublocations[j];
-      }
-    }
+
     return false;
   }
 
-  users;
-
+  // For users
+  users = [];
   getUsers() {
     this.auth.getUsers().subscribe(users => {
       this.users = users;
-    }, (err) => {
-      console.error(err);
     });
   }
 
   getUser(id) {
-    for (var j = 0; j < this.users.length; j++) {
-      if (this.users[j]._id == id) {
+    for (var j = 0; j < this.users.length; j++)
+      if (this.users[j]._id == id) 
         return this.users[j];
-      }
-    }
+      
     return false;
   }
-
-  public static areaUnits = {
-    ONE: "Sq. Feet",
-    TWO: "Marla",
-    THREE: "Kanal"
-  };
-
-  public static clientTypes = {
-    ONE: "Owner",
-    TWO: "Dealer"
-  };
 
   changeStatus(statusID, leadID) {
     this.leadService.setStatusID(statusID);
@@ -379,8 +320,6 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
     this.auth.updateStatus(status).subscribe(() => {
       console.log("success");
-    }, (err) => {
-      console.error(err);
     });
 
   }
@@ -389,11 +328,5 @@ export class LeadsComponent implements OnInit, AfterViewInit {
     this.leadService.setIsLead(true);
     this.router.navigateByUrl('/add');
   }
-
-  ///////////////////////////////////////
-  ///////// For search
-  //////////////////////////////////////
-
-
 
 }

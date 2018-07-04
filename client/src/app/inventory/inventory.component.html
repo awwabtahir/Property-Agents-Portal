@@ -112,7 +112,7 @@
 
 
       <p *ngIf="!(resultInventories && sublocations)">Please wait...</p>
-      <table *ngIf="resultInventories && sublocations" datatable [dtTrigger]="dtTrigger" class="table table-bordered table-hover"
+      <table datatable [dtTrigger]="dtTrigger" class="table table-bordered table-hover"
         id="datatableId" [dtOptions]="dtOptions">
         <thead>
           <tr>

@@ -14,7 +14,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(DataTableDirective)
   datatableElement: DataTableDirective;
-  dtOptions = { order: [[0, "desc"]] };
+  dtOptions = { order: [[0, "desc"]], responsive: true, autoWidth: false };
   dtTrigger: Subject<any> = new Subject();
 
   leadId;
@@ -32,7 +32,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
   };
 
   constructor(
-    private auth: AuthenticationService, 
+    public auth: AuthenticationService, 
     private router: Router,
     private leadService: LeadService) {      
   }

@@ -188,7 +188,7 @@ export class AddLeadComponent implements OnInit {
     areaUnit: 1,
     beds: 0,
     clientName: null,
-    clientType: 0,
+    clientType: 1,
     phoneNumber: null,
     assignedTo: 0,
     leadAdminStatus: 0,

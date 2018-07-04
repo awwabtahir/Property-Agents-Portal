@@ -25,17 +25,18 @@
         [dtTrigger]="dtTrigger"
         class="table table-bordered table-hover" 
         style="table-layout:auto;" 
-        id="datatableId">
+        id="datatableId"
+        >
         <thead>
           <tr>
             <th>ID</th>
-            <th data-priority="1">Lead Information</th>
+            <th>Lead Information</th>
             <th>Contact #</th>
             <th>Type</th>
             <th>Assigned To</th>
             <th *ngIf="auth.isAdmin()">Admin Status</th>
             <th>Agent Status</th>
-            <th data-priority="2">Operations</th>
+            <th>Operations</th>
           </tr>
         </thead>
         <tbody>
@@ -106,7 +107,7 @@
         <tfoot>
           <tr>
             <th>
-              <input id="leadInput21" type="text" placeholder="" />
+              <input id="leadInput21" type="text" placeholder=""style="width: 40px;" />
             </th>
             <th>
               <input id="leadInput21" type="text" placeholder="" />
@@ -133,6 +134,7 @@
         </tfoot>
 
       </table>
+
       <!-- Delete Modal -->
       <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="delModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

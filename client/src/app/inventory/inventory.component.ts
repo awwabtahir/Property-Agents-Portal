@@ -114,7 +114,7 @@ export class InventoryComponent implements OnInit, AfterViewInit {
 
   inventories;
   newinventories;
-  resultInventories;
+  resultInventories = [];
 
   getInventories() {
     let loc = "0";
@@ -132,6 +132,7 @@ export class InventoryComponent implements OnInit, AfterViewInit {
       this.cleaner();
       this.resultInventories = this.newinventories;
       this.setInv();
+      this.redrawTable();
     }, (err) => {
       console.error(err);
     });

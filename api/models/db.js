@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 var gracefulShutdown;
 var dbURI = 'mongodb://asasa:marwat!123@ds117739.mlab.com:17739/mydbasasa';
-if (process.env.NODE_ENV === 'production') {
-  dbURI = process.env.MONGOLAB_URI;
-}
+// if (process.env.NODE_ENV === 'production') {
+//   dbURI = process.env.MONGOLAB_URI;
+// }
 
 mongoose.connect(dbURI);
 

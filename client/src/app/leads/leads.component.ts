@@ -262,10 +262,11 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   onAgentChange() {
     let agentId = this.selectedAgent;
-    if (agentId == 0) this.searchAgentTable("");
+    if (agentId === 0) this.searchAgentTable("");
     else {
       let agent = this.users.filter(function (user) { return user._id == agentId; });
       let agentName = agent[0].name;
+      console.log(agentName);
       this.searchAgentTable(agentName.toLowerCase());
     }
   }

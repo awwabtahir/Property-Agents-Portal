@@ -57,8 +57,6 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   searchTable(value, col) {
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      console.log(value + " col: " + col);
-      console.log(dtInstance.columns(col).search(value).draw().columns(col).data().toArray());
       dtInstance.columns(col).search(value).draw();
     });
   }
@@ -262,7 +260,6 @@ export class LeadsComponent implements OnInit, AfterViewInit {
     else {
       let agent = this.users.filter(function (user) { return user._id == agentId; });
       let agentName = agent[0].name;
-      console.log(agentName);
       this.searchTable(agentName.toLowerCase(), 4);
     }
   }

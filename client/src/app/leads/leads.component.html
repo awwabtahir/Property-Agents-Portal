@@ -89,7 +89,7 @@
             <td *ngIf="l.clientType == 2">Dealer</td>
             <td *ngIf="l.clientType == 3">Buyer</td>
 
-            <td>{{ getUser(l.assignedTo).name }}</td>
+            <td><span>{{ getUser(l.assignedTo).name }}</span></td>
 
             <td *ngIf="auth.isAdmin()">{{ getStatusType(l.leadAdminStatus) }}</td>
             <td>{{ getStatusType(l.leadAgentStatus) }}</td>

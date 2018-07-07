@@ -57,6 +57,8 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   searchTable(value, col) {
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      console.log(value + " col: " + col);
+      console.log(dtInstance.columns(col).search(value).draw().columns(col).data().toArray());
       dtInstance.columns(col).search(value).draw();
     });
   }

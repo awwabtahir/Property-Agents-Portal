@@ -243,6 +243,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
   getUsers() {
     this.auth.getUsers().subscribe(users => {
       this.users = users;
+      this.redrawTable();
     });
   }
 

@@ -55,15 +55,9 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   // For table  
 
-  searchTable(value) {
+  searchTable(value, col) {
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.columns(1).search(value).draw();
-    });
-  }
-
-  searchAgentTable(value) {
-    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.columns(4).search(value).draw();
+      dtInstance.columns(col).search(value).draw();
     });
   }
 
@@ -166,11 +160,11 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   onCityChange() {
     let cityId = this.selectedCity;
-    if (cityId == 0) this.searchTable("");
+    if (cityId == 0) this.searchTable("", 1);
     else {
       let city = this.cities.filter(function (city) { return city._id == cityId; });
       let cityName = city[0].name;
-      this.searchTable(cityName.toLowerCase());
+      this.searchTable(cityName.toLowerCase(), 1);
     }
   }
 
@@ -262,12 +256,12 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   onAgentChange() {
     let agentId = this.selectedAgent;
-    if (agentId === 0) this.searchAgentTable("");
+    if (agentId == 0) this.searchTable("", 4);
     else {
       let agent = this.users.filter(function (user) { return user._id == agentId; });
       let agentName = agent[0].name;
       console.log(agentName);
-      this.searchAgentTable(agentName.toLowerCase());
+      this.searchTable(agentName.toLowerCase(), 4);
     }
   }
 

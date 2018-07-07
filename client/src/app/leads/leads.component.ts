@@ -14,7 +14,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(DataTableDirective)
   datatableElement: DataTableDirective;
-  dtOptions = { order: [[0, "desc"]], responsive: true, autoWidth: false };
+  dtOptions = { order: [[0, "desc"]], responsive: true, autoWidth: false, iDisplayLength: 50 };
   dtTrigger: Subject<any> = new Subject();
 
   leadId;
@@ -58,6 +58,12 @@ export class LeadsComponent implements OnInit, AfterViewInit {
   searchTable(value) {
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.columns(1).search(value).draw();
+    });
+  }
+
+  searchAgentTable(value) {
+    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.columns(4).search(value).draw();
     });
   }
 
@@ -239,6 +245,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   // For users
   users = [];
+  selectedAgent = 0;
   getUsers() {
     this.auth.getUsers().subscribe(users => {
       this.users = users;
@@ -251,6 +258,16 @@ export class LeadsComponent implements OnInit, AfterViewInit {
         return this.users[j];
       
     return false;
+  }
+
+  onAgentChange() {
+    let agentId = this.selectedAgent;
+    if (agentId == 0) this.searchAgentTable("");
+    else {
+      let agent = this.users.filter(function (user) { return user._id == agentId; });
+      let agentName = agent[0].name;
+      this.searchAgentTable(agentName.toLowerCase());
+    }
   }
 
   changeStatus(statusID, leadID) {

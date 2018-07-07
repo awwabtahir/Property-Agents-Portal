@@ -10,10 +10,18 @@
           <div class="form-group col">
             <button (click)="addLead()" class="btn btn-primary">Add New</button>
           </div>
+          <div class="form-group col">
+          </div>
           <div class="form-group col" *ngIf="!isCityManager && !isAgent">
             <select class="form-control" id="selectCity" name="cityId" (change)="onCityChange()" [(ngModel)]="selectedCity" style="width: 200px;">
               <option value="0">Select City</option>
               <option *ngFor="let city of cities" value="{{ city?._id }}">{{ city?.name }}</option>
+            </select>
+          </div>
+          <div class="form-group col" *ngIf="!isAgent">
+            <select class="form-control" id="selectAgent" name="agentId" (change)="onAgentChange()" [(ngModel)]="selectedAgent" style="width: 200px;">
+              <option value="0">Select Agent</option>
+              <option *ngFor="let u of users" value="{{ u?._id }}">{{ u?.name }}</option>
             </select>
           </div>
         </div>

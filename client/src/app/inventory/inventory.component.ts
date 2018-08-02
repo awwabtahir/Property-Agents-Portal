@@ -70,7 +70,7 @@ export class InventoryComponent implements OnInit, AfterViewInit {
       responsive: true,
       order: [[0, "desc"]],
       iDisplayLength: 50,
-      dom: 'Bfrtip',
+      dom: 'lBfrtip',
       // Configure the buttons
       buttons: [
         'print',

@@ -24,7 +24,8 @@ export class InventoryComponent implements OnInit, AfterViewInit {
 
   inventoryId;
 
-  dtOptions: any = {};
+  dtOptions: any = {
+  };
 
   dtTrigger: Subject<any> = new Subject();
 
@@ -68,7 +69,13 @@ export class InventoryComponent implements OnInit, AfterViewInit {
     this.dtOptions = {
       responsive: true,
       order: [[0, "desc"]],
-      iDisplayLength: 50
+      iDisplayLength: 50,
+      dom: 'Bfrtip',
+      // Configure the buttons
+      buttons: [
+        'print',
+        'excel'
+      ]
     };
 
   }
@@ -88,12 +95,13 @@ export class InventoryComponent implements OnInit, AfterViewInit {
   }
 
   redrawTable(): void {
-    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      // Destroy the table first
-      dtInstance.destroy();
-      // Call the dtTrigger to rerender again
-      this.dtTrigger.next();
-    });
+    if(this.datatableElement.dtInstance)
+      this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        // Destroy the table first
+        dtInstance.destroy();
+        // Call the dtTrigger to rerender again
+        this.dtTrigger.next();
+      });
   }
 
   filter(): void {
@@ -119,11 +127,11 @@ export class InventoryComponent implements OnInit, AfterViewInit {
 
   getInventories() {
     let loc = "0";
-    if(this.auth.isCityManager() == 'yes') {
+    if (this.auth.isCityManager() == 'yes') {
       loc = this.auth.getlocation();
     }
     this.auth.getInventories().subscribe(inventories => {
-      if(loc !== "0") {
+      if (loc !== "0") {
         inventories = inventories.filter(function (inventory) {
           return inventory.cityId == loc;
         });
@@ -295,7 +303,7 @@ export class InventoryComponent implements OnInit, AfterViewInit {
         }
       }
 
-      if(this.resultInventories[i].street)
+      if (this.resultInventories[i].street)
         this.resultInventories[i].location = type + " # " + this.resultInventories[i].propNumber + " ,St # " + this.resultInventories[i].street + ", ";
       else
         this.resultInventories[i].location = type + " # " + this.resultInventories[i].propNumber + ", ";

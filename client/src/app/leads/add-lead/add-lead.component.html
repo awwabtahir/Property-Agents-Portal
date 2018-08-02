@@ -166,7 +166,7 @@
 
           <div class="form-group col-md-6">
             <input type="text" class="form-control" name="phoneNumber" [(ngModel)]="lead.phoneNumber" #phoneNumber="ngModel" required
-              id="inputPhone" placeholder="Phone #">
+              id="inputPhone" placeholder="Phone #" required>
             <p *ngIf="!phoneNumber.valid" style="color:blue">
               <b>Step 11: Enter client phone number</b>
             </p>

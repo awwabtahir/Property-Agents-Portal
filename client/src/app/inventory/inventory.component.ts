@@ -71,7 +71,6 @@ export class InventoryComponent implements OnInit, AfterViewInit {
       order: [[0, "desc"]],
       iDisplayLength: 50,
       dom: 'lBfrtip',
-      // Configure the buttons
       buttons: [
         'print',
         'excel'

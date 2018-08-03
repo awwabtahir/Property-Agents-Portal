@@ -20,7 +20,8 @@
         <tbody>
           <tr class="odd gradeX" *ngFor="let l of resultLeads">
             <td>{{ l._id }}</td>
-            <td style="text-transform:capitalize;">{{ l.clientName.toLowerCase() }}</td>
+            <td *ngIf="l.clientName" style="text-transform:capitalize;">{{ l.clientName.toLowerCase() }}</td>
+            <td *ngIf="!l.clientName" style="text-transform:capitalize;color: red;">Not Found</td>
             <td>{{ l.phoneNumber }}</td>
           </tr>
         </tbody>

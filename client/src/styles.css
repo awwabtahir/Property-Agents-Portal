@@ -6,3 +6,14 @@ html, body {
 .dataTables_wrapper {
     margin-bottom: 40px;
 }
+
+.dt-buttons {
+    margin-left: 20px;
+    float: right!important;
+}
+
+button.dt-button, 
+div.dt-button, 
+a.dt-button {
+    font-size: 0.8rem!important;
+}

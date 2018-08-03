@@ -14,7 +14,17 @@ export class InactiveLeadsComponent implements OnInit, AfterViewInit {
   @ViewChild(DataTableDirective)
   datatableElement: DataTableDirective;
 
-  dtOptions: any = {};
+  dtOptions: any = {
+    order: [[0, "desc"]],
+    responsive: true,
+    autoWidth: false,
+    iDisplayLength: 50,
+    dom: 'lBfrtip',
+    buttons: [
+      'print',
+      'excel'
+    ]
+  };
 
   constructor(private auth: AuthenticationService, private router: Router,
     private leadService: LeadService) { }

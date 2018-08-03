@@ -14,7 +14,17 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(DataTableDirective)
   datatableElement: DataTableDirective;
-  dtOptions = { order: [[0, "desc"]], responsive: true, autoWidth: false, iDisplayLength: 50 };
+  dtOptions = {
+    order: [[0, "desc"]],
+    responsive: true,
+    autoWidth: false,
+    iDisplayLength: 50,
+    dom: 'lBfrtip',
+    buttons: [
+      'print',
+      'excel'
+    ]
+  };
   dtTrigger: Subject<any> = new Subject();
 
   leadId;
@@ -32,9 +42,9 @@ export class LeadsComponent implements OnInit, AfterViewInit {
   };
 
   constructor(
-    public auth: AuthenticationService, 
+    public auth: AuthenticationService,
     private router: Router,
-    private leadService: LeadService) {      
+    private leadService: LeadService) {
   }
 
   ngOnInit() {
@@ -50,7 +60,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-      this.drawTable();
+    this.drawTable();
   }
 
   // For table  
@@ -67,7 +77,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
       dtInstance.columns().every(function () {
         const that = this;
         $('#leadInput21', this.footer()).on('keyup change', function () {
-          if (that.search() !== this['value']) 
+          if (that.search() !== this['value'])
             that.search(this['value']).draw();
         });
       });
@@ -100,23 +110,23 @@ export class LeadsComponent implements OnInit, AfterViewInit {
   private applyLeadsFilter(leads) {
     let rawleads = leads.filter(function (leads) { return leads.assignedTo !== "0"; });
     this.leads = rawleads.filter(function (leads) { return leads.leadAdminStatus !== 0; });
-    if (this.auth.isAgent) 
+    if (this.auth.isAgent)
       this.leads = this.leads.filter(function (leads) { return leads.leadAgentStatus !== 0; });
   }
 
   private setLeads(leads) {
     if (this.auth.isCityManager() !== 'yes') return leads;
 
-      this.isCityManager = true;
+    this.isCityManager = true;
 
-      let loc = this.auth.getlocation();
-      this.inventories = this.inventories.filter(function (inv) { return inv.cityId == loc; });
+    let loc = this.auth.getlocation();
+    this.inventories = this.inventories.filter(function (inv) { return inv.cityId == loc; });
 
-      let newLeads = [];
-      for (let i = 0; i < leads.length; i++) 
-        for (let j = 0; j < this.inventories.length; j++) 
-          if (leads[i]._id == this.inventories[j].leadId) newLeads.push(leads[i]);
-      return newLeads;
+    let newLeads = [];
+    for (let i = 0; i < leads.length; i++)
+      for (let j = 0; j < this.inventories.length; j++)
+        if (leads[i]._id == this.inventories[j].leadId) newLeads.push(leads[i]);
+    return newLeads;
   }
 
   // For Inventories
@@ -180,9 +190,9 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   getPropertyType(id) {
     for (var j = 0; j < this.propertytypes.length; j++)
-      if (this.propertytypes[j]._id == this.getInventory(id).propTypeId) 
+      if (this.propertytypes[j]._id == this.getInventory(id).propTypeId)
         return this.propertytypes[j];
-    
+
     return false;
   }
 
@@ -215,10 +225,10 @@ export class LeadsComponent implements OnInit, AfterViewInit {
   }
 
   getLocation(id) {
-    for (var j = 0; j < this.locations.length; j++) 
-      if (this.locations[j]._id == this.getInventory(id).locationId) 
+    for (var j = 0; j < this.locations.length; j++)
+      if (this.locations[j]._id == this.getInventory(id).locationId)
         return this.locations[j];
-      
+
     return false;
   }
 
@@ -230,8 +240,8 @@ export class LeadsComponent implements OnInit, AfterViewInit {
   }
 
   getSubLocation(id) {
-    for (var j = 0; j < this.sublocations.length; j++) 
-      if (this.sublocations[j]._id == this.getInventory(id).sublocationId) 
+    for (var j = 0; j < this.sublocations.length; j++)
+      if (this.sublocations[j]._id == this.getInventory(id).sublocationId)
         return this.sublocations[j];
 
     return false;
@@ -249,9 +259,9 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   getUser(id) {
     for (var j = 0; j < this.users.length; j++)
-      if (this.users[j]._id == id) 
+      if (this.users[j]._id == id)
         return this.users[j];
-      
+
     return false;
   }
 

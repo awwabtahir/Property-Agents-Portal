@@ -14,23 +14,25 @@ export class InactiveLeadsComponent implements OnInit, AfterViewInit {
   @ViewChild(DataTableDirective)
   datatableElement: DataTableDirective;
 
-  dtOptions: any = {
-    order: [[0, "desc"]],
-    responsive: true,
-    autoWidth: false,
-    iDisplayLength: 50,
-    dom: 'lBfrtip',
-    buttons: [
-      'print',
-      'excel'
-    ]
-  };
+  dtOptions: any;
 
   constructor(private auth: AuthenticationService, private router: Router,
     private leadService: LeadService) { }
 
   ngOnInit() {
     this.getLeads();
+
+    this.dtOptions  = {
+      order: [[0, "desc"]],
+      autoWidth: false,
+      iDisplayLength: 50,
+      dom: 'lBfrtip',
+      buttons: [
+        'print',
+        'excel'
+      ]
+    };
+  
   }
 
   ngAfterViewInit(): void {

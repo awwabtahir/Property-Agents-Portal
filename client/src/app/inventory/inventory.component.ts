@@ -67,7 +67,6 @@ export class InventoryComponent implements OnInit, AfterViewInit {
     });
 
     this.dtOptions = {
-      responsive: true,
       order: [[0, "desc"]],
       iDisplayLength: 50,
       dom: 'lBfrtip',

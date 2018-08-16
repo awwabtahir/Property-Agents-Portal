@@ -14,7 +14,10 @@ export class LoginComponent {
     password: ''
   };
 
-  constructor(private auth: AuthenticationService, private router: Router) {}
+  constructor(private auth: AuthenticationService, private router: Router) {
+    if(this.auth.isLoggedIn())
+      this.router.navigateByUrl('/profile');
+  }
 
   login() {
     this.auth.login(this.credentials).subscribe(() => {

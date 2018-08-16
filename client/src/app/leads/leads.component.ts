@@ -16,7 +16,6 @@ export class LeadsComponent implements OnInit, AfterViewInit {
   datatableElement: DataTableDirective;
   dtOptions = {
     order: [[0, "desc"]],
-    responsive: true,
     autoWidth: false,
     iDisplayLength: 50,
     dom: 'lBfrtip',

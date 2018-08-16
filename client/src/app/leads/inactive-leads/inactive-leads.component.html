@@ -14,6 +14,7 @@
             <th>ID</th>
             <th data-priority="1">Client Name</th>
             <th>Contact #</th>
+            <th>Operations</th>
           </tr>
         </thead>
 
@@ -23,6 +24,9 @@
             <td *ngIf="l.clientName" style="text-transform:capitalize;">{{ l.clientName.toLowerCase() }}</td>
             <td *ngIf="!l.clientName" style="text-transform:capitalize;color: red;">Not Found</td>
             <td>{{ l.phoneNumber }}</td>
+            <td>
+              <button class="btn btn-danger">Delete permanently</button>
+            </td>
           </tr>
         </tbody>
 

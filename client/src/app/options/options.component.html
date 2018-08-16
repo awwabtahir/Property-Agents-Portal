@@ -21,7 +21,7 @@
           <input type="text" name="name" class="form-control" id="cityName" placeholder="Enter city" [(ngModel)]="city.name">
         </div>
         <!-- Button for adding and editing city name -->
-        <button *ngIf="!editCityClick" (click)="addCity()" class="btn btn-primary">Add City</button>
+        <button *ngIf="!editCityClick" (click)="addCity()" class="btn btn-primary mr-2">Add City</button>
         <button *ngIf="editCityClick" (click)="editCity()" class="btn btn-primary">Edit City</button>
         <p *ngIf="cityAdded == true" style="color: blue;">Successfully Added!</p>
         <p *ngIf="cityUpdated" style="color: blue;">Successfully Updated!</p>
@@ -41,8 +41,8 @@
           </select>
         </div>
 
-        <button (click)="editCityBtnClicked()" type="submit" class="btn btn-primary">Edit</button>
-        <button *ngIf="!deleteCityBtn" (click)="deleteCityBtnPressed()" class="btn btn-danger">Delete</button>
+        <button (click)="editCityBtnClicked()" type="submit" class="btn btn-primary mr-2">Edit</button>
+        <button *ngIf="!deleteCityBtn" (click)="deleteCityBtnPressed()" class="btn btn-danger mr-2">Delete</button>
         <button *ngIf="deleteCityBtn" (click)="deleteCityBtnClicked()" class="btn btn-danger">Click again to delete</button>
       </form>
     </div>
@@ -90,7 +90,7 @@
           <input type="text" class="form-control" name="sublocation" id="inputSubLocation" placeholder="Enter sub location" [(ngModel)]="location.sublocation">
         </div>
 
-        <button *ngIf="!editLocClicked" (click)="addLoc()" class="btn btn-primary">Add Location</button>
+        <button *ngIf="!editLocClicked" (click)="addLoc()" class="btn btn-primary mr-2">Add Location</button>
         <button *ngIf="editLocClicked" (click)="editLoc()" class="btn btn-primary">Edit Location</button>
         <p *ngIf="locAdded" style="color: blue;">Successfully Added!</p>
         <p *ngIf="locUpdated" style="color: blue;">Successfully Updated!</p>
@@ -126,8 +126,8 @@
           </select>
         </div>
 
-        <button (click)="editLocBtnClicked()" class="btn btn-primary">Edit</button>
-        <button *ngIf="!locDelBtn" (click)="locDelBtnPressed()" class="btn btn-danger">Delete</button>
+        <button (click)="editLocBtnClicked()" class="btn btn-primary mr-2">Edit</button>
+        <button *ngIf="!locDelBtn" (click)="locDelBtnPressed()" class="btn btn-danger mr-2">Delete</button>
         <button *ngIf="locDelBtn" (click)="locDelBtnClicked()" class="btn btn-danger">Click again to confirm deletion</button>
       </form>
     </div>
@@ -151,7 +151,7 @@
           <input type="text" class="form-control" name="type" id="inputType" placeholder="Enter property type" [(ngModel)]="propType.type">
         </div>
 
-        <button *ngIf="!editProp" (click)="addPropType()" class="btn btn-primary">Add Property Type</button>
+        <button *ngIf="!editProp" (click)="addPropType()" class="btn btn-primary mr-2">Add Property Type</button>
         <button *ngIf="editProp" (click)="editPropType()" class="btn btn-primary">Edit Property Type</button>
         <p *ngIf="propTypeAdded" style="color: blue;">Successfully Added!</p>
       </form>
@@ -169,8 +169,8 @@
           </select>
         </div>
 
-        <button (click)="editPropTypeClicked()" class="btn btn-primary">Edit</button>
-        <button *ngIf="!deletePropBtn" (click)="deletePropBtnClicked()" class="btn btn-danger">Delete</button>
+        <button (click)="editPropTypeClicked()" class="btn btn-primary mr-2">Edit</button>
+        <button *ngIf="!deletePropBtn" (click)="deletePropBtnClicked()" class="btn btn-danger mr-2">Delete</button>
         <button *ngIf="deletePropBtn" (click)="deletePropType()" class="btn btn-danger">Click again to confirm deletion</button>
       </form>
     </div>
@@ -194,7 +194,7 @@
           <input type="text" class="form-control" name="type" id="inputStatusType" placeholder="Enter status type" [(ngModel)]="statusType.type">
         </div>
 
-        <button *ngIf="!editStatusBtn" (click)="addStatusType()" class="btn btn-primary">Add Status Type</button>
+        <button *ngIf="!editStatusBtn" (click)="addStatusType()" class="btn btn-primary mr-2">Add Status Type</button>
         <button *ngIf="editStatusBtn" (click)="editStatusType()" class="btn btn-primary">Edit Status Type</button>
         <p *ngIf="statusTypeAdded" style="color: blue;">Successfully Added!</p>
       </form>
@@ -212,8 +212,8 @@
           </select>
         </div>
 
-        <button (click)="editStatusClicked()" class="btn btn-primary">Edit</button>
-        <button *ngIf="!deleteStatusBtn" (click)="deleteStatusBtnClicked()" class="btn btn-danger">Delete</button>
+        <button (click)="editStatusClicked()" class="btn btn-primary mr-2">Edit</button>
+        <button *ngIf="!deleteStatusBtn" (click)="deleteStatusBtnClicked()" class="btn btn-danger mr-2">Delete</button>
         <button *ngIf="deleteStatusBtn" (click)="deleteStatusType()" class="btn btn-danger">Click again to confirm deletion</button>
       </form>
     </div>

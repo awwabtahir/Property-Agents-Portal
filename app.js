@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+var compression = require('compression');
 var http = require('http');
 // Require Passport
 var passport = require('passport');
@@ -13,7 +14,6 @@ var passport = require('passport');
 require('./api/models/db');
 // Bring in the Passport config after model is defined
 require('./api/config/passport');
-
 
 // Bring in the routes for the API (delete the default routes)
 var routesApi = require('./api/routes/index');
@@ -42,6 +42,7 @@ app.use('/api', routesApi);
 app.use(express.static(path.join(__dirname, 'client/dist')));
 
 // Catch all other routes and return the index file
+app.use(compression()); //compressing dist folder 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname,'client/dist/index.html'));
 });  

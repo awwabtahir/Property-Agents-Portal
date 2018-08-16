@@ -5,6 +5,9 @@ html, body {
 
 .spinner {
     background: url(./assets/images/loading.gif) center center no-repeat; 
+    background-size: cover;
+    width: 300px;
+    height: 300px;
 }
 
 tr input {

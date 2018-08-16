@@ -17,5 +17,10 @@
     ],
     "module": "es2015",
     "baseUrl": "./"
+  },
+  "paths": {
+    "rxjs": [
+      "./vendor/rxjs.ts"
+    ]
   }
 }

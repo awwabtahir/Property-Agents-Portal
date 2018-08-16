@@ -268,11 +268,16 @@ export class AuthenticationService {
     Observable<any> {
 
     let base;
+    let prod = false;
 
     if (method === 'post') {
       base = this.http.post(`/api/${type}`, template);
+      if(prod)
+        base = this.http.post(`http://localhost:3000/api/${type}`, template);
     } else {
       base = this.http.get(`/api/${type}`, { headers: { Authorization: `Bearer ${this.getToken()}` } });
+      if(prod)
+        base = this.http.get(`http://localhost:3000/api/${type}`, { headers: { Authorization: `Bearer ${this.getToken()}` } });
     }
 
     const request = base.pipe(

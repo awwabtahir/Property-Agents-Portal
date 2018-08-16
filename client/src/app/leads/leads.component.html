@@ -75,7 +75,7 @@
               <span *ngIf="getInventory(l._id).areaUnit == 2">Marla</span>
               <span *ngIf="getInventory(l._id).areaUnit == 3">Kanal</span>
 
-              <b>Demand</b>: Rs. {{ getInventory(l._id).demand | number:'1.0-0' }}
+              <b> Demand</b>: Rs. {{ getInventory(l._id).demand | number:'1.0-0' }}
 
               <b class="capital">{{ getPropertyType(l._id).type }} #</b>: {{ getInventory(l._id).propNumber }}
               <b>Street</b>: {{ getInventory(l._id).street }}

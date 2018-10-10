@@ -8,22 +8,22 @@
 
           <b class="ml-2 mr-2">Purpose:</b>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="purpose" [(ngModel)]="lead.purpose" #purpose="ngModel" id="purpose1" [value]="1"
-              required>
+            <input class="form-check-input" type="radio" name="purpose" [(ngModel)]="lead.purpose" #purpose="ngModel"
+              id="purpose1" [value]="1" required>
             <label class="form-check-label" for="purpose1">
               Sell
             </label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="purpose" [(ngModel)]="lead.purpose" #purpose="ngModel" id="purpose2" [value]="2" 
-            required>
+            <input class="form-check-input" type="radio" name="purpose" [(ngModel)]="lead.purpose" #purpose="ngModel"
+              id="purpose2" [value]="2" required>
             <label class="form-check-label" for="purpose2">
               Buy
             </label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="purpose" [(ngModel)]="lead.purpose" #purpose="ngModel" id="purpose3" [value]="3" 
-            required>
+            <input class="form-check-input" type="radio" name="purpose" [(ngModel)]="lead.purpose" #purpose="ngModel"
+              id="purpose3" [value]="3" required>
             <label class="form-check-label" for="purpose3">
               Rent
             </label>
@@ -35,24 +35,33 @@
           <!-- Get city names here -->
           <div class="form-group col-md-6">
             <label for="inputCity"></label>
-            <select class="form-control" id="selectCity" name="cityId" [(ngModel)]="lead.cityId" #cityId="ngModel" (change)="onChange($event.target.value)"
-              required>
-              <option value="0" selected>Select city</option>
-              <option *ngFor="let city of cities" value="{{ city?._id }}">{{ city?.name }}</option>
-            </select>
+            <ng-select 
+              [items]="cities" 
+              bindLabel="name" 
+              bindValue="_id" 
+              name="cityId"
+              placeholder="Select city"
+              [(ngModel)]="lead.cityId" 
+              (change)="onChange($event)"
+              #cityId="ngModel" required>
+            </ng-select>
             <p *ngIf="!(cityId.touched || cityId.dirty)" style="color:blue">
-              <b>Step 2: Select the city</b>
+              <b>Step 2: Select city</b>
             </p>
           </div>
 
           <!-- Get Property Types here -->
           <div class="form-group col-md-6">
             <label for="inputType"></label>
-            <select class="form-control" id="selectPropertyType" name="propTypeId" [(ngModel)]="lead.propTypeId" #propTypeId="ngModel"
-              required>
-              <option value="0" selected>Select property type</option>
-              <option *ngFor="let type of propTypes" value="{{ type?._id }}">{{ type?.type }}</option>
-            </select>
+            <ng-select 
+              [items]="propTypes" 
+              bindLabel="type" 
+              bindValue="_id" 
+              name="propTypeId"
+              placeholder="Select property type"
+              [(ngModel)]="lead.propTypeId" 
+              #propTypeId="ngModel" required>
+            </ng-select>
             <p *ngIf="!(propTypeId.touched || propTypeId.dirty)" style="color:blue">
               <b>Step 3: Select the property type</b>
             </p>
@@ -64,11 +73,23 @@
           <!-- Get Locations here -->
           <div class="form-group col-md-6">
             <label for="locId">Select location</label>
-            <select class="form-control" id="selectLocation" name="locId" [(ngModel)]="lead.locationId" #locId="ngModel" (change)="onLocChange($event.target.value)"
-              required>
+            <!-- <select class="form-control" id="selectLocation" name="locId" [(ngModel)]="lead.locationId" #locId="ngModel"
+              (change)="onLocChange($event.target.value)" required>
               <option value="0" selected>Select location</option>
               <option *ngFor="let loc of newLocations" value="{{ loc?._id }}">{{ loc?.location }}</option>
-            </select>
+            </select> -->
+
+            <ng-select 
+              [items]="newLocations" 
+              bindLabel="location" 
+              bindValue="_id" 
+              name="locId"
+              placeholder="Select location"
+              [(ngModel)]="lead.locationId"
+              (change)=onLocChange($event) 
+              #locId="ngModel" required>
+            </ng-select>
+
             <select *ngIf="isLocation" class="form-control mt-2" id="selectSubLocation" name="sublocId" [(ngModel)]="lead.sublocationId">
               <option value="0" selected>Select Sub Location</option>
               <option *ngFor="let sloc of newSubLocations" value="{{ sloc?._id }}">{{ sloc?.sublocation }}</option>
@@ -80,8 +101,8 @@
 
           <div class="form-group col-md-3">
             <label for="propNumber">{{ getPropertyType }} #</label>
-            <input type="text" class="form-control" name="propNumber" [(ngModel)]="lead.propNumber" #propNumber="ngModel" required id="inputPropNumber"
-              placeholder="{{ getPropertyType }} #">
+            <input type="text" class="form-control" name="propNumber" [(ngModel)]="lead.propNumber" #propNumber="ngModel"
+              required id="inputPropNumber" placeholder="{{ getPropertyType }} #">
             <p *ngIf="!propNumber.valid" style="color:blue">
               <b>Step 5: Enter {{ getPropertyType }} number</b>
             </p>
@@ -98,7 +119,8 @@
 
           <div class="form-group col-md-6">
             <label for="inputDemand">Demand (Rs)</label>
-            <input type="text" class="form-control" name="demand" [(ngModel)]="lead.demand" #demand="ngModel" required id="inputDemand">
+            <input type="text" class="form-control" name="demand" [(ngModel)]="lead.demand" #demand="ngModel" required
+              id="inputDemand">
             <p *ngIf="!demand.valid" style="color:blue">
               <b>Step 7: Enter demand</b>
             </p>
@@ -142,8 +164,8 @@
         <div class="form-row">
 
           <div class="form-group col-md-6">
-            <input type="text" class="form-control" name="clientName" [(ngModel)]="lead.clientName" #clientName="ngModel" required id="inputName"
-              placeholder="Client Name">
+            <input type="text" class="form-control" name="clientName" [(ngModel)]="lead.clientName" #clientName="ngModel"
+              required id="inputName" placeholder="Client Name">
             <p *ngIf="!clientName.valid" style="color:blue">
               <b>Step 9: Enter client name</b>
             </p>
@@ -165,8 +187,8 @@
         <div class="form-row">
 
           <div class="form-group col-md-6">
-            <input type="text" class="form-control" name="phoneNumber" [(ngModel)]="lead.phoneNumber" #phoneNumber="ngModel" required
-              id="inputPhone" placeholder="Phone #" required>
+            <input type="text" class="form-control" name="phoneNumber" [(ngModel)]="lead.phoneNumber" #phoneNumber="ngModel"
+              required id="inputPhone" placeholder="Phone #" required>
             <p *ngIf="!phoneNumber.valid" style="color:blue">
               <b>Step 11: Enter client phone number</b>
             </p>
@@ -182,10 +204,7 @@
         </div>
 
         <div class="text-left">
-          <button 
-            [disabled]="!f.valid"
-            (click)="addLead()" 
-            class="btn btn-success">Save</button>
+          <button [disabled]="!f.valid" (click)="addLead()" class="btn btn-success">Save</button>
           <p *ngIf="!f.valid" style="color: red;">Please fill all required fields</p>
         </div>
 

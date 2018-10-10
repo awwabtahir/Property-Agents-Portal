@@ -54,9 +54,9 @@ export class AddLeadComponent implements OnInit {
 
   // City onChange()
   newLocations: Locations;
-  onChange(id) {
+  onChange(city) {
     this.newLocations = this.locations.filter(function (locations) {
-      return locations.cityId == id;
+      return locations.cityId == city._id;
     });
   }
 
@@ -79,10 +79,10 @@ export class AddLeadComponent implements OnInit {
   // Location onLocChange()
   newSubLocations;
   isLocation = false;
-  onLocChange(id) {
+  onLocChange(location) {
     this.isLocation = true;
     this.newSubLocations = this.sublocations.filter(function (sublocations) {
-      return sublocations.locationId == id;
+      return sublocations.locationId == location._id;
     });
   }
 
@@ -178,10 +178,10 @@ export class AddLeadComponent implements OnInit {
 
   lead: Lead = {
     purpose: 1,
-    cityId: 0,
-    locationId: 0,
+    cityId: null,
+    locationId: null,
     sublocationId: 0,
-    propTypeId: 0,
+    propTypeId: null,
     propNumber: null,
     street: null,
     demand: null,

@@ -44,6 +44,7 @@
             <th>Assigned To</th>
             <th *ngIf="auth.isAdmin()">Admin Status</th>
             <th>Agent Status</th>
+            <th>Added on</th>
             <th>Operations</th>
           </tr>
         </thead>
@@ -93,6 +94,7 @@
 
             <td *ngIf="auth.isAdmin()">{{ getStatusType(l.leadAdminStatus) }}</td>
             <td>{{ getStatusType(l.leadAgentStatus) }}</td>
+            <td>{{ l.date | date }}</td>
             <td>
               <a *ngIf="auth.isAdmin()" (click)="changeStatus(l.leadAdminStatus, l._id)" class="btn btn-sm btn-default">
                 <i class="fas fa-exchange-alt" style="font-size:1.2rem"></i>
@@ -130,6 +132,9 @@
               <input id="leadInput21" type="text" placeholder="" />
             </th>
             <th *ngIf="auth.isAdmin()">
+              <input id="leadInput21" type="text" placeholder="" />
+            </th>
+            <th>
               <input id="leadInput21" type="text" placeholder="" />
             </th>
             <th>

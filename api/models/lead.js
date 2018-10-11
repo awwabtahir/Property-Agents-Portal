@@ -1,77 +1,82 @@
-var mongoose = require( 'mongoose' );
+var mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
 
 autoIncrement.initialize(mongoose.connection);
 
 var leadSchema = new mongoose.Schema({
-    clientName : {
+    clientName: {
         type: String
     },
-    clientType : {
+    clientType: {
         type: Number
     },
-    phoneNumber : {
+    phoneNumber: {
         type: String
     },
-    assignedTo : {
+    assignedTo: {
         type: String,
         default: 0
     },
-    leadAdminStatus : {
+    leadAdminStatus: {
         type: Number
     },
     leadAgentStatus: {
         type: Number
     },
-    inventoryId : {
+    inventoryId: {
         type: Number
     },
     cmt: {
         type: String
+    },
+    date: {
+        type: Date,
+        default: Date.now,
+        required : true
     }
 });
 
 var inventorySchema = new mongoose.Schema({
-    purpose : {
+    purpose: {
         type: Number,
         required: true,
         default: 1
     },
-    cityId : {
-      type: Number 
-    },
-    locationId : {
+    cityId: {
         type: Number
     },
-    sublocationId : {
+    locationId: {
         type: Number
     },
-    propTypeId : {
+    sublocationId: {
         type: Number
     },
-    propNumber : {
+    propTypeId: {
+        type: Number
+    },
+    propNumber: {
         type: String
     },
-    street : {
+    street: {
         type: String
     },
-    demand : {
+    demand: {
         type: Number
     },
-    area : {
-       type: String 
+    area: {
+        type: String
     },
-    areaUnit : {
+    areaUnit: {
         type: Number
     },
-    beds : {
+    beds: {
         type: Number
     },
-    dateAdded : {
-        type: Date, 
+    dateAdded: {
+        type: Date,
         default: Date.now
     },
-    leadId : {
+    leadId: {
         type: Number
     }
 });

@@ -463,6 +463,10 @@ export class InventoryComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl('/add');
   }
 
+  addToWeb(inv) {
+    localStorage.setItem('inv', JSON.stringify(inv));
+  }
+
   ////////////////////////////////////
   ////////// Search
   ////////////////////////////////////

@@ -74,17 +74,11 @@ module.exports.getLeads = function (req, res) {
 }
 
 module.exports.getInventories = function (req, res) {
-    if (!req.payload._id) {
-        res.status(401).json({
-            "message": "UnauthorizedError: private profile"
+    Inventory
+        .find()
+        .exec(function (err, inventories) {
+            res.status(200).json(inventories);
         });
-    } else {
-        Inventory
-            .find()
-            .exec(function (err, inventories) {
-                res.status(200).json(inventories);
-            });
-    }
 }
 
 module.exports.updateLead = function (req, res) {

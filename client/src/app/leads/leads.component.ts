@@ -80,7 +80,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
             that.search(this['value']).draw();
         });
       });
-      $('#datatableId tfoot tr').appendTo('#datatableId thead');
+      // $('#datatableId tfoot tr').appendTo('#datatableId thead');
     });
   }
 
@@ -170,11 +170,11 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   onCityChange() {
     let cityId = this.selectedCity;
-    if (cityId == 0) this.searchTable("", 1);
+    if (cityId == 0) this.searchTable("", 7);
     else {
       let city = this.cities.filter(function (city) { return city._id == cityId; });
       let cityName = city[0].name;
-      this.searchTable(cityName.toLowerCase(), 1);
+      this.searchTable(cityName.toLowerCase(), 7);
     }
   }
 
@@ -267,11 +267,11 @@ export class LeadsComponent implements OnInit, AfterViewInit {
 
   onAgentChange() {
     let agentId = this.selectedAgent;
-    if (agentId == 0) this.searchTable("", 4);
+    if (agentId == 0) this.searchTable("", 11);
     else {
       let agent = this.users.filter(function (user) { return user._id == agentId; });
       let agentName = agent[0].name;
-      this.searchTable(agentName.toLowerCase(), 4);
+      this.searchTable(agentName.toLowerCase(), 11);
     }
   }
 

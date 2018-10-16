@@ -123,6 +123,7 @@
             <th>Demand (Rs)</th>
             <th>Purpose</th>
             <th>Beds</th>
+            <th>Client Details</th>
             <th data-priority="1">Operations</th>
           </tr>
         </thead>
@@ -137,6 +138,13 @@
             <td *ngIf="inv.purpose == 2">Buy</td>
             <td *ngIf="inv.purpose == 3">Rent</td>
             <td>{{ inv.beds }}</td>
+            <td>
+              Name: {{ getClientDetails(inv.leadId).clientName }} <br>
+              Phone: {{ getClientDetails(inv.leadId).phoneNumber }} <br>
+              Type: <span *ngIf="getClientDetails(inv.leadId).clientType == 1">Owner</span>
+              <span *ngIf="getClientDetails(inv.leadId).clientType == 2">Dealer</span>
+              <span *ngIf="getClientDetails(inv.leadId).clientType == 3">Buyer</span>
+            </td>
             <td>
               <a (click)="editLead(inv.leadId)" class="btn btn-sm btn-default">
                 <i class="fas fa-edit" style="font-size:1.2rem"></i> Edit

@@ -463,6 +463,13 @@ export class InventoryComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl('/add');
   }
 
+  getClientDetails(id) {
+    let lead = this.leads.filter(function (l) {
+      return l._id == id;
+    });
+    return lead[0];
+  }
+
   addToWeb(inv) {
     localStorage.setItem('inv', JSON.stringify(inv));
   }

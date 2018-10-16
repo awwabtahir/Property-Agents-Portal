@@ -141,10 +141,10 @@
               <a (click)="editLead(inv.leadId)" class="btn btn-sm btn-default">
                 <i class="fas fa-edit" style="font-size:1.2rem"></i> Edit
               </a>
-              <button (click)="delModal(inv.leadId)" *ngIf="auth.isAdmin()" class="btn btn-sm btn-default" data-toggle="modal" data-target="#delModal">
+              <button (click)="delModal(inv.leadId)" class="btn btn-sm btn-default" data-toggle="modal" data-target="#delModal">
                 <i class="fas fa-trash" style="font-size:1.2rem"></i>
               </button>
-              <button (click)="addToWeb(inv)" class="btn btn-sm btn-success mt-1">
+              <button (click)="addToWeb(inv)" class="btn btn-sm btn-success mt-1 ml-1">
                 <i class="fas fa-plus-square"></i> Add to website
               </button>
             </td>

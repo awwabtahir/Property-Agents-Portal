@@ -177,6 +177,7 @@ export class AddLeadComponent implements OnInit {
   // Add Lead
 
   lead: Lead = {
+    isInventory: false,
     purpose: 1,
     cityId: null,
     locationId: null,
@@ -201,6 +202,12 @@ export class AddLeadComponent implements OnInit {
     if ((this.lead.assignedTo == 0) && this.isLead) {
       var userId = this.LeadService.getUserId();
       this.lead.assignedTo = userId;
+    }
+
+    if ((this.lead.assignedTo == 0) && !this.isLead) {
+      var userId = this.LeadService.getUserId();
+      this.lead.assignedTo = userId;
+      this.lead.isInventory = true;
     }
 
     if ((this.lead.assignedTo !== 0) && this.isLead) {

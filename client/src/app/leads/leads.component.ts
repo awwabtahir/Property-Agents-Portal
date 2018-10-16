@@ -109,6 +109,7 @@ export class LeadsComponent implements OnInit, AfterViewInit {
   private applyLeadsFilter(leads) {
     let rawleads = leads.filter(function (leads) { return leads.assignedTo !== "0"; });
     this.leads = rawleads.filter(function (leads) { return leads.leadAdminStatus !== 0; });
+    this.leads = this.leads.filter(function (leads) { return leads.isInventory !== true; });
     if (this.auth.isAgent)
       this.leads = this.leads.filter(function (leads) { return leads.leadAgentStatus !== 0; });
   }

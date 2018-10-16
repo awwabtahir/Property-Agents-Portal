@@ -30,6 +30,7 @@ module.exports.addLead = function (req, res) {
     lead.clientType = req.body.clientType;
     lead.phoneNumber = req.body.phoneNumber;
     lead.assignedTo = req.body.assignedTo;
+    lead.isInventory = req.body.isInventory;
     lead.leadAdminStatus = req.body.leadAdminStatus;
     lead.leadAgentStatus = req.body.leadAgentStatus;
     lead.cmt = req.body.cmt;

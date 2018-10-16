@@ -29,6 +29,10 @@ var leadSchema = new mongoose.Schema({
     cmt: {
         type: String
     },
+    isInventory: {
+        type: Boolean,
+        default: false
+    },
     date: {
         type: Date,
         default: Date.now,

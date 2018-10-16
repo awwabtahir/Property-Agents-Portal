@@ -85,6 +85,7 @@ export interface StatusTypes {
 // For Lead
 
 export interface Lead {
+  isInventory: Boolean,
   purpose: Number,
   cityId: Number,
   locationId: Number,

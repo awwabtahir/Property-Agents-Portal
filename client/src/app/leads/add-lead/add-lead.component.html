@@ -60,6 +60,7 @@
               name="propTypeId"
               placeholder="Select property type"
               [(ngModel)]="lead.propTypeId" 
+              (change)="onPropTypeChange($event)"
               #propTypeId="ngModel" required>
             </ng-select>
             <p *ngIf="!(propTypeId.touched || propTypeId.dirty)" style="color:blue">
@@ -90,7 +91,8 @@
               #locId="ngModel" required>
             </ng-select>
 
-            <select *ngIf="isLocation" class="form-control mt-2" id="selectSubLocation" name="sublocId" [(ngModel)]="lead.sublocationId">
+            <select *ngIf="isLocation" class="form-control mt-2" id="selectSubLocation" 
+            name="sublocId" [(ngModel)]="lead.sublocationId" (change)=onSubLocChange($event)>
               <option value="0" selected>Select Sub Location</option>
               <option *ngFor="let sloc of newSubLocations" value="{{ sloc?._id }}">{{ sloc?.sublocation }}</option>
             </select>

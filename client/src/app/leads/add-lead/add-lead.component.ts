@@ -2,6 +2,7 @@ import { LeadService } from './../../lead.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService, Cities, Locations, PropertyTypes, Lead, StatusTypes } from '../../authentication.service';
 import { Router } from '@angular/router';
+import { timeout } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-lead',
@@ -13,7 +14,7 @@ export class AddLeadComponent implements OnInit {
   constructor(private auth: AuthenticationService, private router: Router,
     private LeadService: LeadService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     
     this.auth.profile().subscribe(user => {
       this.LeadService.setUserId(user._id);
@@ -28,6 +29,23 @@ export class AddLeadComponent implements OnInit {
     this.getUsers();
     this.getIsLead();
     this.getStatusTypes();
+
+    await new Promise((resolve, reject) => setTimeout(resolve, 1500));
+
+    if(JSON.parse(localStorage.getItem('city'))) {
+      let city = JSON.parse(localStorage.getItem('city'));
+      let location = JSON.parse(localStorage.getItem('location'));
+      let subLocationId = JSON.parse(localStorage.getItem('subLocationId'));
+      let propType = JSON.parse(localStorage.getItem('propType'));
+
+      this.lead.cityId = city._id;
+      this.onChange(city);
+      this.lead.locationId = location._id;
+      this.onLocChange(location);
+      this.lead.sublocationId = subLocationId;
+      this.lead.propTypeId = propType._id;
+    }
+    
 
   }
 
@@ -58,6 +76,7 @@ export class AddLeadComponent implements OnInit {
     this.newLocations = this.locations.filter(function (locations) {
       return locations.cityId == city._id;
     });
+    localStorage.setItem('city', JSON.stringify(city));
   }
 
   //////////////////////////////////////////////////////////
@@ -84,6 +103,7 @@ export class AddLeadComponent implements OnInit {
     this.newSubLocations = this.sublocations.filter(function (sublocations) {
       return sublocations.locationId == location._id;
     });
+    localStorage.setItem('location', JSON.stringify(location));
   }
 
   sublocations;
@@ -94,6 +114,10 @@ export class AddLeadComponent implements OnInit {
     }, (err) => {
       console.error(err);
     });
+  }
+
+  onSubLocChange(subLocation) {
+    localStorage.setItem('subLocationId', JSON.stringify(subLocation.srcElement.value));
   }
 
   /////////////////////////////////////////////////////////
@@ -110,6 +134,10 @@ export class AddLeadComponent implements OnInit {
     }, (err) => {
       console.error(err);
     });
+  }
+
+  onPropTypeChange(propType) {
+    localStorage.setItem('propType', JSON.stringify(propType));
   }
 
   get getPropertyType() {

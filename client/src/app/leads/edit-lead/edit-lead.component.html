@@ -119,8 +119,8 @@
           </div>
 
           <div class="form-group col-md-6">
-            <label *ngIf="isLead" for="selectAssignedTo">Assigned To</label>
-            <select *ngIf="isLead" id="selectAgent" name="assignedTo" [(ngModel)]="lead.assignedTo" class="form-control">
+            <label for="selectAssignedTo">Assigned To</label>
+            <select id="selectAgent" name="assignedTo" [(ngModel)]="lead.assignedTo" class="form-control">
               <option value="0" selected>Not assigned to any agent</option>
               <option *ngFor="let user of users" value="{{ user?._id }}">{{ user?.name }}</option>
             </select>

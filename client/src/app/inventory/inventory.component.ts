@@ -29,11 +29,12 @@ export class InventoryComponent implements OnInit, AfterViewInit {
 
   dtTrigger: Subject<any> = new Subject();
 
-  constructor(private auth: AuthenticationService, private router: Router,
+  constructor(public auth: AuthenticationService, private router: Router,
     private leadService: LeadService) { }
 
   ngOnInit() {
     this.getLeads();
+    // this.getUsers();
     // this.getPropTypes();
     // this.getLocations();
     // this.getCities();
@@ -114,6 +115,7 @@ export class InventoryComponent implements OnInit, AfterViewInit {
     this.auth.getLeads().subscribe(leads => {
       this.leads = leads;
       this.getPropTypes();
+      this.getUsers();
     }, (err) => {
       console.error(err);
     });
@@ -468,6 +470,23 @@ export class InventoryComponent implements OnInit, AfterViewInit {
       return l._id == id;
     });
     return lead[0];
+  }
+
+  users;
+  getUsers() {
+    this.auth.getUsers().subscribe(users => {
+      this.users = users;
+    }, (err) => {
+      console.error(err);
+    });
+  }
+
+  getUserDetails(id) {
+    let user = this.users.filter(function (u) {
+      return u._id == id;
+    });
+    if(user !== []) return user[0];
+    return "";
   }
 
   addToWeb(inv) {

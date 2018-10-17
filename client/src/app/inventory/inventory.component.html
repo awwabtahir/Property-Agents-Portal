@@ -124,6 +124,7 @@
             <th>Purpose</th>
             <th>Beds</th>
             <th>Client Details</th>
+            <th *ngIf="auth.isAdmin()">Agent Assigned</th>
             <th data-priority="1">Operations</th>
           </tr>
         </thead>
@@ -139,11 +140,17 @@
             <td *ngIf="inv.purpose == 3">Rent</td>
             <td>{{ inv.beds }}</td>
             <td>
-              Name: {{ getClientDetails(inv.leadId).clientName }} <br>
-              Phone: {{ getClientDetails(inv.leadId).phoneNumber }} <br>
-              Type: <span *ngIf="getClientDetails(inv.leadId).clientType == 1">Owner</span>
+              <b>Name:</b> {{ getClientDetails(inv.leadId).clientName }} <br>
+              <b>Phone:</b> {{ getClientDetails(inv.leadId).phoneNumber }} <br>
+              <b>Type: </b> <span *ngIf="getClientDetails(inv.leadId).clientType == 1">Owner</span>
               <span *ngIf="getClientDetails(inv.leadId).clientType == 2">Dealer</span>
               <span *ngIf="getClientDetails(inv.leadId).clientType == 3">Buyer</span>
+            </td>
+            <td *ngIf="auth.isAdmin()">
+              <span *ngIf="getUserDetails(getClientDetails(inv.leadId).assignedTo)">
+                <b>Name:</b> {{ getUserDetails(getClientDetails(inv.leadId).assignedTo).name }} <br>
+                <b>Phone:</b> {{ getUserDetails(getClientDetails(inv.leadId).assignedTo).phone }}
+              </span>
             </td>
             <td>
               <a (click)="editLead(inv.leadId)" class="btn btn-sm btn-default">

@@ -112,12 +112,10 @@ module.exports.updateLead = function (req, res) {
     lead.phoneNumber = req.body.phoneNumber;
     lead.assignedTo = req.body.assignedTo;
     lead.inventoryId = req.body.inventoryId;
+    lead.isInventory = req.body.isInventory;
     lead.leadAdminStatus = req.body.leadAdminStatus;
     lead.leadAgentStatus = req.body.leadAgentStatus;
     lead.cmt = req.body.cmt;
-
-    console.log(lead);
-    console.log(inventory);
 
     var conditions = { _id: req.body.leadId }
         , update = { $set: lead }

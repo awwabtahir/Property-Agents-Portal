@@ -3,7 +3,23 @@
     <div class="col align-self-center box-head">
       <p *ngIf="!(users && cities && propTypes && locations)">Please wait...</p>
       <form *ngIf="users && cities && propTypes && locations" #f="ngForm">
-        <h3 *ngIf="!isLead">Important: You are adding inventory</h3>
+        <div class="form-row mb-3">
+          <b class="ml-2 mr-2">Type:</b>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="isLead" [(ngModel)]="isLead"
+              id="isLead1" [value]="true" required>
+            <label class="form-check-label" for="isLead1">
+              Lead
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="isLead" [(ngModel)]="isLead"
+              id="isLead2" [value]="false" required>
+            <label class="form-check-label" for="isLead2">
+              Inventory
+            </label>
+          </div>
+        </div>
         <div class="form-row">
 
           <b class="ml-2 mr-2">Purpose:</b>

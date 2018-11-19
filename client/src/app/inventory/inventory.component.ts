@@ -23,6 +23,7 @@ export class InventoryComponent implements OnInit, AfterViewInit {
   maxA: number;
 
   inventoryId;
+  isAgent = false;
 
   dtOptions: any = {
   };
@@ -33,6 +34,7 @@ export class InventoryComponent implements OnInit, AfterViewInit {
     private leadService: LeadService) { }
 
   ngOnInit() {
+    this.isAgent = this.auth.isAgent();
     this.getLeads();
     // this.getUsers();
     // this.getPropTypes();
@@ -106,6 +108,12 @@ export class InventoryComponent implements OnInit, AfterViewInit {
   filter(): void {
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.draw();
+    });
+  }
+
+  searchTable(value, col) {
+    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.columns(col).search(value).draw();
     });
   }
 
@@ -473,6 +481,7 @@ export class InventoryComponent implements OnInit, AfterViewInit {
   }
 
   users;
+  selectedAgent = 0;
   getUsers() {
     this.auth.getUsers().subscribe(users => {
       this.users = users;
@@ -487,6 +496,16 @@ export class InventoryComponent implements OnInit, AfterViewInit {
     });
     if(user !== []) return user[0];
     return "";
+  }
+
+  onAgentChange() {
+    let agentId = this.selectedAgent;
+    if (agentId == 0) this.searchTable("", 8);
+    else {
+      let agent = this.users.filter(function (user) { return user._id == agentId; });
+      let agentName = agent[0].name;
+      this.searchTable(agentName.toLowerCase(), 8);
+    }
   }
 
   addToWeb(inv) {

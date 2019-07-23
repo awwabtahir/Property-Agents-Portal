@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
 var gracefulShutdown;
-var dbURI = 'mongodb+srv://iamasasa:warka123@cluster0-ijdgl.mongodb.net';
+var dbURI = 'mongodb://iamasasa:OE3LY5warPj1A0UO@cluster0-shard-00-02-ijdgl.mongodb.net:27017/mydbasasa?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority';
 // if (process.env.NODE_ENV === 'production') {
 //   dbURI = process.env.MONGOLAB_URI;
 // }
 
-mongoose.connect(dbURI, {dbName: 'mydbasasa'});
+mongoose.connect(dbURI);
 
 // CONNECTION EVENTS
 mongoose.connection.on('connected', function() {
